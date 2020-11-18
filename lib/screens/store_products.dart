@@ -84,7 +84,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                       },
                       // You tab view goes here
                       body: productFromServer['message'] == "Followed"
-                          ? Column(
+                          ?  Column(
                               children: <Widget>[
                                 Container(
                                   decoration: BoxDecoration(
