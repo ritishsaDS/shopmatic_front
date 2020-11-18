@@ -83,7 +83,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                         ];
                       },
                       // You tab view goes here
-                      body: productFromflutter upgrade Server['message'] == "Followed"
+                      body: productFromServer['message'] == "Followed"
                           ? Column(
                               children: <Widget>[
                                 Container(

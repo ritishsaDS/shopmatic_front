@@ -35,6 +35,8 @@ class addaddressState extends State<addaddress> {
   bool isError = false;
   bool value4 = false;
   bool isLoading = false;
+  bool ishuihi = false;
+
   String id = "";
   TextEditingController fnameController = new TextEditingController();
   TextEditingController lnameController = new TextEditingController();

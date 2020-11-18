@@ -81,7 +81,7 @@ class editoutletstate extends State<editOutlet>{
           elevation: 2,
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Edit Outlet",
-              style: TextStyle(fontSize: 16, color: darkText)),
+              style: TextStyle(fontSize: 16,fontFamily: "futura", color: darkText)),
           centerTitle: true,
           backgroundColor: white,
         ),
