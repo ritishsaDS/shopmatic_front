@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:loading_gifs/loading_gifs.dart';
+import 'package:http/http.dart' as http;
 import 'package:shopmatic_front/utils/common.dart';
 
 import 'add_product.dart';
-import 'editProduct.dart';
 import 'manage_productListing.dart';
 
 class manageproducts extends StatefulWidget {
@@ -55,7 +51,7 @@ class stateproducts extends State<manageproducts> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          "Add Product",
+          "Manage Product",
           style: TextStyle(fontSize: 16, color: darkText),
         ),
         backgroundColor: white,

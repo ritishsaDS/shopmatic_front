@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopmatic_front/screens/personal_info.dart';
+import 'package:shopmatic_front/screens/edit_profile.dart';
 import 'package:shopmatic_front/screens/store_products.dart';
 import 'package:shopmatic_front/screens/tile.dart';
 import 'package:shopmatic_front/utils/common.dart';
@@ -81,17 +81,17 @@ class _ProfilePageState extends State<userProfile> {
                                           blurRadius: 3.0,
                                           offset: Offset(0, 4.0),
                                           color: Colors.black38),
-                                    ],
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        productFromServer['data']['image'],
-
-                                      ),
-                                      fit: BoxFit.fitWidth,
-
-                                    ),
-                                  ),
-
+                                    ]),
+                                   
+child:ClipOval(
+                            child: CircleAvatar(
+                               radius: 90,
+                                backgroundColor: lightGrey,
+                                child: FadeInImage.assetNetwork(
+                                  width: 110,
+                                  image: productFromServer['data']['image'],
+                                  placeholder: cupertinoActivityIndicator,
+                                  fit: BoxFit.fill,)))
                                 ),
 
                               ],

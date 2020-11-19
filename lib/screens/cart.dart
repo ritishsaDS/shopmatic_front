@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopmatic_front/utils/common.dart';
-import 'package:http/http.dart' as http;
 import 'package:shopmatic_front/widget/cart_product_cell.dart';
 
 import 'orders.dart';
-import 'store_products.dart';
 
 class Cart extends StatefulWidget {
 dynamic image ;
@@ -40,7 +39,137 @@ class cartstate extends State<Cart> {
           backgroundColor: Colors.white,
           title: Text("My Cart", style: TextStyle(color: darkText)),
         ),
-        body:ListView(children: createProduct(cartTemporary)));
+        body:ListView(children: <Widget>[
+           Container(
+      margin: EdgeInsets.only(top: 15, bottom: 15, right: 15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          itemToDelete == widget.id
+              ? Container(
+                  padding: EdgeInsets.all(12.0),
+                  height: 43,
+                  width: 43,
+                  child: CircularProgressIndicator(
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(primaryColor)))
+              : IconButton(
+                  //onPressed: widget.delItem,
+                  iconSize: 19,
+                  icon: Icon(
+                    Icons.delete,
+                    color: transparentREd,
+                  ),
+                ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              color: white,
+              padding: EdgeInsets.all(1),
+              child: FadeInImage.assetNetwork(
+                  height: 80,
+                  width: 80,
+                  placeholder: cupertinoActivityIndicator,
+                  fit: BoxFit.fitWidth,
+                  image: widget.image//imageList[skuList.indexOf(widget.productData['item_id'])]
+                  ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(left: 10, top: 5),
+                    child: Text(
+                      widget.name,
+                      style: TextStyle(
+                          color: darkText,
+                          fontFamily: "futura",
+                          
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14),
+                    )), Container(
+                    margin: EdgeInsets.only(left: 10, top: 5),
+                    child: Text(
+                      widget.description,
+                      style: TextStyle(
+                          color: lightestText,
+                          fontFamily: "proxima",
+                          fontWeight: FontWeight.normal,
+                          fontSize: 13),
+                          softWrap: true,overflow: TextOverflow.ellipsis,
+                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.only(left: 10, top: 2),
+                        child: Text(
+currency+widget.price,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontFamily: "proxima",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19),
+                        )),
+                    Row(
+                       
+                      children: <Widget>[
+                        IconButton(
+                          //onPressed: cartOnHold ? null : widget.delQuant,
+                          iconSize: 18,
+                          icon: Icon(Icons.remove),
+                        ),
+                        cartOnHold &&
+                                updatingItemId == widget.id
+                            ? Container(
+                                height: 15,
+                                width: 15,
+                                child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            primaryColor)),
+                              )
+                            : Text(widget.Quantity.toString(),
+                                style:
+                                    TextStyle(color: darkText, fontSize: 16)),
+                        IconButton(
+                         // onPressed: cartOnHold ? null : widget.addQuant,
+                          color: primaryColor,
+                          iconSize: 18,
+                          icon: Icon(Icons.add),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                // Container(
+                //     margin: EdgeInsets.only(left: 10),
+                //     child: Text("Store: " + widget.productData['storeName'])),
+
+              ],
+            ),
+          )
+        ],
+      ),
+    ),
+   GestureDetector(
+     child: Container(
+margin: EdgeInsets.all(10.0),
+decoration: BoxDecoration(
+  borderRadius: BorderRadius.circular(6.0),
+  color: Colors.black
+),
+child: RaisedButton(
+   color: Colors.black,
+  child: Text("Checkout",style: TextStyle(color: white),),
+),
+     ),onTap: ()=>createOrder(),
+
+   )        ],));
   }
 
   Future<void> createOrder() async {
@@ -86,116 +215,5 @@ class cartstate extends State<Cart> {
       });
     }
   }
-  List<Widget> createProduct(dynamic cartListFromLocal) {
-    double subtotal = 0;
-    List<Widget> productList = new List();
-    if (cartListFromLocal.length > 0) {
-      for (int i = 0; i < cartListFromLocal.length; i++) {
-        print(cartListFromLocal[i]);
-        subtotal = subtotal +
-            double.parse(cartListFromLocal[i]['price']
-                .replaceAll("\$", "")
-                .replaceAll(",", "")) *
-                double.parse(cartListFromLocal[i]['quantity'].toString());
-        productList.add(CartProductCell(
-          productData: cartListFromLocal[i],
-          addQuant: () {
-            setState(() {
-              cartListFromLocal[i]['quantity'] =
-                  cartListFromLocal[i]['quantity'] + 1;
-            });
-          },
-          delQuant: () {
-            setState(() {
-              if (cartListFromLocal[i]['quantity'] > 1) {
-                cartListFromLocal[i]['quantity'] =
-                    cartListFromLocal[i]['quantity'] - 1;
-              }
-            });
-          },
-          delItem: () {
-            setState(() {
-              cartListFromLocal.removeAt(i);
-            });
-          },
-        ));
-      }
-      productList.add(Container(
-        color: lightGrey,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(15),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'SubTotal:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              cartOnHold
-                  ? Container(
-                height: 15,
-                width: 15,
-                child: CircularProgressIndicator(
-                    valueColor:
-                    new AlwaysStoppedAnimation<Color>(primaryColor)),
-              )
-                  : Text(
-                '\₹' + subtotal.toStringAsFixed(2),
-                // /*+ calculateDriverTip(double.parse(dropdownValue)) + shipping + calculateDriverTip(serviceFeePercent)*/).toStringAsFixed(2),
-                style:
-                TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ]),
-      ));
-      productList.add(Container(
-        height: 45,
-        color: primaryColor,
-        margin: EdgeInsets.all(15),
-        child: new FlatButton(
-            onPressed: () {
-             // isLoggedIn();
-            },
-            child: isLoading
-                ? CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(white))
-                : Text(
-              "Checkout",
-              style: TextStyle(
-                  color: white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
-            )),
-      ));
-      productList.add(SizedBox(
-        height: 50,
-      ));
-    } else {
-      productList.add(new Container(
-          height: MediaQuery.of(context).size.width,
-          child: Container(
-            margin: EdgeInsets.only(top: 100),
-            child: Column(
-              children: <Widget>[
-                Container(
-                    child: Icon(
-                      Icons.add_shopping_cart,
-                      size: 80,
-                      color: darkText,
-                    )),
-                SizedBox(height: 20),
-                Text(
-                  'Cart is empty!',
-                  style: TextStyle(
-                      color: darkText,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 22),
-                ),
-              ],
-            ),
-          )));
-    }
-
-    return productList;
-  }
-
+  
 }

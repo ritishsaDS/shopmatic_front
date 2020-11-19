@@ -1,25 +1,13 @@
-import 'dart:io';
 import 'dart:convert';
-import 'package:badges/badges.dart';
-import 'package:expandable/expandable.dart';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopmatic_front/screens/personal_info.dart';
-import 'package:shopmatic_front/screens/store_products.dart';
-import 'package:shopmatic_front/screens/tile.dart';
 import 'package:shopmatic_front/screens/userprofile.dart';
 import 'package:shopmatic_front/utils/common.dart';
-import 'package:http/http.dart' as http;
-
-import 'bottom_bar.dart';
-import 'cart.dart';
-
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {
   dynamic username;
@@ -105,12 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           style: TextStyle(color: darkText),
         ),
         elevation: 1,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-          ),
-          onPressed: () {},
-        ),
+        
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -235,9 +218,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   RaisedButton(
                     onPressed: () {
+                      startUpload();
                       editprofile(namecontroller.text, emailcontroller.text,
                           phonecontroller.text, addresscontroller.text);
-                      startUpload();
+                    
 
                     },
                     color: Colors.green,
@@ -304,6 +288,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString('intValue');
+
     try {
       final response = await http.post(editprofileapi, body: {
         "user_id": id,
@@ -312,9 +297,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
         "phone": phone,
         "address": address,
         "gender": "1",
-        "image": productFromServer["data"]['image']
+       // "image": productFromServer["data"]['image']
       });
       if (response.statusCode == 200) {
+         
         final responseJson = json.decode(response.body);
         print(responseJson.toString() + "hello");
 
@@ -347,6 +333,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     images=true;
     setState(() {
       file = ImagePicker.pickImage(source: ImageSource.gallery);
+       
     });
     setStatus('');
   }
@@ -374,6 +361,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       "image": base64Image,
       "user_id": id,
     }).then((result) {
+              print("image yploaded top server");
+
       setStatus(result.statusCode == 200 ? result.body : errMessage);
     }).catchError((error) {
       setStatus(error);
@@ -407,9 +396,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ],
                     shape: BoxShape.circle,
                   ),
-                  child: Image.file(
+                
+                    
+                    child:ClipOval(
+                            child: CircleAvatar(
+                               radius: 90,
+                                backgroundColor: lightGrey,
+                                child:Image.file(
+                      
                     snapshot.data,
+                      fit: BoxFit.fitWidth,
                   ),
+                  ))
                 ),
                 Positioned(
                     bottom: 0,

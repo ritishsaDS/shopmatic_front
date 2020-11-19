@@ -11,6 +11,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'bottom_bar.dart';
 import 'cart.dart';
+import 'demo.dart';
 
 class Store_detail extends StatefulWidget {
   VoidCallback onP1Badge;
@@ -117,14 +118,23 @@ class storestate extends State<Store_detail> {
                             children: <Widget>[
                               Stack(
                                 children: <Widget>[
-                                  Container(
+                                 GestureDetector(
+                                   child: Container(
                                     height: 300,
-                                    child: PageView(
+                                    child: Hero(
+                                      tag:"imagehero",
+                                      child:PageView(
                                         controller: _pageController,
                                         scrollDirection: Axis.horizontal,
                                         children: createBannerSlider()),
-                                  ),
-                                _buildCircleIndicator(),
+
+                                    )                                  ),onTap: (){
+                                       Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return InstaProfilePage();
+          }));
+                                    },
+
+                                 ),                                _buildCircleIndicator(),
                                   Positioned(
                                     right: 0,
                                     top: 0,
@@ -158,9 +168,9 @@ class storestate extends State<Store_detail> {
                                   widget.name,
                                   style: TextStyle(
                                       color: darkText,
-                                      fontFamily: "proxima",
+                                      fontFamily: "futura",
                                       fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                      ),
                                 ),
                               ),
                               Container(

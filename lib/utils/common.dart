@@ -112,6 +112,8 @@ String addAddressapi = domainURL+ "topStore/user/addaddress";
 String useraddressesapi = domainURL+ "topStore/user/useraddresses";
 String deleteaddressapi = domainURL+ "topStore/user/deleteaddress";
 String editaddressapi = domainURL+ "topStore/user/editaddress";
+String blockOutletApi = domainURL+ "topStore/user/blockOutlet";
+
 String deletOutletapi = domainURL+ "topStore/outlets/delete";
 
 

@@ -1,21 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
-import 'package:loading_gifs/loading_gifs.dart';
-import 'package:shopmatic_front/screens/manage_products.dart';
-import 'package:shopmatic_front/utils/common.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'store_detail.dart';
-import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:loading_gifs/loading_gifs.dart';
+import 'package:shopmatic_front/utils/common.dart';
 class List_View extends StatefulWidget{
   dynamic id;
   dynamic name;
   dynamic desc;
+  dynamic price;
 
-  List_View({Key key, this.id,this.name,this.desc}) : super(key: key);
+  List_View({Key key, this.id,this.name,this.desc,this.price}) : super(key: key);
   stateListView createState()=>stateListView();
 
 }
@@ -35,18 +31,62 @@ class stateListView extends State<List_View> {
     child: isLoading
     ? Center(child: Image.asset(cupertinoActivityIndicator))
         :  Container(
-              child: ListTile(
+          margin: EdgeInsets.only(top:10),
+              child: Column(
+                children:<Widget>[
+                  ListTile(
                 title: Text(widget.name,style: TextStyle(fontFamily: "futura",fontSize: 13),),
-                leading:  ClipRRect(
-                    borderRadius: BorderRadius.circular(6.0),
+                leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
                     child: FadeInImage.assetNetwork(
                       image: productFromServer[0],
                       placeholder: cupertinoActivityIndicator,
-                      height: 90,
-                      width: 90,
+                      height: 100,
+                      width: 100,
                       fit: BoxFit.cover,
-                    )),
-                subtitle:Text(widget.desc,style: TextStyle(fontFamily: "proxima",fontSize: 11,fontWeight: FontWeight.bold)),
+                    )
+
+                ),                subtitle:Container(
+
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height:3
+                      ),
+Row(
+                  children: <Widget>[
+                    Text("" + currency + widget.price.toString(),
+                        style: TextStyle(
+                            color: lightText,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,fontFamily: "futura")),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(currency + "900",
+                        style: TextStyle(
+                            color: mostlight,
+                            fontSize: 11,
+                            decoration: TextDecoration.lineThrough,fontFamily: "proxima")),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("65% OFF",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontFamily: 'proxima')),
+                  ],
+                ),
+ SizedBox(
+                        height:3
+                      ),
+                      Text(widget.desc,style: TextStyle(fontFamily: "proxima",fontSize: 12,fontWeight: FontWeight.bold),maxLines: 2,softWrap: true,overflow: TextOverflow.ellipsis,),
+],
+                  )
+                ),
                 trailing: Container(
                   child: Row(
 
@@ -74,8 +114,15 @@ class stateListView extends State<List_View> {
                     ],
                   ),
                 ),
+              ),
+              Divider(
+                height: 10,
+                thickness: 1.5,
+                color: dividerColor,
               )
 
+                ]
+              )
     ))]);
   }
   dynamic productFromServer = new List();

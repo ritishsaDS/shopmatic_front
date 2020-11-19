@@ -30,6 +30,7 @@ class addaddressState extends State<addaddress> {
   String phoneNumber = '';
   String comment = '';
   String priority = '';
+  String pin="";
   String dateString = '';
   final _formKey = GlobalKey<FormState>();
   bool isError = false;
@@ -88,7 +89,7 @@ class addaddressState extends State<addaddress> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        labelText: "First name",
+                                        labelText: "Full name",
                                         labelStyle:
                                             TextStyle(color: Colors.grey),
                                         fillColor: Colors.white,
@@ -115,48 +116,7 @@ class addaddressState extends State<addaddress> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    child: TextFormField(
-                                      controller: lnameController,
-                                      onChanged: (text) {
-                                        //password = text;
-                                        lName = text;
-                                      },
-                                      cursorColor: primaryColor,
-                                      decoration: new InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey, width: 1.0),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        labelText: "Last name",
-                                        labelStyle:
-                                            TextStyle(color: Colors.grey),
-                                        fillColor: Colors.white,
-                                        border: new OutlineInputBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(8.0),
-                                          borderSide: new BorderSide(),
-                                        ),
-                                      ),
-                                      validator: (val) {
-                                        if (val.length == 0) {
-                                          return "Last name cannot be empty";
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      keyboardType: TextInputType.emailAddress,
-                                      style: new TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                                              ],
                             ),
                             SizedBox(height: 10),
                             Container(
@@ -314,7 +274,7 @@ class addaddressState extends State<addaddress> {
                               child: TextFormField(
                                 onChanged: (text) {
                                   //password = text;
-                                  streetAddress = text;
+                                  pin = text;
                                 },
                                 cursorColor: primaryColor,
                                 decoration: new InputDecoration(
@@ -556,6 +516,7 @@ return "street adress";
                                     phoneController.text,
                                     fnameController.text,
                                     state,
+                                    pin,
                                     selected,
                                     priority);}
                               },
@@ -578,7 +539,7 @@ return "street adress";
   dynamic productFromServer = new List();
 
   Future<void> addadress(String street, String city, String phone, String name,
-      String state, String select, String priority) async {
+      String state, String pin,String select, String priority) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString('intValue');
@@ -587,7 +548,7 @@ return "street adress";
         "user_id": id,
         "name": name,
         "phone": phone,
-        "pin_code": "144001",
+        "pin_code": pin,
         "address": street,
         "city": city,
         "state": state,

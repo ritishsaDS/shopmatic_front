@@ -3,11 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shopmatic_front/screens/manage_products.dart';
-import 'package:shopmatic_front/utils/common.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:shopmatic_front/utils/common.dart';
 
 import 'Home_screen.dart';
 

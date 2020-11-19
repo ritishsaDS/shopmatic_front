@@ -17,8 +17,9 @@ class editaddress extends StatefulWidget{
   dynamic city;
   dynamic state;
   dynamic name;
+  dynamic value;
 
-  editaddress({this.id,this.pin,this.phone,this.address,this.city,this.state,this.name});
+  editaddress({this.id,this.pin,this.phone,this.address,this.city,this.state,this.name,this.value});
   editaddressstate createState()=>editaddressstate(id,pin,phone,address,city,state,name);
 }
 class editaddressstate extends State<editaddress>{
@@ -84,6 +85,18 @@ String fname="";
   }
   @override
   Widget build(BuildContext context) {
+    if(widget.value=="1"){
+      setState(() {
+       value4=true; 
+      });
+      print("ifififi");
+    }
+    else{
+       setState(() {
+ value4=false;      });
+     
+      print("ekekeke");
+    }
     return Scaffold(
         appBar: AppBar(
           backgroundColor: white,
@@ -496,6 +509,8 @@ String fname="";
                                       value: value4,
                                       onChanged: (val) {
                                         setState(() {
+                                          widget.value=="1";
+                                          print(widget.value);
                                           value4 = val;
                                         });
                                       }),
@@ -528,7 +543,7 @@ String fname="";
                               else{
                                 priority="0";
                               }
-                              editadress(stateController.text,cityController.text,phoneController.text,fnameController.text,stateController.text,selected,priority);
+                              editadress(pinController.text,stateController.text,cityController.text,phoneController.text,fnameController.text,stateController.text,selected,priority);
                             },
                             )
                           ],
@@ -546,7 +561,7 @@ String fname="";
 
   dynamic productFromServer = new List();
 
-  Future<void> editadress(String street,String city,String phone,String name,String state,String select ,String priority ) async {
+  Future<void> editadress(String pin,String street,String city,String phone,String name,String state,String select ,String priority ) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     aid = prefs.getString('intValue');
@@ -554,7 +569,7 @@ String fname="";
       final response = await http.post(editaddressapi, body: {"id": widget.id,
         "name":name,
         "phone":phone,
-        "pin_code":"144001",
+        "pin_code":pin,
         "address":street,
         "city":city,
         "state":state,

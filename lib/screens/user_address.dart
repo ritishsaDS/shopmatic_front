@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopmatic_front/screens/personal_info.dart';
+import 'package:shopmatic_front/screens/edit_profile.dart';
 import 'package:shopmatic_front/screens/store_products.dart';
 import 'package:shopmatic_front/screens/tile.dart';
 import 'package:shopmatic_front/screens/userprofile.dart';
@@ -216,7 +216,7 @@ return Scaffold(
                     ],
                   )),
             )),onTap: (){
-         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>editaddress(name:products[i]['name'],id:products[i]['id'],phone:products[i]['phone'],pin:products[i]['pin_code'],address:products[i]['address'],city:products[i]['city'],state:products[i]['state'])));
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>editaddress(name:products[i]['name'],id:products[i]['id'],phone:products[i]['phone'],pin:products[i]['pin_code'],address:products[i]['address'],city:products[i]['city'],state:products[i]['state'],value:products[i]['priority'])));
       },
       ));
     }

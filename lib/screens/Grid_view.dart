@@ -47,8 +47,8 @@ class Grid_state extends State<Grid> {
                         child: FadeInImage.assetNetwork(
                           image: productFromServer[0],
                           placeholder: cupertinoActivityIndicator,
-                          height: 190,
-                          width: 190,
+                          height: 180,
+                          width: 170,
                           fit: BoxFit.fill,
                         )),
                     Positioned(
@@ -66,26 +66,29 @@ class Grid_state extends State<Grid> {
                     )
                   ],
                 ),
+                 SizedBox(
+                  height: 3,
+                ),
                 Text(
                   widget.name,
                   style: TextStyle(
-                      color: lightText,
+                      color: darkText,
                       fontFamily: "futura",
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 14,
+                    ),
                 ),
                 SizedBox(
                   height: 3,
                 ),
                 Row(
                   children: <Widget>[
-                    Text(" " + currency + widget.price.toString(),
+                    Text("" + currency + widget.price.toString(),
                         style: TextStyle(
                             color: lightText,
-                            fontSize: 12,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,fontFamily: "futura")),
                     SizedBox(
-                      width: 3,
+                      width: 4,
                     ),
                     Text(currency + "900",
                         style: TextStyle(
@@ -102,18 +105,23 @@ class Grid_state extends State<Grid> {
                             fontFamily: 'proxima')),
                   ],
                 ),
+                SizedBox(
+                  height:2
+                ),
+                Text(widget.desc,style:TextStyle(color: lightestText,fontFamily: "proxima",fontSize: 11),softWrap: true,overflow: TextOverflow.ellipsis,),
                 Row(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     GestureDetector(
                       child: Container(
-                        width: 30,
+                        width: 25,
                         padding: EdgeInsets.only(left: 5),
                         child: CircleAvatar(
                           backgroundColor: Colors.grey[400],
                           child: Icon(
                             Icons.share,
-                            size: 15,
+                            size: 13,
                             color: Colors.grey[100],
                           ),
                         ),
@@ -128,13 +136,13 @@ class Grid_state extends State<Grid> {
                     },
                     ),
                     Container(
-                      width: 30,
+                      width: 25,
                       padding: EdgeInsets.only(left: 5),
                       child: CircleAvatar(
                         backgroundColor: Colors.grey[400],
                         child: Icon(
                           Icons.add,
-                          size: 15,
+                          size: 13,
                           color: Colors.grey[100],
                         ),
                       ),

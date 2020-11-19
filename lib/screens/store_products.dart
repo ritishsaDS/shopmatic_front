@@ -1,25 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopmatic_front/screens/story.dart';
-import 'package:shopmatic_front/screens/tab2.dart';
 import 'package:shopmatic_front/utils/common.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:http/http.dart' as http;
 
 import 'Grid_view.dart';
-import 'Home_screen.dart';
 import 'List_view.dart';
-import 'followers.dart';
-import 'tab1.dart';
 import 'bottom_bar.dart';
-import 'profile_screen.dart';
 import 'store_detail.dart';
 
 class storeProducts extends StatefulWidget {
@@ -41,6 +32,9 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
   @override
   void initState() {
     getProfile();
+    getFollowersapi();
+      getStories();
+        getCategories();
     getProductsserver();
     _controller = new TabController(length: 2, vsync: this);
     super.initState();
@@ -62,7 +56,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
         title: Text(widget.name,
             style: TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
+                
                 fontSize: 15,fontFamily: "futura")),
       ),
       body:Stack(children: <Widget>[
@@ -195,13 +189,12 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
         print(responseJson.toString() + "hello");
 
         productFromServer = responseJson;
-        getFollowersapi();
-        getStories();
-        getCategories();
+       
+       
 
         setState(() {
           isError = false;
-          isLoading = false;
+        
           print('setstate');
         });
       } else {
@@ -237,7 +230,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
         }
         setState(() {
           isError = false;
-          isLoading = false;
+        
           print('setstate');
         });
       } else {
@@ -546,7 +539,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
 
         setState(() {
           isError = false;
-          isLoading = false;
+         isLoading = true;
           print('setstate');
         });
       } else {
@@ -782,22 +775,90 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
     for (int i = 0; i < products.length; i++) {
       print("sdujh" + products.toString());
       productLists.add(GestureDetector(
-        child: List_View(
-            id: products[i]['id'],
-            name: products[i]['name'],
-            desc: products[i]['description']),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Store_detail(
-                      data: products[i]['id'],
-                      name: products[i]['name'],
-                      description: products[i]['description'],
-                    )),
-          );
-        },
-      ));
+                      child: productFromServer['data']['outlet_group'] == "0"
+                          ? GestureDetector(
+                              child: List_View(
+                                  id: products[i]['id'],
+                                  name: products[i]['name'],
+                                  desc: products[i]['description'],
+                                  price: products[i]['price']),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Store_detail(
+                                          data: products[i]['id'],
+                                          name: products[i]['name'],
+                                          description: products[i]
+                                              ['description'],
+                                          price: products[i]['price'])),
+                                );
+                              },
+                            )
+                          : productFromServer['data']['outlet_group'] == "1"
+                              ? GestureDetector(
+                                  child: List_View(
+                                      id: products[i]['id'],
+                                      name: products[i]['name'],
+                                      desc: products[i]['description'],
+                                      price: products[i]['silverprice']),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Store_detail(
+                                              data: products[i]['id'],
+                                              name: products[i]['name'],
+                                              description: products[i]
+                                                  ['description'],
+                                              price: products[i]
+                                                  ['silverprice'])),
+                                    );
+                                  },
+                                )
+                              : productFromServer['data']['outlet_group'] == "2"
+                                  ? GestureDetector(
+                                      child: List_View(
+                                          id: products[i]['id'],
+                                          name: products[i]['name'],
+                                          desc: products[i]['description'],
+                                          price: products[i]['goldprice']),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Store_detail(
+                                                      data: products[i]['id'],
+                                                      name: products[i]['name'],
+                                                      description: products[i]
+                                                          ['description'],
+                                                      price: products[i]
+                                                          ['goldprice'])),
+                                        );
+                                      },
+                                    )
+                                  : GestureDetector(
+                                      child: List_View(
+                                          id: products[i]['id'],
+                                          name: products[i]['name'],
+                                          desc: products[i]['description'],
+                                          price: products[i]['platinumprice']),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Store_detail(
+                                                      data: products[i]['id'],
+                                                      name: products[i]['name'],
+                                                      description: products[i]
+                                                          ['description'],
+                                                      price: products[i]
+                                                          ['platinumprice'])),
+                                        );
+                                      },
+                                    )));
     }
     return productLists;
   }
@@ -860,7 +921,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                       Column(children: <Widget>[
                         Container(
                             child: Text(
-                                followersfromserver['total followers'].toString(),
+                                followersfromserver['total followers'],
                                 style: TextStyle(
                                     color: darkText,
                                     fontWeight: FontWeight.bold,
@@ -1024,7 +1085,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                       child: Text("Top Categories",
                           style: TextStyle(
                               color: darkText,
-                              fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.normal,
                               fontSize: 16,fontFamily: "futura"))),
                   Container(
                       height: 50,

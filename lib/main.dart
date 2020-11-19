@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopmatic_front/screens/Login_screen.dart';
 import 'package:shopmatic_front/screens/SplashScreen.dart';
-import 'package:shopmatic_front/screens/store_products.dart';
+
 import 'screens/Home_screen.dart';
-import 'screens/profile_screen.dart';
 
 void main() {
   runApp(MyApp());

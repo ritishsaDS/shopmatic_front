@@ -218,7 +218,7 @@ class settings_state extends State<settings> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                             MaterialPageRoute(builder: (context) => userProfile()));
                       }),
                 ),

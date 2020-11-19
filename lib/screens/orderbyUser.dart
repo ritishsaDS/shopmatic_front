@@ -1,17 +1,12 @@
 import 'dart:convert';
 
-import 'package:badges/badges.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopmatic_front/screens/store_products.dart';
 import 'package:shopmatic_front/utils/common.dart';
 import 'package:http/http.dart' as http;
 
-import 'bottom_bar.dart';
-import 'cart.dart';
 
 class userorder extends StatefulWidget{
   userorderstate createState()=>userorderstate();
@@ -28,7 +23,6 @@ String uid="";
   }
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body:Stack(children: <Widget>[
       Container(
@@ -66,7 +60,14 @@ String uid="";
                     title: Text(categories[i]['name'],style: TextStyle(fontSize: 16,color: darkText),),
                     leading:  ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: FadeInImage.assetNetwork(
+                        child:categories[i]['product_image']=="https://aashya.com/topStore/assets/uploads/products/cf6e60f3fa5f278c513a298029a8178c.x-empty"?Image.asset(
+                         "assets/images/kids.jpeg",
+                       
+                          height: 90,
+                          width: 90,
+                          fit: BoxFit.cover,
+                        ):
+                         FadeInImage.assetNetwork(
                           image: categories[i]['product_image'],
                           placeholder: cupertinoActivityIndicator,
                           height: 90,

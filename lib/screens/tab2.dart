@@ -1,15 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:loading_gifs/loading_gifs.dart';
+import 'package:http/http.dart' as http;
 import 'package:shopmatic_front/screens/store_detail.dart';
 import 'package:shopmatic_front/utils/common.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
-import 'package:http/http.dart' as http;
 
-import 'Grid_view.dart';
 import 'List_view.dart';
-import 'manage_products.dart';
 class tab2 extends StatefulWidget{
   dynamic data;
   dynamic message;
