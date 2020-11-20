@@ -95,13 +95,7 @@ class _BottomTabsState extends State<BottomTabs> {
                                 builder: (context) => Home(),
                               ));
                         }
-                        /* Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Home(),
-                          ));*/
-                        // Navigator.popUntil(context, ModalRoute.withName('/store'));
-                      },
+                         },
                       child:
                          Center(
                            child: Icon(

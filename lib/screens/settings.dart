@@ -765,7 +765,7 @@ class settings_state extends State<settings> {
                                       color: Colors.grey[300], size: 14))
                             ],
                           ),onTap:(){
-                          Navigator.pushReplacement(context,
+                          Navigator.push(context,
                               MaterialPageRoute(builder: (BuildContext ctx) => profile()));
                         }
                         ),

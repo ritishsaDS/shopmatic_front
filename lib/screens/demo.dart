@@ -17,9 +17,8 @@ class InstaProfilePage extends StatefulWidget {
   _InstaProfilePageState createState() => _InstaProfilePageState();
 }
 
-class _InstaProfilePageState extends State<InstaProfilePage>
-    {
-        String selected = "first";
+class _InstaProfilePageState extends State<InstaProfilePage> {
+  String selected = "first";
   bool view = true;
   bool viewVisible = false;
   bool viewVisibletext = false;
@@ -38,35 +37,120 @@ class _InstaProfilePageState extends State<InstaProfilePage>
   );
   @override
   void initState() {
-    getSingleProduct();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-        child: Center(
-          child: Hero(
-            tag: 'imagehero',
-            child: PageView(
-                                        controller: _pageController,
-                                        scrollDirection: Axis.horizontal,
-                                        children: createBannerSlider()),  
-            
+    return Scaffold(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+            child: Column(
+      children: <Widget>[
+        Container(
+          height: 300,
+          child:Stack(
+          children: <Widget>[
+            Positioned(
+                height: 250,
+                top: 0,
+                child: Container(
+                  height: 400,
+                  alignment: Alignment.center, // This is needed
+                  child: Image.asset(
+                    "assets/images/super.png",
+                    fit: BoxFit.cover,
+                    height: 400,
+                    width: 400,
                   ),
+                )),
+            Positioned(
+              top: 200.0,
+              left: 130.0,
+              child: Container(
+                  height: 90,
+                  width: 90,
+                  child: ClipOval(
+                    child: Image.asset(
+                      "assets/images/syore.jpg",
+                      height: 80,
+                      width: 70,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
+          ],
         ),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      );
+
+
+        ),
+        Divider(
+          height: 10,
+          thickness: 1.5,
+          color: dividerColor,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+             Column(
+                          children: <Widget>[
+
+                            Container(
+                                child: Text("219",
+                                    style: TextStyle(
+                                        color: darkText,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17))),
+                            Container(
+                                padding: EdgeInsets.all(5.0),
+                                child: Text("Joined",
+                                    style: TextStyle(fontFamily: "proxima",color: lightText, fontSize: 15)))
+                          ]),
+                      SizedBox(width: 30,),
+                      Column(children: <Widget>[
+                        Container(
+                            child: Text("19",
+                                style: TextStyle(
+                                    color: darkText,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17))),
+                        Container(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("Posts",
+                                style: TextStyle(fontFamily: "proxima",color: lightText, fontSize: 15)))
+                      ]),
+                      SizedBox(width: 30,),
+                      Column(children: <Widget>[
+                        Container(
+                            child: Text(
+                              "40",
+                                style: TextStyle(
+                                    color: darkText,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17))),
+                        Container(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text("Followers",
+                                style: TextStyle(fontFamily: "proxima",color: lightText, fontSize: 15)))
+                      ])
+      
+          ],
+        ),
+         Divider(
+          height: 10,
+          thickness: 1.5,
+          color: dividerColor,
+        ),
+        ],
+    )));
   }
+
   dynamic productFromServer = new List();
 
   Future<void> getSingleProduct() async {
     isLoading = true;
     try {
-      final response =
-          await http.post(SingleproductAPi, body: {"id": "8"});
+      final response = await http.post(SingleproductAPi, body: {"id": "8"});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
         print(responseJson.toString() + "hello");
@@ -95,7 +179,8 @@ class _InstaProfilePageState extends State<InstaProfilePage>
       // showToast('Something went wrong');
     }
   }
-List<Widget> createBannerSlider() {
+
+  List<Widget> createBannerSlider() {
     List<Widget> bannerWidgetList = new List();
     try {
       List bannerList = productFromServer as List;
@@ -113,5 +198,4 @@ List<Widget> createBannerSlider() {
 
     return bannerWidgetList;
   }
-
-    }
+}
