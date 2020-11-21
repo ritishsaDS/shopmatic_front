@@ -31,6 +31,7 @@ List<String> splita=[];
   @override
   void initState() {
     getProfile();
+   
     super.initState();
   }
 
@@ -105,10 +106,11 @@ List<String> splita=[];
                                 style: TextStyle(fontFamily: "proxima",color: lightText, fontSize: 15)))
                       ]),
                       Column(children: <Widget>[
+                        
                       GestureDetector(
                         child:  Container(
                             child: Text(
-                                "20",
+                               "20",
                                 style: TextStyle(
                                     color: darkText,
                                     fontWeight: FontWeight.bold,
@@ -170,9 +172,13 @@ List<String> splita=[];
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => editOutlet(
-                                              data: id,
+                                              data: productFromServer['data']
+                                                  ['outlet_id'],
                                               name: productFromServer['data']
                                                   ['outlet_name'],
+                                                   phone: productFromServer['data']
+                                                  ['phone'],
+                                                  image:productFromServer['data']['logo'],
                                               address: productFromServer['data']
                                                   ['address'])));
                                 },
@@ -258,6 +264,7 @@ child: RaisedButton(
 
   dynamic productFromServer = new List();
   dynamic storyfromserver = new List();
+  dynamic followersfromserver = new List();
 
   Future<void> getProfile() async {
     isLoading = true;
@@ -414,6 +421,42 @@ child: RaisedButton(
       });
     }
   }
+  Future<void> getFollowersapi() async {
+    isLoading = true;
+    try {
+      final response = await http.post(followersApi, body: {
+        "outlet_id":"23",
+      });
+      if (response.statusCode == 200) {
+        final responseJson = json.decode(response.body);
+        print(responseJson.toString() + "hello");
+
+        followersfromserver = responseJson;
+
+
+        setState(() {
+          isError = false;
+         isLoading = true;
+          print('setstate');
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("uhdfuhdfuh");
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
+      // productFromServer = new List();
+
+      // showToast('Something went wrong');
+    }
+  }
+
 //  List<Widget> getfollowers() {
 //     List categories = splita ;
 //     for (int i = 0; i < categories.length; i++) {

@@ -72,7 +72,7 @@ GestureDetector(
               height: 35,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: lightGrey
+                color: dividerColor
               ),
               margin: EdgeInsets.all(12.0),
               child: TextField(

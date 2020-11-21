@@ -30,9 +30,61 @@ class storestate extends State<storescreen> {
             margin: EdgeInsets.only(left: 12, right: 12),
             child: Column(children: <Widget>[
               Row(children: <Widget>[
+                              Container(
+                    padding: EdgeInsets.only(left: 10),
+                   
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(widget.productData['outlet_name'],
+                            style: TextStyle(
+                                color: darkText,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "futura",
+                                fontSize: 15)),
+                        Container(
+                          padding: EdgeInsets.only(top: 3, bottom: 2),
+                          width: 200,
+                          child: Text(
+                            widget.productData['address'],
+                            style: TextStyle(
+                                color: lightText,
+                                fontSize: 13,
+                                fontFamily: "proxima"),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 2,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 2, bottom: 3),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(
+                                    Icons.location_on,
+                                    size: 13,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "" + widget.productData['place_name'],
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: "proxima",
+                                      color: lightestText),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        
+                      ],
+                    )),
                 GestureDetector(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6.0),
+                    borderRadius: BorderRadius.circular(12.0),
                     child: FadeInImage.assetNetwork(
                       image: widget.productData['logo'],
                       fit: BoxFit.fitWidth,
@@ -42,59 +94,11 @@ class storestate extends State<storescreen> {
                     ),
                   ),
                 ),
-                Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(widget.productData['outlet_name'],
-                            style: TextStyle(
-                                color: darkText,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "futura",
-                                fontSize: 15)),
-                        Container(
-                          padding: EdgeInsets.only(top: 3, bottom: 3),
-                          width: 200,
-                          child: Text(
-                            widget.productData['address'],
-                            style: TextStyle(
-                                color: lightText,
-                                fontSize: 14,
-                                fontFamily: "proxima"),
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            maxLines: 2,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 3, bottom: 3),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.location_on,
-                                    size: 14,
-                                    color: primaryColor,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "" + widget.productData['place_name'],
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontFamily: "proxima",
-                                      color: lightestText),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
+
               ]),
+
               Divider(
-                height: 30,
+                height: 25,
                 thickness: 1.5,
                 color: dividerColor,
               )
@@ -108,6 +112,7 @@ class storestate extends State<storescreen> {
                       name: widget.productData['outlet_name'])));
         },
       ),
+        
          ]);
   }
 

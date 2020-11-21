@@ -66,7 +66,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
         :  DefaultTabController(
                     length: 2,
                     child: NestedScrollView(
-                      // allows you to build a list of elements that would be scrolled away till the body reached the top
+                      
                       headerSliverBuilder: (context, _) {
                         return [
                           SliverList(
@@ -919,13 +919,17 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                                 style: TextStyle(fontFamily: "proxima",color: lightText, fontSize: 15)))
                       ]),
                       Column(children: <Widget>[
-                        Container(
+                        Stack(children: <Widget>[
+        Container(
+            child: isLoading
+                ? Center(child: Image.asset(cupertinoActivityIndicator,height: 0,))
+                : Container(
                             child: Text(
                                 followersfromserver['total followers'],
                                 style: TextStyle(
                                     color: darkText,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 17))),
+                                    fontSize: 17))))]),
                         Container(
                             padding: EdgeInsets.all(5.0),
                             child: Text("Followers",

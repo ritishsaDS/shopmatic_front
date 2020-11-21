@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shopmatic_front/utils/common.dart';
 
 import 'Home_screen.dart';
@@ -13,8 +14,10 @@ class editOutlet extends StatefulWidget{
   dynamic data;
   dynamic name;
   dynamic address;
-  editOutlet({this.data,this.name,this.address});
-  editoutletstate createState()=> editoutletstate(data,name,address);
+  dynamic image;
+  dynamic phone;
+  editOutlet({this.data,this.name,this.address,this.image,this.phone});
+  editoutletstate createState()=> editoutletstate(data,name,address,phone);
 }
 class editoutletstate extends State<editOutlet>{
   final TextEditingController _controller = TextEditingController();
@@ -24,6 +27,8 @@ class editoutletstate extends State<editOutlet>{
   final odata;
   final oname;
   final oaddress;
+  final ophone;
+
   File imageURI;
   Future<File> imageFile;
   String localImagePath;
@@ -32,13 +37,14 @@ class editoutletstate extends State<editOutlet>{
   String status = '';
   String base64Image;
   String name;
+  String phone;
   String address;
   File tmpFile;
   String errMessage = 'Error Uploading Image';
   TextEditingController nameController   ;
-  TextEditingController phoneController=TextEditingController()  ;
+  TextEditingController phoneController ;
   TextEditingController addressController;
-  editoutletstate(this.odata,this.oname,this.oaddress);
+  editoutletstate(this.odata,this.oname,this.oaddress,this.ophone);
   void hideWidget() {
     setState(() {
       viewVisible = false;
@@ -56,13 +62,13 @@ class editoutletstate extends State<editOutlet>{
   }
   @override
   void initState() {
-
-    name = oname;
-
+    
+name=oname;
+phone=ophone;
     address = oaddress;
     nameController = TextEditingController(text: name);
+    phoneController =TextEditingController(text:phone);
     addressController = TextEditingController(text: address);
-
     super.initState();
   }
 
@@ -270,15 +276,10 @@ class editoutletstate extends State<editOutlet>{
                 child: Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     color: Colors.white10,
-                    child: Center(
-                        child:Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.add_photo_alternate,size: 55,),
-                            Text("Tap to add image ",style: TextStyle(fontFamily: "proxima",fontSize: 16),)
-                          ],
-                        )
-                    )),
+                    child: 
+                            FadeInImage.assetNetwork(placeholder: cupertinoActivityIndicator, image:widget.image)
+                          
+                        ),
                 onTap: () {
                   chooseImage();
                 },
