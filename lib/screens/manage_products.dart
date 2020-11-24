@@ -118,11 +118,15 @@ class stateproducts extends State<manageproducts> {
     List products = productFromServer as List;
     for (int i = 0; i < products.length; i++) {
       print("sdujh" + products.toString());
-      productLists.add(
-          product_listing(id:products[i]['id'],name:products[i]['name'],desc:products[i]['description'])
-      );
+      productLists.add(product_listing(
+          id: products[i]['id'],
+          name: products[i]['name'],
+          desc: products[i]['description'],
+          oprice: products[i]['price'],
+          gprice: products[i]['gold_discount'],
+          sprice: products[i]['silver_discount'],
+          pprice: products[i]['platinum_discount']));
     }
     return productLists;
   }
-
 }

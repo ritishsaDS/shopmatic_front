@@ -101,232 +101,259 @@ class storestate extends State<Store_detail> {
   Widget build(BuildContext context) {
     String quantity = Quantity.toString();
     return SafeArea(
-      child:Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
-        resizeToAvoidBottomPadding: true,
-        body: Stack(children: <Widget>[
-          Container(
-              child: isLoading
-                  ? Center(child: Image.asset(cupertinoActivityIndicator))
-                  : Stack(children: <Widget>[
-                GestureDetector(
-                  child: Container(
-                    child: ListView(
-                      children: <Widget>[
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Stack(
+        child: Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      resizeToAvoidBottomPadding: true,
+      body: Stack(children: <Widget>[
+        Container(
+            child: isLoading
+                ? Center(child: Image.asset(cupertinoActivityIndicator))
+                : Stack(children: <Widget>[
+                    GestureDetector(
+                      child: Container(
+                        child: ListView(
+                          children: <Widget>[
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                 GestureDetector(
-                                   child: Container(
-                                    height: 300,
-                                    child: Hero(
-                                      tag:"imagehero",
-                                      child:PageView(
-                                        controller: _pageController,
-                                        scrollDirection: Axis.horizontal,
-                                        children: createBannerSlider()),
-
-                                    )                                  ),onTap: (){
-                                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return InstaProfilePage();
-          }));
-                                    },
-
-                                 ),                                _buildCircleIndicator(),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: Container(
-                                      decoration: new BoxDecoration(
-                                          color: lightGrey,
-                                          borderRadius:
-                                          new BorderRadius.only(
-                                            topLeft:
-                                            const Radius.circular(40.0),
-                                            topRight:
-                                            const Radius.circular(40.0),
-                                            bottomRight:
-                                            const Radius.circular(40.0),
-                                            bottomLeft:
-                                            const Radius.circular(40.0),
-                                          )),
-                                      child: IconButton(
-                                        icon: Icon(Icons.close),
-                                        onPressed: () {
-                                          Navigator.pop(context);
+                                  Stack(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        child: Container(
+                                            height: 300,
+                                            child: Hero(
+                                              tag: "imagehero",
+                                              child: PageView(
+                                                  controller: _pageController,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  children:
+                                                      createBannerSlider()),
+                                            )),
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (_) {
+                                            return InstaProfilePage();
+                                          }));
                                         },
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(10.0),
-                                child: Text(
-                                  widget.name,
-                                  style: TextStyle(
-                                      color: darkText,
-                                      fontFamily: "futura",
-                                      fontSize: 20,
-                                      ),
-                                ),
-                              ),
-                              Container(
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                          currency +
-                                              widget.price.toString(),
-                                          style: TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 18,
-                                          )),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(currency + "900",
-                                          style: TextStyle(
-                                              color: mostlight,
-                                              fontFamily: "proxima",
-                                              fontSize: 16,
-                                              decoration: TextDecoration
-                                                  .lineThrough)),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        color: Colors.red,
-                                        child: Text(" 65% OFF ",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontFamily: 'proxima')),
+                                      _buildCircleIndicator(),
+                                      Positioned(
+                                        right: 0,
+                                        top: 0,
+                                        child: Container(
+                                          decoration: new BoxDecoration(
+                                              color: lightGrey,
+                                              borderRadius:
+                                                  new BorderRadius.only(
+                                                topLeft:
+                                                    const Radius.circular(40.0),
+                                                topRight:
+                                                    const Radius.circular(40.0),
+                                                bottomRight:
+                                                    const Radius.circular(40.0),
+                                                bottomLeft:
+                                                    const Radius.circular(40.0),
+                                              )),
+                                          child: IconButton(
+                                            icon: Icon(Icons.close),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ),
                                       )
                                     ],
-                                  )),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      'Availability:  ',
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      widget.name,
                                       style: TextStyle(
-                                          color: lightestText,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14),
+                                        color: darkText,
+                                        fontFamily: "futura",
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                    /*  Text(
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.only(left: 10.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                              currency +
+                                                  widget.price.toString(),
+                                              style: TextStyle(
+                                                fontFamily: "futura",
+                                                fontWeight: FontWeight.bold,
+                                                color: primaryColor,
+                                                fontSize: 18,
+                                              )),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(currency + "900",
+                                              style: TextStyle(
+                                                  color: mostlight,
+                                                  fontFamily: "proxima",
+                                                  fontSize: 16,
+                                                  decoration: TextDecoration
+                                                      .lineThrough)),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text(" 65% OFF ",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontFamily: 'proxima')),
+                                          )
+                                        ],
+                                      )),
+                                  SizedBox(
+                                    height: 7,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Availability:  ',
+                                          style: TextStyle(
+                                              color: lightestText,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14),
+                                        ),
+                                        /*  Text(
                               widget.productData['special'],
                               style: TextStyle(
                                   color: primaryColor,
                                   fontWeight: FontWeight.normal,
                                   fontSize: 14),
                             ),*/
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      'SKU: ',
-                                      style: TextStyle(
-                                          color: lightestText,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14),
+                                      ],
                                     ),
-                                    Text(
-                                      widget.name.replaceAll("&amp;", "&"),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'SKU: ',
+                                          style: TextStyle(
+                                              color: lightestText,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14),
+                                        ),
+                                        Text(
+                                          widget.name.replaceAll("&amp;", "&"),
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "proxima",
+                                              fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: 10, right: 10, top: 10),
+                                    child: Text(
+                                      widget.description,
+                                      maxLines: 3,
                                       style: TextStyle(
-                                          color: primaryColor,
                                           fontWeight: FontWeight.normal,
                                           fontFamily: "proxima",
+                                          color: lightestText,
                                           fontSize: 14),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: Text(
-                                  widget.description,
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: "proxima",
-                                      color: lightestText,
-                                      fontSize: 14),
-                                ),
-                              ),
-                              Container(
-                                  margin:
-                                  EdgeInsets.only(top: 15, right: 5, left: 10,),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Container(
-
-                                        color: Colors.black,
-                                        child: FlatButton(
-                                          child: Text(
-                                            "Buy Now",
-                                            style: TextStyle(
-                                                fontFamily: "proxima",
-                                                fontSize: 14,
-                                                color: Colors.white),
-                                          ),
-                                          onPressed: () {
-                                            //data = product;
-/*
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          buildOutlineButton(
+                                              icon: Icons.remove,
+                                              press: () {
                                                 setState(() {
-                                                  /// cartCount++;
-                                                  saveCartToLocal(productFromServer[0],widget.price,widget.id,Quantity.toString());
+                                                  if (Quantity == 1) {
+                                                  } else {
+                                                    Quantity--;
+                                                  }
                                                 });
-*/
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => Cart(
-                                                        image: widget.image,
-                                                        name: widget.name,
-                                                        description: widget
-                                                            .description,
-                                                        Quantity:
-                                                        Quantity)));
-                                          },
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: 2,
-                                          right: 4,
-                                        ),
-                                        color: lightGrey,
-                                        child: FlatButton(
-                                          child: Text(
-                                            "Add to Cart",
+                                              }),
+                                          Container(
+                                              child: Text(
+                                            "   " + quantity + "   ",
                                             style: TextStyle(
-                                                fontFamily: "proxima",
-                                                fontSize: 14,
-                                                color: mostlight),
+                                                fontFamily: "futura",
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14),
+                                          )),
+                                          buildOutlineButton(
+                                            icon: Icons.add,
+                                            press: () {
+                                              setState(() {
+                                                Quantity++;
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            onP1Badge();
-                                          },
-                                          /* onPressed: () {
+                                          Expanded(child: SizedBox()),
+                                          Container(
+                                            height: 32,
+                                            width: 32,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFFF6464),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                                child: Icon(
+                                                    Icons
+                                                        .favorite_border_outlined,
+                                                    color: white)),
+                                          )
+                                        ],
+                                      )),
+                                  Container(
+                                      margin: EdgeInsets.only(
+                                        top: 15,
+                                        right: 5,
+                                        left: 10,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Container(
+                                            height: 50,
+                                            width: 58,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(18),
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                            margin: EdgeInsets.only(
+                                              left: 2,
+                                              right: 4,
+                                            ),
+                                            child: FlatButton(
+                                              child: Icon(
+                                                Icons.shopping_cart_outlined,
+                                                size: 25,
+                                                color: Colors.blue,
+                                              ),
+                                              onPressed: () {
+                                                onP1Badge();
+                                              },
+                                              /* onPressed: () {
                                   showModalBottomSheet<void>(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -346,324 +373,316 @@ class storestate extends State<Store_detail> {
                                     },
                                   );
                                 },*/
-                                        ),
-                                      ),
-                                      Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: lightGrey)),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
-                                            children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(
-                                                  Icons.remove,
-                                                  size: 18,
-                                                ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (Quantity == 1) {
-                                                    } else {
-                                                      Quantity--;
-                                                    }
-                                                  });
-                                                },
-                                              ),
-                                              Container(
-                                                  child: Text(
-                                                    quantity,
-                                                    style: TextStyle(
-                                                        fontFamily: "proxima",
-                                                        fontSize: 14),
-                                                  )),
-                                              IconButton(
-                                                icon: Icon(Icons.add,
-                                                    size: 18),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Quantity++;
-                                                  });
-                                                },
-                                              )
-                                            ],
-                                          ))
-                                    ],
-                                  )),
-                              Container(
-                                margin: EdgeInsets.all(10.0),
-                                height: 1.5,
-                                color: Colors.grey[200],
-                              ),
-
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
-                                color: Colors.black,
-                                child: ExpandablePanel(
-                                  theme: const ExpandableThemeData(
-                                      headerAlignment:
-                                      ExpandablePanelHeaderAlignment
-                                          .center,
-                                      tapBodyToCollapse: true,
-                                      iconColor: Colors.white),
-                                  header: Container(
-                                      color: Colors.black,
-                                      padding: EdgeInsets.only(
-                                          top: 7.0, bottom: 7, left: 10),
-                                      child: Text(
-                                        "Reviews",
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontFamily: "proxima",
-                                            color: Colors.white),
-                                      )),
-                                  expanded: Container(
-                                      width:
-                                      MediaQuery.of(context).size.width,
-                                      height: 100,
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Text(
-                                          "No Reviews",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: "proxima",
-                                              color: Colors.black),
-                                          softWrap: true,
-                                        ),
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(10.0),
-                                height: 1.5,
-                                color: Colors.grey[200],
-                              ),
-                              Container(
-                                  margin:
-                                  EdgeInsets.only(left: 10, right: 10),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Visibility(
-                                        visible: view,
-                                        maintainState: view,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(children: <Widget>[
-                                              Icon(Icons.local_shipping),
-                                              Text(
-                                                  "   When will you recieve your order?",
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: darkText,
-                                                  ))
-                                            ]),
-                                            SizedBox(
-                                              height: 5,
                                             ),
-                                            TextField(
-                                              keyboardType:
-                                              TextInputType.number,
-                                              controller:
-                                              textEditingController,
-                                              onChanged: (text) {
-                                                // print("jnjno" + resultText);
-                                                query = text;
-                                                ischanged = true;
-                                                setState(() {
-                                                  if (query != "") {
-                                                    viewVisibletext = false;
-                                                  }
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                  enabledBorder:
-                                                  OutlineInputBorder(
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(2.0),
-                                                    borderSide: BorderSide(
-                                                      color: Colors.grey,
-                                                      width: 2.0,
+                                          ),
+                                          Expanded(
+                                              child: SizedBox(
+                                                  height: 50,
+                                                  child: FlatButton(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        18)),
+                                                    color: Colors.black,
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => Cart(
+                                                                  image: widget
+                                                                      .image,
+                                                                  name: widget
+                                                                      .name,
+                                                                  description:
+                                                                      widget
+                                                                          .description,
+                                                                  Quantity:
+                                                                      Quantity)));
+                                                    },
+                                                    child: Text(
+                                                      "Buy  Now".toUpperCase(),
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  focusedBorder:
-                                                  OutlineInputBorder(
-                                                    borderRadius:
-                                                    BorderRadius
-                                                        .circular(2.0),
-                                                    borderSide: BorderSide(
-                                                      color: Colors.grey,
-                                                      width: 2.0,
-                                                    ),
-                                                  ),
-                                                  hintText: 'Enter Pincode',
-                                                  suffixIcon: Container(
-                                                    width: 165,
-                                                    child: Row(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .end,
-                                                        children: <Widget>[
-                                                          Visibility(
-                                                              maintainState:
-                                                              false,
-                                                              visible:
-                                                              viewVisibletext,
-                                                              child: Text(
-                                                                  "Enter Pincode    ",
-                                                                  style:
-                                                                  TextStyle(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontFamily:
-                                                                    "proxima",
-                                                                  ))),
-                                                          GestureDetector(
-                                                            child: Text(
-                                                                " Check   ",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                    fontFamily:
-                                                                    "proxima",
-                                                                    fontSize:
-                                                                    14)),
-                                                            onTap: () {
-                                                              print("jhvsdjbk" +
-                                                                  textEditingController
-                                                                      .text
-                                                                      .length
-                                                                      .toString());
-                                                              if (textEditingController
-                                                                  .text ==
-                                                                  "") {
-                                                                setState(
+                                                  ))),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    height: 1.5,
+                                    color: Colors.grey[200],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    color: Colors.black,
+                                    child: ExpandablePanel(
+                                      theme: const ExpandableThemeData(
+                                          headerAlignment:
+                                              ExpandablePanelHeaderAlignment
+                                                  .center,
+                                          tapBodyToCollapse: true,
+                                          iconColor: Colors.white),
+                                      header: Container(
+                                          color: Colors.black,
+                                          padding: EdgeInsets.only(
+                                              top: 7.0, bottom: 7, left: 10),
+                                          child: Text(
+                                            "Reviews",
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                fontFamily: "proxima",
+                                                color: Colors.white),
+                                          )),
+                                      expanded: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 100,
+                                          color: Colors.white,
+                                          child: Center(
+                                            child: Text(
+                                              "No Reviews",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: "proxima",
+                                                  color: Colors.black),
+                                              softWrap: true,
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    height: 1.5,
+                                    color: Colors.grey[200],
+                                  ),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.only(left: 10, right: 10),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Visibility(
+                                            visible: view,
+                                            maintainState: view,
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(children: <Widget>[
+                                                  Icon(Icons.local_shipping),
+                                                  Text(
+                                                      "   When will you recieve your order?",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: darkText,
+                                                      ))
+                                                ]),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller:
+                                                      textEditingController,
+                                                  onChanged: (text) {
+                                                    // print("jnjno" + resultText);
+                                                    query = text;
+                                                    ischanged = true;
+                                                    setState(() {
+                                                      if (query != "") {
+                                                        viewVisibletext = false;
+                                                      }
+                                                    });
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2.0),
+                                                        borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 2.0,
+                                                        ),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2.0),
+                                                        borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 2.0,
+                                                        ),
+                                                      ),
+                                                      hintText: 'Enter Pincode',
+                                                      suffixIcon: Container(
+                                                        width: 165,
+                                                        child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              Visibility(
+                                                                  maintainState:
+                                                                      false,
+                                                                  visible:
+                                                                      viewVisibletext,
+                                                                  child: Text(
+                                                                      "Enter Pincode    ",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .red,
+                                                                        fontFamily:
+                                                                            "proxima",
+                                                                      ))),
+                                                              GestureDetector(
+                                                                child: Text(
+                                                                    " Check   ",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontFamily:
+                                                                            "proxima",
+                                                                        fontSize:
+                                                                            14)),
+                                                                onTap: () {
+                                                                  print("jhvsdjbk" +
+                                                                      textEditingController
+                                                                          .text
+                                                                          .length
+                                                                          .toString());
+                                                                  if (textEditingController
+                                                                          .text ==
+                                                                      "") {
+                                                                    setState(
                                                                         () {
                                                                       if (textEditingController
-                                                                          .text ==
+                                                                              .text ==
                                                                           "") {
                                                                         setState(
-                                                                                () {
-                                                                              showText();
-                                                                            });
+                                                                            () {
+                                                                          showText();
+                                                                        });
                                                                       } else {
                                                                         setState(
-                                                                                () {
-                                                                              hideWidget();
-                                                                            });
+                                                                            () {
+                                                                          hideWidget();
+                                                                        });
                                                                       }
                                                                     });
-                                                              } else {
-                                                                showPincode();
-                                                              }
-                                                            },
-                                                          ),
-                                                        ]),
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Visibility(
-                                          visible: viewPincode,
-                                          maintainState: viewPincode,
-                                          child: Column(children: <Widget>[
-                                            Row(children: <Widget>[
-                                              Icon(Icons.local_shipping),
-                                              textEditingController
-                                                  .text.length ==
-                                                  6
-                                                  ? Text(
-                                                  "  With in 10-12 business days to " +
-                                                      textEditingController
-                                                          .text,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .bold,
-                                                      color: darkText))
-                                                  : Text(
-                                                  "  We cant deliver here ",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .bold,
-                                                      color: darkText))
-                                            ]),
-                                            GestureDetector(
-                                                child: Text(
-                                                    "Try different pincode",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        color: const Color(
-                                                            0xFF07413C))),
-                                                onTap: () {
-                                                  hidePincode();
+                                                                  } else {
+                                                                    showPincode();
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ]),
+                                                      )),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Visibility(
+                                              visible: viewPincode,
+                                              maintainState: viewPincode,
+                                              child: Column(children: <Widget>[
+                                                Row(children: <Widget>[
+                                                  Icon(Icons.local_shipping),
                                                   textEditingController
-                                                      .clear();
-                                                })
-                                          ])),
-                                    ],
-                                  )),
-                              SizedBox(
-                                height: 35,
-                              ),
-                            ]),
+                                                              .text.length ==
+                                                          6
+                                                      ? Text(
+                                                          "  With in 10-12 business days to " +
+                                                              textEditingController
+                                                                  .text,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: darkText))
+                                                      : Text(
+                                                          "  We cant deliver here ",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: darkText))
+                                                ]),
+                                                GestureDetector(
+                                                    child: Text(
+                                                        "Try different pincode",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: const Color(
+                                                                0xFF07413C))),
+                                                    onTap: () {
+                                                      hidePincode();
+                                                      textEditingController
+                                                          .clear();
+                                                    })
+                                              ])),
+                                        ],
+                                      )),
+                                  SizedBox(
+                                    height: 35,
+                                  ),
+                                ]),
 
-                        /* HorizontalProductList(
+                            /* HorizontalProductList(
                           1,
 
                           widget.productData['category_id'],
                           'Related Products',
                           widget.productData['image'])*/ /**/
-                      ],
-                    ),
-                  ),
-                )
-              ]))
-        ]),
-        floatingActionButton: FloatingActionButton(
-
-          child: Container(
-            child: Badge(
-              showBadge: p1badge,
-              badgeContent: Text(
-                badge.toString(),
-                style: TextStyle(color: Colors.white),
-              ),
-              child: Icon(
-                Icons.add_shopping_cart,
-                size: 38,
-              ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ]))
+      ]),
+      floatingActionButton: FloatingActionButton(
+        child: Container(
+          child: Badge(
+            showBadge: p1badge,
+            badgeContent: Text(
+              badge.toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+            child: Icon(
+              Icons.add_shopping_cart,
+              size: 38,
             ),
           ),
-          onPressed: () {
-            if (badge == 0) {
-            } else {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Cart(
-                          image: productFromServer[0],
-                          name: widget.name,
-                          id: widget.data,
-                          price: widget.price,
-                          description: widget.description,
-                          Quantity: Quantity)));
-            }
-          },
         ),
-        bottomNavigationBar: BottomTabs(1, true),
-      )
-    );
+        onPressed: () {
+          if (badge == 0) {
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Cart(
+                        image: productFromServer[0],
+                        name: widget.name,
+                        id: widget.data,
+                        price: widget.price,
+                        description: widget.description,
+                        Quantity: Quantity)));
+          }
+        },
+      ),
+      bottomNavigationBar: BottomTabs(1, true),
+    ));
   }
 
   void onP1Badge() {
@@ -730,23 +749,35 @@ class storestate extends State<Store_detail> {
 
     return bannerWidgetList;
   }
+
   _buildCircleIndicator() {
     return Positioned(
-      bottom: 0.0,
-      right: 130.0,
-      child: Center(
-          child: SmoothPageIndicator(
-            controller: _pageController,
-            count:  createBannerSlider().length,
-            effect:  WormEffect(
-              dotWidth: 18,
-              dotHeight: 7,
-              activeDotColor: primaryColor,
-            ),  // your preferred effect // PageController
+        bottom: 0.0,
+        right: 130.0,
+        child: Center(
+            child: SmoothPageIndicator(
+          controller: _pageController,
+          count: createBannerSlider().length,
+          effect: WormEffect(
+            dotWidth: 20,
+            dotHeight: 5,
+            activeDotColor: primaryColor,
+          ), // your preferred effect // PageController
+        )));
+  }
 
-          )
-      )
-    )
-    ;
+  SizedBox buildOutlineButton({IconData icon, Function press}) {
+    return SizedBox(
+      width: 40,
+      height: 32,
+      child: OutlineButton(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(13),
+        ),
+        onPressed: press,
+        child: Icon(icon),
+      ),
+    );
   }
 }

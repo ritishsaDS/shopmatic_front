@@ -50,8 +50,9 @@ class _InstaProfilePageState extends State<InstaProfilePage>  with SingleTickerP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: Column(children: <Widget>[
+        body: Container(
+          height:MediaQuery.of(context).size.height,
+            child: ListView(children: <Widget>[
       Stack(overflow: Overflow.visible,
        children: <Widget>[
         Container(
@@ -176,7 +177,7 @@ class _InstaProfilePageState extends State<InstaProfilePage>  with SingleTickerP
                             Padding(
                               padding: EdgeInsets.only(left: 30.0, top: 3),
                               child: Text(
-                                "My Albums",
+                                "Our Albums",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -191,32 +192,11 @@ class _InstaProfilePageState extends State<InstaProfilePage>  with SingleTickerP
                   ],
                 )))
       ]),
-      DefaultTabController(
+Container(
+  height:500,
+  child: DefaultTabController(
                     length: 2,
-                  
-                      child:Column(
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 0.5, color: Colors.black)),
-                                  child: TabBar(
-                                    tabs: [
-                                      Tab(
-                                        icon: Icon(Icons.grid_on,
-                                            color: Colors.black),
-                                      ),
-                                      Tab(
-                                        icon: Icon(Icons.format_list_bulleted,
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: TabBarView(
-                                    children: [
-                                      GridView.count(
+                  child:  GridView.count(
                                         childAspectRatio:
                                             MediaQuery.of(context).size.width *
                                                 0.5 /
@@ -225,16 +205,51 @@ class _InstaProfilePageState extends State<InstaProfilePage>  with SingleTickerP
                                         crossAxisSpacing: 1,
                                         scrollDirection: Axis.vertical,
                                        children: getProducts(),
-                                      ),
-                                      ListView(
-                                      children: getProductsL(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ))
-,
+                                      ),)
+                      // child:ListView(
+                      //         children: <Widget>[
+                      //           Container(
+                      //             decoration: BoxDecoration(
+                      //                 border: Border.all(
+                      //                     width: 0.5, color: Colors.black)),
+                      //             child: TabBar(
+                      //               tabs: [
+                      //                 Tab(
+                      //                   icon: Icon(Icons.grid_on,
+                      //                       color: Colors.black),
+                      //                 ),
+                      //                 Tab(
+                      //                   icon: Icon(Icons.format_list_bulleted,
+                      //                       color: Colors.black),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //           Container(
+                      //             child: TabBarView(
+                      //               children: [
+                      //                 GridView.count(
+                      //                   childAspectRatio:
+                      //                       MediaQuery.of(context).size.width *
+                      //                           0.5 /
+                      //                           300,
+                      //                   crossAxisCount: 2,
+                      //                   crossAxisSpacing: 1,
+                      //                   scrollDirection: Axis.vertical,
+                      //                  children: getProducts(),
+                      //                 ),
+                      //                 ListView(
+                      //                 children: getProductsL(),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ))
+
+)
+
+     
     
     
     ])));

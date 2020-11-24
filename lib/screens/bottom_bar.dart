@@ -99,9 +99,9 @@ class _BottomTabsState extends State<BottomTabs> {
                       child:
                          Center(
                            child: Icon(
-                             Icons.home,size: 30,
+                             Icons.home,size: 28,
                              color:
-                             widget.index == 1 ? primaryColor : lightestText,
+                             widget.index == 1 ? primaryColor : darkText,
                            ),
                          )
                       ),
@@ -128,9 +128,9 @@ class _BottomTabsState extends State<BottomTabs> {
                         child:
                         Center(
                           child: Icon(
-                            Icons.developer_board,size: 30,
+                            Icons.developer_board,size: 28,
                             color:
-                            widget.index == 2 ? primaryColor : lightestText,
+                            widget.index == 2 ? primaryColor : darkText,
                           ),
                         )
                     ),
@@ -154,7 +154,7 @@ class _BottomTabsState extends State<BottomTabs> {
                     child: Container(
 
                     child:
-                      Icon(Icons.control_point,size:30,color:  widget.index == 3 ? primaryColor : lightestText,),
+                      Icon(Icons.control_point,size:28,color:  widget.index == 3 ? primaryColor : darkText,),
                      // Icon(Icons.shopping_cart, color:  index == 4 ? primaryColor : lightestText,),
 
 
@@ -184,9 +184,9 @@ class _BottomTabsState extends State<BottomTabs> {
                               colorFilter: ColorFilter.mode(
                                   widget.index == 4
                                       ? primaryColor
-                                      : lightestText,
+                                      : darkText,
                                   BlendMode.srcATop),
-                              child:  Icon(Icons.favorite_border,size: 30,),
+                              child:  Icon(Icons.favorite_border,size: 28,),
                             ),
 
 
@@ -216,10 +216,10 @@ class _BottomTabsState extends State<BottomTabs> {
                                 colorFilter: ColorFilter.mode(
                                     widget.index == 5
                                         ? primaryColor
-                                        : lightestText,
+                                        : darkText,
                                     BlendMode.srcATop),
                                 child:
-                                    Icon(Icons.settings,size: 30,),
+                                    Icon(Icons.settings,size: 28,),
                               ),
                             ), //Icon(Icons.shopping_cart,color:  widget.index == 5 ? primaryColor : lightestText,),
                           ),

@@ -6,20 +6,22 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import 'package:shopmatic_front/screens/profile_screen.dart';
 import 'package:shopmatic_front/utils/common.dart';
 
 import 'Home_screen.dart';
 
-class editOutlet extends StatefulWidget{
+class editOutlet extends StatefulWidget {
   dynamic data;
   dynamic name;
   dynamic address;
   dynamic image;
   dynamic phone;
-  editOutlet({this.data,this.name,this.address,this.image,this.phone});
-  editoutletstate createState()=> editoutletstate(data,name,address,phone);
+  editOutlet({this.data, this.name, this.address, this.image, this.phone});
+  editoutletstate createState() => editoutletstate(data, name, address, phone);
 }
-class editoutletstate extends State<editOutlet>{
+
+class editoutletstate extends State<editOutlet> {
   final TextEditingController _controller = TextEditingController();
   bool isError = false;
   bool isLoading = false;
@@ -41,10 +43,10 @@ class editoutletstate extends State<editOutlet>{
   String address;
   File tmpFile;
   String errMessage = 'Error Uploading Image';
-  TextEditingController nameController   ;
-  TextEditingController phoneController ;
+  TextEditingController nameController;
+  TextEditingController phoneController;
   TextEditingController addressController;
-  editoutletstate(this.odata,this.oname,this.oaddress,this.ophone);
+  editoutletstate(this.odata, this.oname, this.oaddress, this.ophone);
   void hideWidget() {
     setState(() {
       viewVisible = false;
@@ -60,14 +62,14 @@ class editoutletstate extends State<editOutlet>{
       viewVisibles = false;
     });
   }
+
   @override
   void initState() {
-    
-name=oname;
-phone=ophone;
+    name = oname;
+    phone = ophone;
     address = oaddress;
     nameController = TextEditingController(text: name);
-    phoneController =TextEditingController(text:phone);
+    phoneController = TextEditingController(text: phone);
     addressController = TextEditingController(text: address);
     super.initState();
   }
@@ -78,6 +80,7 @@ phone=ophone;
     addressController = TextEditingController(text: address);
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +88,8 @@ phone=ophone;
           elevation: 2,
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Edit Outlet",
-              style: TextStyle(fontSize: 16,fontFamily: "futura", color: darkText)),
+              style: TextStyle(
+                  fontSize: 16, fontFamily: "futura", color: darkText)),
           centerTitle: true,
           backgroundColor: white,
         ),
@@ -103,8 +107,8 @@ phone=ophone;
                           filled: true,
                           labelText: "Outlet Name",
                           hintText: widget.name,
-                          labelStyle: TextStyle(
-                              fontFamily: "proxima", fontSize: 12),
+                          labelStyle:
+                              TextStyle(fontFamily: "proxima", fontSize: 12),
                           fillColor: Colors.white,
                           prefixIcon: Icon(
                             Icons.image,
@@ -124,7 +128,6 @@ phone=ophone;
                     children: <Widget>[
                       TextField(
                           controller: phoneController,
-
                           inputFormatters: [
                             WhitelistingTextInputFormatter.digitsOnly
                           ],
@@ -132,8 +135,8 @@ phone=ophone;
                           decoration: InputDecoration(
                             filled: true,
                             labelText: "Phone",
-                            labelStyle: TextStyle(
-                                fontFamily: "proxima", fontSize: 12),
+                            labelStyle:
+                                TextStyle(fontFamily: "proxima", fontSize: 12),
                             fillColor: Colors.white,
                             prefixIcon: Icon(
                               Icons.loyalty,
@@ -151,15 +154,12 @@ phone=ophone;
                   children: <Widget>[
                     TextField(
                         controller: addressController,
-
-
-
                         decoration: InputDecoration(
                           filled: true,
                           labelText: "Address",
                           hintText: widget.address,
-                          labelStyle: TextStyle(
-                              fontFamily: "proxima", fontSize: 12),
+                          labelStyle:
+                              TextStyle(fontFamily: "proxima", fontSize: 12),
                           fillColor: Colors.white,
                           prefixIcon: Icon(
                             Icons.content_copy,
@@ -168,19 +168,37 @@ phone=ophone;
                         )),
                   ]),
             ),
-
             Container(
+              padding: EdgeInsets.only(bottom: 10),
+              color: Colors.white,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TextField(
+                        decoration: InputDecoration(
+                      filled: true,
+                      labelText: "Description",
+                      hintText: widget.address,
+                      labelStyle:
+                          TextStyle(fontFamily: "proxima", fontSize: 12),
+                      fillColor: Colors.white,
+                      prefixIcon: Icon(
+                        Icons.content_copy,
+                        color: Colors.blue,
+                      ),
+                    )),
+                  ]),
+            ),
+            Container(
+                margin: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: lightGrey
-                ),
-                child:  FlatButton(
-                  child: Text("Edit Outlet")
-                  ,onPressed: (){
-                  startUpload();
-                },
-                )
-            )
+                    borderRadius: BorderRadius.circular(8.0), color: lightGrey),
+                child: FlatButton(
+                  child: Text("Edit Outlet"),
+                  onPressed: () {
+                    startUpload();
+                  },
+                ))
           ],
         ));
   }
@@ -197,8 +215,7 @@ phone=ophone;
     });
   }
 
-  Future<void> addproduct(
-      String name,String address, String desc, base64Image) async {
+  Future<void> addproduct(String name, String address, String desc) async {
     isLoading = true;
     try {
       print(widget.data);
@@ -207,14 +224,15 @@ phone=ophone;
         "address": address,
         "phone": desc,
         "outlet_id": widget.data,
-        "image": base64Image,
-        "city":"Jalandhar",
-        "state":"Punjab",
+        "short_description": "This is a heaven for faishioners ",
+        "city": "Jalandhar",
+        "state": "Punjab",
       });
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
         print(responseJson.toString() + "hello");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => profile()));
 
         setState(() {
           isError = false;
@@ -243,7 +261,7 @@ phone=ophone;
         if (snapshot.connectionState == ConnectionState.done &&
             null != snapshot.data) {
           tmpFile = snapshot.data;
-          print("njdenk" );
+          print("njdenk");
           base64Image = base64Encode(snapshot.data.readAsBytesSync());
           return GestureDetector(
             child: Container(
@@ -253,9 +271,7 @@ phone=ophone;
                   child: Image.file(snapshot.data,
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fitHeight),
-
-
+                      fit: BoxFit.fitWidth),
                   onTap: () {
                     chooseImage();
                   },
@@ -267,19 +283,20 @@ phone=ophone;
             textAlign: TextAlign.center,
           );
         } else {
-          print("njdedssdsdnk" );
+          print("njdedssdsdnk");
 
           return Stack(
             children: <Widget>[
-
               GestureDetector(
                 child: Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     color: Colors.white10,
-                    child: 
-                            FadeInImage.assetNetwork(placeholder: cupertinoActivityIndicator, image:widget.image)
-                          
-                        ),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: cupertinoActivityIndicator,
+                      image: widget.image,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                    )),
                 onTap: () {
                   chooseImage();
                 },
@@ -290,18 +307,21 @@ phone=ophone;
       },
     );
   }
+
   startUpload() {
+    String productName = nameController.text;
+    String productDesc = phoneController.text;
+    String adress = addressController.text;
+
     setStatus('Uploading Image...');
     if (null == tmpFile) {
+      addproduct(productName, adress, productDesc);
       setStatus(errMessage);
       return;
     }
-    String productName = nameController.text;
-    String productDesc=phoneController.text;
-    String adress=addressController.text;
-
+  addproduct(productName, adress, productDesc);
+  editImage(base64Image);
     print("nklssfok" + base64Image);
-    addproduct(productName,adress,productDesc,base64Image);
   }
 
   chooseImage() {
@@ -316,5 +336,39 @@ phone=ophone;
     setState(() {
       status = message;
     });
+  }
+
+  Future<void> editImage(String image) async {
+    isLoading = true;
+    try {
+      print("josdfjhu");
+      final response = await http.post(editoutletImage, body: {
+        "outlet_id": "23",
+        "image": image,
+      });
+      if (response.statusCode == 200) {
+        final responseJson = json.decode(response.body);
+        print(responseJson.toString() + "hello");
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => profile()));
+
+        setState(() {
+          isError = false;
+          isLoading = false;
+          print('setstate');
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("uhdfuhdfuh");
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
+    }
   }
 }

@@ -6,7 +6,9 @@ import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopmatic_front/utils/common.dart';
 import 'package:shopmatic_front/widget/cart_product_cell.dart';
+import 'package:shopmatic_front/widget/checkouCard.dart';
 
+import 'DefaultButton.dart';
 import 'orders.dart';
 
 class Cart extends StatefulWidget {
@@ -25,12 +27,15 @@ Cart({Key key, this.image,this.name,this.description,this.Quantity,this.price,th
 class cartstate extends State<Cart> {
   bool isError = false;
   bool isLoading = false;
+  String pQuantity="";
+   
   String uid="";
   @override
   void initState() {
+   
     super.initState();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,116 +44,130 @@ class cartstate extends State<Cart> {
           backgroundColor: Colors.white,
           title: Text("My Cart", style: TextStyle(color: darkText)),
         ),
-        body:ListView(children: <Widget>[
-           Container(
-      margin: EdgeInsets.only(top: 15, bottom: 15, right: 15),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          itemToDelete == widget.id
-              ? Container(
-                  padding: EdgeInsets.all(12.0),
-                  height: 43,
-                  width: 43,
-                  child: CircularProgressIndicator(
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(primaryColor)))
-              : IconButton(
-                  //onPressed: widget.delItem,
-                  iconSize: 19,
-                  icon: Icon(
-                    Icons.delete,
-                    color: transparentREd,
-                  ),
+        body:ListView.builder(
+     
+      itemCount: 5,//CHANGED
+      itemBuilder: (context, index) =>
+           Dismissible(
+            key: Key(widget.id),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              
+               setState(() {
+    
+              });
+            },
+            background: 
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xFFFFE6E6),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.delete)
+                ])
+                
                 ),
+                child:  Card(
+                                  child: Container(
+            
+      margin: EdgeInsets.only( top:5, right: 10,left:10),
+      child: Row(
+       
+        children: <Widget>[
+         
           GestureDetector(
             onTap: () {},
-            child: Container(
-              color: white,
-              padding: EdgeInsets.all(1),
-              child: FadeInImage.assetNetwork(
-                  height: 80,
-                  width: 80,
-                  placeholder: cupertinoActivityIndicator,
-                  fit: BoxFit.fitWidth,
-                  image: widget.image//imageList[skuList.indexOf(widget.productData['item_id'])]
-                  ),
-            ),
-          ),
+            child:  Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(12),
+                            bottomLeft: Radius.circular(12),
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: FadeInImage.assetNetwork(
+                        image: widget.image,
+                        fit: BoxFit.cover,
+                        placeholder: cupertinoActivityIndicator,
+                        height: 90.0,
+                        width: 100.0,
+                      ),
+                    ),
+                  )),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                    margin: EdgeInsets.only(left: 10, top: 5),
-                    child: Text(
-                      widget.name,
-                      style: TextStyle(
-                          color: darkText,
-                          fontFamily: "futura",
+                  Container(
+                      margin: EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                        widget.name,
+                        style: TextStyle(
+                            color: darkText,
+                            fontFamily: "futura",
                           
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14),
-                    )), Container(
-                    margin: EdgeInsets.only(left: 10, top: 5),
-                    child: Text(
-                      widget.description,
-                      style: TextStyle(
-                          color: lightestText,
-                          fontFamily: "proxima",
-                          fontWeight: FontWeight.normal,
-                          fontSize: 13),
-                          softWrap: true,overflow: TextOverflow.ellipsis,
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                        margin: EdgeInsets.only(left: 10, top: 2),
-                        child: Text(
-currency+widget.price,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontFamily: "proxima",
-                              fontWeight: FontWeight.bold,
-                              fontSize: 19),
-                        )),
-                    Row(
-                       
-                      children: <Widget>[
-                        IconButton(
-                          //onPressed: cartOnHold ? null : widget.delQuant,
-                          iconSize: 18,
-                          icon: Icon(Icons.remove),
-                        ),
-                        cartOnHold &&
-                                updatingItemId == widget.id
-                            ? Container(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            primaryColor)),
-                              )
-                            : Text(widget.Quantity.toString(),
-                                style:
-                                    TextStyle(color: darkText, fontSize: 16)),
-                        IconButton(
-                         // onPressed: cartOnHold ? null : widget.addQuant,
-                          color: primaryColor,
-                          iconSize: 18,
-                          icon: Icon(Icons.add),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                // Container(
-                //     margin: EdgeInsets.only(left: 10),
-                //     child: Text("Store: " + widget.productData['storeName'])),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                      )),  Container(
+                      margin: EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                       widget.description,
+                        style: TextStyle(
+                            color: lightestText,
+                            fontFamily: "proxima",
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12),
+                            softWrap: true,overflow: TextOverflow.ellipsis,
+                      )),
+                      Container(
+                      margin: EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                       currency+ widget.price,
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontFamily: "proxima",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13),
+                            softWrap: true,overflow: TextOverflow.ellipsis,
+                      )),
+                  
+                   Container(
+                                        margin: EdgeInsets.all(10.0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            buildOutlineButton(
+                                                icon: Icons.remove,
+                                                press: () {
+                                                  setState(() {
+widget.Quantity--;
+                                                  });
+                                                }),
+                                            Container(
+                                                child: Text(
+                                              "   " + widget.Quantity.toString()+ "   ",
+                                              style: TextStyle(
+                                                  fontFamily: "futura",
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13),
+                                            )),
+                                            buildOutlineButton(
+                                              icon: Icons.add,
+                                              press: () {
+                                                setState(() {
+                                                  widget.Quantity++;
+                                                });
+                                              },
+                                            ),]))
+                                                  // Container(
+                  //     margin: EdgeInsets.only(left: 10),
+                  //     child: Text("Store: " + widget.productData['storeName'])),
 
               ],
             ),
@@ -156,20 +175,12 @@ currency+widget.price,
         ],
       ),
     ),
-   GestureDetector(
-     child: Container(
-margin: EdgeInsets.all(10.0),
-decoration: BoxDecoration(
-  borderRadius: BorderRadius.circular(6.0),
-  color: Colors.black
-),
-child: RaisedButton(
-   color: Colors.black,
-  child: Text("Checkout",style: TextStyle(color: white),),
-),
-     ),onTap: ()=>createOrder(),
+                ),
 
-   )        ],));
+                
+                ),
+        ) ,  bottomNavigationBar:CheckoutCard()
+   );
   }
 
   Future<void> createOrder() async {
@@ -215,5 +226,19 @@ child: RaisedButton(
       });
     }
   }
-  
+   SizedBox buildOutlineButton({IconData icon, Function press}) {
+    return SizedBox(
+      width: 40,
+      height: 32,
+      child: OutlineButton(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(13),
+        ),
+        onPressed: press,
+        child: Icon(icon),
+      ),
+    );
+  }
+
 }

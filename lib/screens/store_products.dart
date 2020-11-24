@@ -53,19 +53,23 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
         elevation: 1,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
-        title: Text(widget.name,
-            style: TextStyle(
+        title:Stack(children: <Widget>[
+        Container(
+            child: isLoading
+                ? Center(child: Image.asset(cupertinoActivityIndicator,height: 0,))
+                :Container(child: Text(productFromServer['data']['outlet_name'], style: TextStyle(
                 color: Colors.black,
                 
-                fontSize: 15,fontFamily: "futura")),
-      ),
+                fontSize: 15,fontFamily: "futura")) ,)
+        )])),
+ 
       body:Stack(children: <Widget>[
       Container(
       child: isLoading
       ? Center(child: Image.asset(cupertinoActivityIndicator))
         :  DefaultTabController(
                     length: 2,
-                    child: NestedScrollView(
+                    child:  NestedScrollView(
                       
                       headerSliverBuilder: (context, _) {
                         return [
@@ -77,7 +81,11 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                         ];
                       },
                       // You tab view goes here
-                      body: productFromServer['message'] == "Followed"
+                      body:Stack(children: <Widget>[
+      Container(
+      child: isLoading
+      ? Center(child: Image.asset(cupertinoActivityIndicator))
+        : productFromServer['message'] == "Followed"
                           ?  Column(
                               children: <Widget>[
                                 Container(
@@ -87,7 +95,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                                   child: TabBar(
                                     tabs: [
                                       Tab(
-                                        icon: Icon(Icons.grid_on,
+                                        icon: Icon(Icons.apps_sharp,
                                             color: Colors.black),
                                       ),
                                       Tab(
@@ -104,7 +112,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                                         childAspectRatio:
                                             MediaQuery.of(context).size.width *
                                                 0.5 /
-                                                300,
+                                                260,
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 1,
                                         scrollDirection: Axis.vertical,
@@ -165,7 +173,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                             ),
                     ),
 
-      ))]),
+                      ]))))]),
       bottomNavigationBar: BottomTabs(1, true),
     );
   }
@@ -1052,7 +1060,7 @@ class storestate extends State<storeProducts> with SingleTickerProviderStateMixi
                           height: 40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6.0),
-                              color: lightGrey),
+                              color: dividerColor),
                           margin: EdgeInsets.only(right: 10, top: 10),
                           child: TextField(
                             decoration: InputDecoration(

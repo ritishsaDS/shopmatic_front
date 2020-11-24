@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,33 +70,25 @@ GestureDetector(
           : ListView(
           children:<Widget> [
             Container(
-              height: 35,
+             
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(8.0),
                 color: dividerColor
               ),
               margin: EdgeInsets.all(12.0),
               child: TextField(
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top:1),
-                    hintText: 'What are you looking for?',
-                    prefixIcon: IconButton(
-                        icon: Icon(
-                          Icons.search,
-                          color: lightestText,
-                          size: 20,
-                        ),
-                        onPressed: () {
-
-                        }),
+                    contentPadding: EdgeInsets.only(left:10),
+                    hintText: 'Search stores,address....',
+                   hintStyle: TextStyle(fontFamily: "proxima",fontSize: 14)
 
 
                 ),
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height*0.78,
+              height: MediaQuery.of(context).size.height*0.75,
               child: ListView(
                   children: createProduct()
               ),

@@ -27,29 +27,67 @@ class storestate extends State<storescreen> {
     return Stack(children: <Widget>[
       GestureDetector(
         child: Container(
-            margin: EdgeInsets.only(left: 12, right: 12),
+            margin: EdgeInsets.only(left: 12, right: 12, bottom: 18),
             child: Column(children: <Widget>[
               Row(children: <Widget>[
-                              Container(
-                    padding: EdgeInsets.only(left: 10),
-                   
+                GestureDetector(
+                    child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(12),
+                          bottomLeft: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12))),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: FadeInImage.assetNetwork(
+                      image: widget.productData['logo'],
+                      fit: BoxFit.cover,
+                      placeholder: cupertinoActivityIndicator,
+                      height: 70.0,
+                      width: 90.0,
+                    ),
+                  ),
+                )),
+                Container(
+                    padding: EdgeInsets.only(left: 7),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(widget.productData['outlet_name'],
                             style: TextStyle(
                                 color: darkText,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontFamily: "futura",
-                                fontSize: 15)),
+                                fontSize: 14)),
                         Container(
-                          padding: EdgeInsets.only(top: 3, bottom: 2),
+                          width: 230,
+                          padding: EdgeInsets.only(top: 2, bottom: 1),
+                          child: widget.productData["short_desc"]==null?Text(
+                            "A clothes Heaven for Gents",
+                            style:
+                                TextStyle(fontFamily: "proxima", fontSize: 13),
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          ):Text(
+                            widget.productData['short_desc'],
+                            style:
+                                TextStyle(fontFamily: "proxima",color:lightText, fontSize: 13),
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 2, bottom: 1),
                           width: 200,
                           child: Text(
                             widget.productData['address'],
                             style: TextStyle(
-                                color: lightText,
-                                fontSize: 13,
+                                color: lightestText,
+                                fontSize: 12,
                                 fontFamily: "proxima"),
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
@@ -57,63 +95,32 @@ class storestate extends State<storescreen> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 2, bottom: 3),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.location_on,
-                                    size: 13,
-                                    color: primaryColor,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "" + widget.productData['place_name'],
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: "proxima",
-                                      color: lightestText),
-                                ),
-                              ],
-                            ),
+                          padding: EdgeInsets.only(top: 3, bottom: 1),
+                          width: 200,
+                          child: Text(
+                            "10:00 am - 9:00 pm",
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 11,
+                                fontFamily: "proxima"),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 2,
                           ),
                         ),
-                        
                       ],
                     )),
-                GestureDetector(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: FadeInImage.assetNetwork(
-                      image: widget.productData['logo'],
-                      fit: BoxFit.fitWidth,
-                      placeholder: cupertinoActivityIndicator,
-                      height: 70.0,
-                      width: 100.0,
-                    ),
-                  ),
-                ),
-
               ]),
-
-              Divider(
-                height: 25,
-                thickness: 1.5,
-                color: dividerColor,
-              )
             ])),
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => storeProducts(
-                      data: widget.productData['outlet_id'],
-                      name: widget.productData['outlet_name'])));
+                        data: widget.productData['outlet_id'],
+                      )));
         },
       ),
-        
-         ]);
+    ]);
   }
-
 }

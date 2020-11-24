@@ -35,123 +35,155 @@ class Grid_state extends State<Grid> {
       Container(
           child: isLoading
               ? Center(child: Image.asset(cupertinoActivityIndicator))
-              : Container(
-            margin: EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(6.0),
-                        child: FadeInImage.assetNetwork(
-                          image: productFromServer[0],
-                          placeholder: cupertinoActivityIndicator,
-                          height: 180,
-                          width: 170,
-                          fit: BoxFit.fill,
-                        )),
-                    Positioned(
-                      right: 5,
-                      top: 5,
-                      child: Container(
-                          padding: EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: lightGrey),
-                          child: Icon(
-                            Icons.favorite_border,
-                            color: lightText,
-                          )),
-                    )
-                  ],
-                ),
-                 SizedBox(
-                  height: 3,
-                ),
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                      color: darkText,
-                      fontFamily: "futura",
-                      fontSize: 14,
-                    ),
-                ),
-                SizedBox(
-                  height: 3,
-                ),
-                Row(
-                  children: <Widget>[
-                    Text("" + currency + widget.price.toString(),
-                        style: TextStyle(
-                            color: lightText,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,fontFamily: "futura")),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(currency + "900",
-                        style: TextStyle(
-                            color: mostlight,
-                            fontSize: 11,
-                            decoration: TextDecoration.lineThrough,fontFamily: "proxima")),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("65% OFF",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                            fontFamily: 'proxima')),
-                  ],
-                ),
-                SizedBox(
-                  height:2
-                ),
-                Text(widget.desc,style:TextStyle(color: lightestText,fontFamily: "proxima",fontSize: 11),softWrap: true,overflow: TextOverflow.ellipsis,),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    GestureDetector(
-                      child: Container(
-                        width: 25,
-                        padding: EdgeInsets.only(left: 5),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey[400],
-                          child: Icon(
-                            Icons.share,
-                            size: 13,
-                            color: Colors.grey[100],
+              : Card(
+elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(14),
+                          bottomLeft: Radius.circular(14),
+                          topLeft: Radius.circular(14),
+                          topRight: Radius.circular(14))),
+                  child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Stack(
+                        children: <Widget>[
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(6.0),
+                              child: FadeInImage.assetNetwork(
+                                image: productFromServer[0],
+                                placeholder: cupertinoActivityIndicator,
+                                height: 150,
+                                width: 170,
+                                fit: BoxFit.cover,
+                              )),
+                          Positioned(
+                            right: 2,
+                            top: 0,
+                            child: Card(
+                              color: Colors.black,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.all(2.0),
+                                  child:Icon(
+                                  Icons.favorite_border,
+                                  color: white,
+                                  size:22
+                                )
+                                )),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5.0),
+                        child: Text(
+                          widget.name,
+                          style: TextStyle(
+                            color: darkText,
+                            fontFamily: "futura",
+                            fontSize: 17,
                           ),
                         ),
-                      ), onTap: () {
-
-                      /* FlutterShare.share(
-                                title: products[i]['name'],
-                                text: products[i]['name'],
-                                linkUrl: products[i]['image'],
-                                chooserTitle: products[i]['name']);*/
-
-                    },
-                    ),
-                    Container(
-                      width: 25,
-                      padding: EdgeInsets.only(left: 5),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey[400],
-                        child: Icon(
-                          Icons.add,
-                          size: 13,
-                          color: Colors.grey[100],
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Container(
+                          padding: EdgeInsets.only(left: 5.0),
+                          child: Text(
+                            widget.desc,
+                            style: TextStyle(
+                                color: lightestText,
+                                fontFamily: "proxima",
+                                fontSize: 13),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5.0),
+                        child: Row(
+                          children: <Widget>[
+                            Text("" + currency + widget.price.toString(),
+                                style: TextStyle(
+                                    color: lightText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "futura")),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(currency + "900",
+                                style: TextStyle(
+                                    color: mostlight,
+                                    fontSize: 12,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontFamily: "proxima")),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("65% OFF",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 12,
+                                    fontFamily: 'proxima')),
+                            
+                          ],
                         ),
                       ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ))
+                      SizedBox(height: 2),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: <Widget>[
+                      //     GestureDetector(
+                      //       child: Container(
+                      //         width: 25,
+                      //         padding: EdgeInsets.only(left: 5),
+                      //         child: CircleAvatar(
+                      //           backgroundColor: Colors.grey[400],
+                      //           child: Icon(
+                      //             Icons.share,
+                      //             size: 13,
+                      //             color: Colors.grey[100],
+                      //           ),
+                      //         ),
+                      //       ), onTap: () {
+
+                      //       /* FlutterShare.share(
+                      //                 title: products[i]['name'],
+                      //                 text: products[i]['name'],
+                      //                 linkUrl: products[i]['image'],
+                      //                 chooserTitle: products[i]['name']);*/
+
+                      //     },
+                      //     ),
+                      //     Container(
+                      //       width: 25,
+                      //       padding: EdgeInsets.only(left: 5),
+                      //       child: CircleAvatar(
+                      //         backgroundColor: Colors.grey[400],
+                      //         child: Icon(
+                      //           Icons.add,
+                      //           size: 13,
+                      //           color: Colors.grey[100],
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // )
+                    ],
+                  ),
+                )))
     ]);
   }
 
@@ -161,11 +193,8 @@ class Grid_state extends State<Grid> {
     isLoading = true;
     try {
       print("josdfhbvfghbhzsjhu");
-      final response = await http.post(
-          SingleproductAPi, body: {
-        "id": widget.id
-      }
-      );
+      final response =
+          await http.post(SingleproductAPi, body: {"id": widget.id});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
         print(responseJson.toString() + "resposnseeeeeeeeeeeee");
@@ -208,5 +237,3 @@ class Grid_state extends State<Grid> {
 */
 
 }
-                                                                                                                                                                  
-                                                                                                                                                                                

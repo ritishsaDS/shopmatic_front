@@ -8,12 +8,12 @@ const white = Color(0xffffffff);
 const transparentREd = Color(0x70df0000);
 
 const background = Color(0xFFf8f8f8);
-//const accent = Color(0xFFED3134);
-const darkText = Color(0xFF222222);
-const lightText = Color(0xFF444444);
+//const accent = Color(0xfF50005);
+const darkText = Color(0xFF444444);
+const lightText = Color(0xFF454545);
 const lightGrey = Color(0xa0d8d8d8);
 const mostlight = Color(0xFF999999);
-const double bottomTabHeight = 45;
+const double bottomTabHeight = 50;
 const statusBarColor = Color(0xffd8d8d8);
 const lightestText = Color(0xFF767676);
 const transparent = Color(0x00ffffff);
@@ -90,6 +90,7 @@ String addOutletApi = domainURL+ "topStore/outlets/add";
 String editProductApi = domainURL+ "topStore/products/edit/";
 String editcategory = domainURL+ "topStore/categories/edit/";
 String editoutlet = domainURL+ "topStore/outlets/edit/";
+String editoutletImage = domainURL+ "topStore/outlets/editOutletImage/";
 String SingleproductAPi = domainURL+ "topStore/products/getproductById/";
 String LoginApi = domainURL+ "topStore/user/login/";
 String followOutlet = domainURL+ "topStore/user/followOutlet/";
@@ -113,7 +114,7 @@ String useraddressesapi = domainURL+ "topStore/user/useraddresses";
 String deleteaddressapi = domainURL+ "topStore/user/deleteaddress";
 String editaddressapi = domainURL+ "topStore/user/editaddress";
 String blockOutletApi = domainURL+ "topStore/user/blockOutlet";
-
+String editProductimage=domainURL+'topStore/products/editProductImage';
 String deletOutletapi = domainURL+ "topStore/outlets/delete";
 
 
