@@ -92,23 +92,41 @@ elevation: 0,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 3,
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            widget.desc,
-                            style: TextStyle(
-                                color: lightestText,
-                                fontFamily: "proxima",
-                                fontSize: 13),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                      SizedBox(
-                        height: 6,
-                      ),
+                      
+
+                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      
+
+                      // Container(
+                      //     padding: EdgeInsets.only(left: 5.0),
+                      //     child: Text(
+                      //       widget.desc,
+                      //       style: TextStyle(
+                      //           color: lightestText,
+                      //           fontFamily: "proxima",
+                      //           fontSize: 13),
+                      //       softWrap: true,
+                      //       overflow: TextOverflow.ellipsis,
+                      //     )),
+                     
                       Container(
                         padding: EdgeInsets.all(5.0),
                         child: Row(

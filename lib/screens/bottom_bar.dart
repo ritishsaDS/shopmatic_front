@@ -99,7 +99,7 @@ class _BottomTabsState extends State<BottomTabs> {
                       child:
                          Center(
                            child: Icon(
-                             Icons.home,size: 28,
+                            Icons.home,size: 28,
                              color:
                              widget.index == 1 ? primaryColor : darkText,
                            ),

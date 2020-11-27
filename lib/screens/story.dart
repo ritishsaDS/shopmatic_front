@@ -12,7 +12,8 @@ import 'package:http/http.dart' as http;
 
 class MoreStories extends StatefulWidget {
   dynamic data;
-  MoreStories({Key key, this.data}) : super(key: key);
+  dynamic index;
+  MoreStories({Key key, this.data,this.index}) : super(key: key);
 
   @override
   _MoreStoriesState createState() => _MoreStoriesState();
@@ -123,8 +124,9 @@ class _MoreStoriesState extends State<MoreStories> {
   List<StoryItem> getStorestories() {
     List<StoryItem> storyItems = new List();
     List story = storyfromserver as List;
-      for (int j = 0; j < story.length; j++) {
-      storyItems.add(StoryItem.pageImage(url: story[j]["photo"], controller: storyController,caption: story[j]['caption']),);
+      // for (int j = 0; j < 1; j++)
+       {
+      storyItems.add(StoryItem.pageImage(url: story[widget.index]["photo"], controller: storyController,caption: story[widget.index]['caption']),);
     }
     return
       storyItems;
