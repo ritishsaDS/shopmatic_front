@@ -45,6 +45,7 @@ class storestate extends State<storescreen> {
                       image: widget.productData['logo'],
                       fit: BoxFit.cover,
                       placeholder: cupertinoActivityIndicator,
+                      placeholderScale: 10,
                       height: 70.0,
                       width: 90.0,
                     ),

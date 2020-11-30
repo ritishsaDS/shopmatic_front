@@ -50,209 +50,78 @@ class _InstaProfilePageState extends State<InstaProfilePage>  with SingleTickerP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          height:MediaQuery.of(context).size.height,
-            child: ListView(children: <Widget>[
-      Stack(overflow: Overflow.visible,
-       children: <Widget>[
-        Container(
-            color: Colors.blue[600],
-            height: 220,
-            child: Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 10, right: 10),
-                      child: Row(children: <Widget>[
+        body: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+              height:MediaQuery.of(context).size.height,
+                child: NestedScrollView(
+                          headerSliverBuilder: (context, bool innerBoxIsScrolled) {
+                            return [
+                              
+                              SliverList(
+                                delegate: SliverChildListDelegate(
+                                  _randomHeightWidgets(context),
+                                ),
+                               
+                              ),
+                            ];
+                          },
+                          // You tab view goes here
+                          body:Column(
+                                                      children:[  
                         Container(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage("assets/images/super.png"))),
-                        ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "  Pick ' N ' Buy",
-                                style: TextStyle(
+                          color: Colors.blue[600],
+                                                 
+                          
+                          child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
                                     color: Colors.white,
-                                    fontSize: 20,
-                                    fontFamily: "futura",
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "   ritishs39@gmail.com",
-                                style: TextStyle(
-                                    color: dividerColor,
-                                    fontFamily: "proxima",
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ]),
-                        SizedBox(height: 20),
-                      ]),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  "10.2K",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: "futura",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Posts",
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                     fontFamily: "proxima",
-                                    fontSize: 14,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(30.0),
+                                      topLeft: Radius.circular(30.0),
+                                    )),
+                                child: SingleChildScrollView(
+                                    child: Column(children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 30.0,top:4),
+                                    child: Text(
+                                      "Our Albums",
+                                      style: TextStyle(
+                                          color: darkText,
+                                          fontFamily: "futura",
+                                         
+                                          fontSize: 20),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  "543",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: "futura",
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Following",
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                     fontFamily: "proxima",
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white60),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "  Follow Us  ",
-                                  style: TextStyle(
-                                      color: Colors.white60, fontSize: 14),
-                                ),
-                              ),
-                            )
-                          ]),
-                    ),
-                    SizedBox(height: 19),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(30.0),
-                                topLeft: Radius.circular(30.0),
-                              )),
-                          child: SingleChildScrollView(
-                              child: Column(children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 30.0, top: 3),
-                              child: Text(
-                                "Our Albums",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                            ),
-                           
-                           SizedBox( height:9,)
-                          ]))),
-                    ),
+                                 
+                                 SizedBox( height:7,)
+                                ]))),
+                          ),
                      
-                  ],
-                )))
-      ]),
-Container(
-  height:500,
-  child: DefaultTabController(
-                    length: 2,
-                  child:  GridView.count(
-                                        childAspectRatio:
-                                            MediaQuery.of(context).size.width *
-                                                0.5 /
-                                                300,
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 1,
-                                        scrollDirection: Axis.vertical,
-                                       children: getProducts(),
-                                      ),)
-                      // child:ListView(
-                      //         children: <Widget>[
-                      //           Container(
-                      //             decoration: BoxDecoration(
-                      //                 border: Border.all(
-                      //                     width: 0.5, color: Colors.black)),
-                      //             child: TabBar(
-                      //               tabs: [
-                      //                 Tab(
-                      //                   icon: Icon(Icons.grid_on,
-                      //                       color: Colors.black),
-                      //                 ),
-                      //                 Tab(
-                      //                   icon: Icon(Icons.format_list_bulleted,
-                      //                       color: Colors.black),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           Container(
-                      //             child: TabBarView(
-                      //               children: [
-                      //                 GridView.count(
-                      //                   childAspectRatio:
-                      //                       MediaQuery.of(context).size.width *
-                      //                           0.5 /
-                      //                           300,
-                      //                   crossAxisCount: 2,
-                      //                   crossAxisSpacing: 1,
-                      //                   scrollDirection: Axis.vertical,
-                      //                  children: getProducts(),
-                      //                 ),
-                      //                 ListView(
-                      //                 children: getProductsL(),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ))
+                         Expanded(
+  
+  child: GridView.count(
+                                              childAspectRatio:
+                                                  MediaQuery.of(context).size.width *
+                                                      0.5 /
+                                                      250,
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 1,
+                                              scrollDirection: Axis.vertical,
+                                             children: getProducts(),
+                                            ),),
+                                                      ])
+     
 
-)
+                        
 
      
     
     
-    ])));
+   
+          ),
+        ))));
   }
 
   dynamic productFromServer = new List();
@@ -580,5 +449,124 @@ Future<void> getProductsserver() async {
     // }
     return productLists;
   }
-  
+  List<Widget> _randomChildren;
+
+  List<Widget> _randomHeightWidgets(BuildContext context) {
+    _randomChildren ??= List.generate(1, (index) {
+      return Stack(overflow: Overflow.visible,
+       children: <Widget>[
+            Container(
+                color: Colors.blue[600],
+                height: 180,
+                child: Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          child: Row(children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image:
+                                          AssetImage("assets/images/super.png"))),
+                            ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "  Pick ' N ' Buy",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontFamily: "futura",
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "   ritishs39@gmail.com",
+                                    style: TextStyle(
+                                        color: dividerColor,
+                                        fontFamily: "proxima",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ]),
+                            SizedBox(height: 20),
+                          ]),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      "10.2K",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: "futura",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Posts",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                         fontFamily: "proxima",
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      "543",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: "futura",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Following",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                         fontFamily: "proxima",
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white60),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "  Follow Us  ",
+                                      style: TextStyle(
+                                          color: Colors.white60, fontSize: 14),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                        ),
+                       
+                      ],
+                    )))
+      ]);});
+
+    return _randomChildren;
+  }
+
 }

@@ -30,6 +30,8 @@ class storestate extends State<storeProducts>
   String id;
   TextEditingController reason = TextEditingController();
 
+  String follow="";
+
   @override
   void initState() {
     getProfile();
@@ -47,205 +49,202 @@ class storestate extends State<storeProducts>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-          elevation: 1,
-          backgroundColor: Colors.white,
-          iconTheme: new IconThemeData(color: Colors.black),
-          title: Stack(children: <Widget>[
-            Container(
-                child: isLoading
-                    ? Center(
-                        child: Image.asset(
-                        cupertinoActivityIndicator,
-                        height: 0,
-                      ))
-                    : Container(
-                        child: Text(productFromServer['data']['outlet_name'],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontFamily: "futura")),
-                      ))
-          ])),
-      body: Stack(children: <Widget>[
-        Container(
-            child: isLoading
-                ? Center(child: Image.asset(cupertinoActivityIndicator))
-                : DefaultTabController(
-                    length: 1,
-                    child: NestedScrollView(
-                        headerSliverBuilder: (context, _) {
-                          return [
-                            SliverList(
-                              delegate: SliverChildListDelegate(
-                                _randomHeightWidgets(context),
-                              ),
-                            ),
-                          ];
-                        },
-                        // You tab view goes here
-                        body: Stack(children: <Widget>[
-                          Container(
-                            child: isLoading
-                                ? Center(
-                                    child:
-                                        Image.asset(cupertinoActivityIndicator))
-                                : productFromServer['message'] == "Joined"
-                                    ? Column(
-                                        children: <Widget>[
-                                           Container(
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin:
-                                      EdgeInsets.only(right: 10, bottom: 10),
-                                  padding: EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      color: lightGrey,
-                                      border: Border.all(color: lightGrey)),
-                                  child: Center(
-                                      child: Text(
-                                    "  All  ",
-                                    style: TextStyle(
-                                        fontFamily: "proxima",
-                                        color: darkText,
-                                        fontSize: 16),
-                                  )),
+      body: SafeArea(
+              child: Stack(children: <Widget>[
+          Container(
+              child: isLoading
+                  ? Center(child: Image.asset(cupertinoActivityIndicator))
+                  : DefaultTabController(
+                      length: 1,
+                      child: NestedScrollView(
+                          headerSliverBuilder: (context, bool innerBoxIsScrolled) {
+                            return [
+                              new SliverAppBar(
+                                  elevation: 2,
+            backgroundColor: Colors.white,
+            iconTheme: new IconThemeData(color: Colors.black),
+                    title: Text(follow,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: "futura")),
+                    pinned: false,
+                    floating: true,
+                    forceElevated: innerBoxIsScrolled,
+                  ),
+                              SliverList(
+                                delegate: SliverChildListDelegate(
+                                  _randomHeightWidgets(context),
                                 ),
-                                Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.73,
-                                    child: ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: getTopcategories()))
-                              ],
-                            )),
-                      
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                               
+                              ),
+                            ];
+                          },
+                          // You tab view goes here
+                          body: Stack(children: <Widget>[
+                            Container(
+                              child: isLoading
+                                  ? Center(
+                                      child:
+                                          Image.asset(cupertinoActivityIndicator))
+                                  : productFromServer['message'] == "Joined"
+                                      ? Container(
+                                          margin: EdgeInsets.all(10.0),
+                                          child: Column(
                                             children: <Widget>[
+                                               Row(children: [
+                                                Expanded(
+                                                  child: Container(
+                                                     margin: EdgeInsets.only(
+                                                           
+                                                            bottom: 10),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                8.0),
+                                                        color: dividerColor),
+                                                    child: TextField(
+                                                      decoration: InputDecoration(
+                                                          border:
+                                                              InputBorder.none,
+                                                          contentPadding:
+                                                              EdgeInsets.only(
+                                                                  left: 10),
+                                                          hintText:
+                                                              'Search Shirts , jeans....',
+                                                          hintStyle: TextStyle(
+                                                              fontFamily:
+                                                                  "proxima",
+                                                              fontSize: 14)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ]),
+                                              Container(
+                                                  height: 50,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 10,
+                                                           ),
+                                                        padding:
+                                                            EdgeInsets.all(10.0),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6.0),
+                                                            color: lightGrey,
+                                                            border: Border.all(
+                                                                color:
+                                                                    lightGrey)),
+                                                        child: Center(
+                                                            child: Text(
+                                                          "  All  ",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  "proxima",
+                                                              color: darkText,
+                                                              fontSize: 16),
+                                                        )),
+                                                      ),
+                                                      Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.73,
+                                                          child: ListView(
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              children:
+                                                                  getTopcategories()))
+                                                    ],
+                                                  )),
+                                             
+                                              SizedBox(height: 7),
                                               Expanded(
-                                                child: Container(
-                                                  height: 40,
+                                                child: TabBarView(
+                                                  children: [
+                                                    GridView.count(
+                                                      childAspectRatio:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.5 /
+                                                              260,
+                                                      crossAxisCount: 2,
+                                                      crossAxisSpacing: 1,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      children: getProducts(),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.all(10.0),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 5, left: 5, right: 5),
+                                                  padding: EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              6.0),
-                                                      color: dividerColor),
-                                                  margin: EdgeInsets.only(
-                                                      right: 10, top: 10),
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                      border: InputBorder.none,
-                                                      hintText:
-                                                          '   Search for products....',
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                             
-                                              Container(
-                                                  height: 40,
-                                                  margin:
-                                                      EdgeInsets.only(top: 10),
-                                                  padding: EdgeInsets.all(10.0),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
-                                                    color: Colors.grey,
-                                                  ),
-                                                  child: GestureDetector(
-                                                    child: Icon(
-                                                      Icons.search,
-                                                      color: Colors.white,
-                                                    ),
-                                                    onTap: () {},
-                                                  )),
+                                                              100),
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: lightGrey)),
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: Icon(Icons.lock,
+                                                      color: Colors.blue,
+                                                      size: 50)),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text("This Account is Private",
+                                                      style: TextStyle(
+                                                          color: darkText,
+                                                          fontFamily: "futura",
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.65,
+                                                      child: Text(
+                                                          "Please do follow to see his all products",
+                                                          style: TextStyle(
+                                                              color: mostlight,
+                                                              fontFamily:
+                                                                  "proxima",
+                                                              fontSize: 14)))
+                                                ],
+                                              )
                                             ],
                                           ),
-                                           SizedBox(height: 7),
-                                          Expanded(
-                                            child: TabBarView(
-                                              children: [
-                                                GridView.count(
-                                                  childAspectRatio:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.5 /
-                                                          260,
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 1,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  children: getProducts(),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                                margin: EdgeInsets.only(
-                                                    top: 5, left: 5, right: 5),
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                    border: Border.all(
-                                                        width: 2,
-                                                        color: lightGrey)),
-                                                height: 70,
-                                                width: 70,
-                                                child: Icon(Icons.lock,
-                                                    color: Colors.blue,
-                                                    size: 50)),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("This Account is Private",
-                                                    style: TextStyle(
-                                                        color: darkText,
-                                                        fontFamily: "futura",
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.65,
-                                                    child: Text(
-                                                        "Please do follow to see his all products",
-                                                        style: TextStyle(
-                                                            color: mostlight,
-                                                            fontFamily:
-                                                                "proxima",
-                                                            fontSize: 14)))
-                                              ],
-                                            )
-                                          ],
                                         ),
-                                      ),
-                          ),
-                        ]))))
-      ]),
+                            ),
+                          ]))))
+        ]),
+      ),
       bottomNavigationBar: BottomTabs(1, true),
     );
   }
@@ -269,7 +268,7 @@ class storestate extends State<storeProducts>
         print(responseJson.toString() + "hello");
 
         productFromServer = responseJson;
-
+follow=productFromServer['data']  ['outlet_name'];
         setState(() {
           isError = false;
 
@@ -330,35 +329,34 @@ class storestate extends State<storeProducts>
     List<Widget> productLists = new List();
     List categories = storyfromserver as List;
     for (int i = 0; i < categories.length; i++) {
-     
-        productLists.add(
-          GestureDetector(
-              child: Container(
-                  margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-                  height: 85,
-                  width: 80,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 4.0, bottom: 5.0),
-                    child: Container(
-                        child: ClipOval(
-                            child: CircleAvatar(
-                                radius: 60,
-                                backgroundColor: lightGrey,
-                                child: FadeInImage.assetNetwork(
-                                  image: categories[i]['photo'],
-                                  placeholder: cupertinoActivityIndicator,
-                                  fit: BoxFit.fill,
-                                  height: 90,
-                                )))),
-                  )),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MoreStories(data: widget.data,index:i)));
-              }),
-        );
-     
+      productLists.add(
+        GestureDetector(
+            child: Container(
+                margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                height: 85,
+                width: 80,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 4.0, bottom: 5.0),
+                  child: Container(
+                      child: ClipOval(
+                          child: CircleAvatar(
+                              radius: 60,
+                              backgroundColor: lightGrey,
+                              child: FadeInImage.assetNetwork(
+                                image: categories[i]['photo'],
+                                placeholder: cupertinoActivityIndicator,
+                                fit: BoxFit.fill,
+                                height: 90,
+                              )))),
+                )),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MoreStories(data: widget.data, index: i)));
+            }),
+      );
     }
     return productLists;
   }
@@ -404,7 +402,7 @@ class storestate extends State<storeProducts>
       productLists.add(GestureDetector(
         child: Container(
           height: 50,
-          margin: EdgeInsets.only(right: 10, bottom: 10),
+          margin: EdgeInsets.only(right: 10),
           padding: EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
@@ -979,7 +977,7 @@ class storestate extends State<storeProducts>
                                             fontFamily: "proxima",
                                             color: lightestText,
                                             fontSize: 14,
-                                          ))),
+                                          ),maxLines: 4,)),
                                   SizedBox(height: 10),
                                   Row(
                                     children: <Widget>[
@@ -1057,6 +1055,11 @@ class storestate extends State<storeProducts>
                                                   children: <Widget>[
                                                     GestureDetector(
                                                         child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.32,
                                                             decoration:
                                                                 BoxDecoration(
                                                               borderRadius:
@@ -1071,10 +1074,8 @@ class storestate extends State<storeProducts>
                                                                     5.0),
                                                             child: Center(
                                                               child: Text(
-                                                                  "     " +
-                                                                      productFromServer[
-                                                                          'message'] +
-                                                                      "     ",
+                                                                  productFromServer[
+                                                                      'message'],
                                                                   style: TextStyle(
                                                                       color:
                                                                           white,
@@ -1090,9 +1091,14 @@ class storestate extends State<storeProducts>
                                                             unfollowDialog();
                                                           }
                                                         }),
-                                                    SizedBox(width: 10),
+                                                    SizedBox(width: 8),
                                                     GestureDetector(
                                                         child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.32,
                                                             decoration:
                                                                 BoxDecoration(
                                                               borderRadius:
@@ -1108,7 +1114,7 @@ class storestate extends State<storeProducts>
                                                                     5.0),
                                                             child: Center(
                                                               child: Text(
-                                                                  "   Message   ",
+                                                                  "Message",
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .pink,
@@ -1141,7 +1147,8 @@ class storestate extends State<storeProducts>
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(children: <Widget>[
+                              Column( mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
                                 Container(
                                     child: Text("219",
                                         style: TextStyle(
@@ -1150,13 +1157,14 @@ class storestate extends State<storeProducts>
                                             fontSize: 20))),
                                 Container(
                                     padding: EdgeInsets.all(5.0),
-                                    child: Text("Joined",
+                                    child: Text("Reviewes",
                                         style: TextStyle(
                                             fontFamily: "proxima",
-                                            color: lightText,
+                                            color: lightestText,
                                             fontSize: 17)))
                               ]),
-                              Column(children: <Widget>[
+                              Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
                                 Container(
                                     child: Text(productFromServer['products'],
                                         style: TextStyle(
@@ -1165,13 +1173,13 @@ class storestate extends State<storeProducts>
                                             fontSize: 20))),
                                 Container(
                                     padding: EdgeInsets.all(5.0),
-                                    child: Text("Posts",
+                                    child: Text("Products",
                                         style: TextStyle(
                                             fontFamily: "proxima",
-                                            color: lightText,
+                                            color: lightestText,
                                             fontSize: 17)))
                               ]),
-                              Column(children: <Widget>[
+                              Column(mainAxisAlignment: MainAxisAlignment.spaceAround,children: <Widget>[
                                 Stack(children: <Widget>[
                                   Container(
                                       child: isLoading
@@ -1192,10 +1200,10 @@ class storestate extends State<storeProducts>
                                 ]),
                                 Container(
                                     padding: EdgeInsets.all(5.0),
-                                    child: Text("Followers",
+                                    child: Text("Resellers",
                                         style: TextStyle(
                                             fontFamily: "proxima",
-                                            color: lightText,
+                                            color: lightestText,
                                             fontSize: 17)))
                               ]),
                             ]),
@@ -1207,7 +1215,7 @@ class storestate extends State<storeProducts>
                           thickness: 1.5,
                           color: dividerColor,
                         ),
-  
+
                         // Container(
                         //   child: Column(
                         //       mainAxisAlignment: MainAxisAlignment.start,
@@ -1315,8 +1323,8 @@ class storestate extends State<storeProducts>
                                   children: getStorestories(),
                                 ),
                               ),
-SizedBox(height: 5),
-                       ],
+                        SizedBox(height: 5),
+                      ],
                     ),
                   ))
       ]);

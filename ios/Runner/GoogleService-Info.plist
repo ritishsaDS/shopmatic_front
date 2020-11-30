@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>711987569927-0mhsc4tauraqvu4tdo04j2vqaikqahqf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.711987569927-0mhsc4tauraqvu4tdo04j2vqaikqahqf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBemR8w8nc6y4Ixac71Q-riUZ7jDpPQy9Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>711987569927</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tapp.shopmaticFront</string>
+	<key>PROJECT_ID</key>
+	<string>proxsmart-47073</string>
+	<key>STORAGE_BUCKET</key>
+	<string>proxsmart-47073.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:711987569927:ios:b26074f146ca03227ed1a2</string>
+	<key>DATABASE_URL</key>
+	<string>https://proxsmart-47073.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -46,10 +47,13 @@ class Homestate extends State<Home> {
           iconTheme: new IconThemeData(color: Colors.pink),
           title: const Text('PROXSMART DEALS', style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14)),
+          
           actions: <Widget>[
 GestureDetector(
-  child:            Container(padding: EdgeInsets.only(right: 10),
-      child: Icon(Icons.add)),onTap: ()async {
+  child:   Transform.rotate(
+  angle: 505 * pi / 270,
+  child:         Container(padding: EdgeInsets.only(right: 10),
+      child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('email');
   Navigator.pushReplacement(context,

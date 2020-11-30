@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "711987569927",
+    "firebase_url": "https://proxsmart-47073.firebaseio.com",
+    "project_id": "proxsmart-47073",
+    "storage_bucket": "proxsmart-47073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711987569927:android:8538ffe7dd9f10747ed1a2",
+        "android_client_info": {
+          "package_name": "com.tapp.shopmatic_front"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711987569927-i42aj0t3d82vq276u3g5eoctkfaq3j0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWl5r7TpGIARrZ9JrAFUhdWS_IAh_aqrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711987569927-i42aj0t3d82vq276u3g5eoctkfaq3j0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
