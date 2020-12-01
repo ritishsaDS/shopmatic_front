@@ -8,6 +8,7 @@ import 'package:shopmatic_front/screens/settings.dart';
 import 'package:shopmatic_front/utils/common.dart';
 
 import 'Home_screen.dart';
+import 'chat.dart';
 import 'demo.dart';
 import 'follow_requests.dart';
 import 'followers.dart';
@@ -119,7 +120,7 @@ class _BottomTabsState extends State<BottomTabs> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Home(),
+                                  builder: (context) => WelcomeScreen(),
                                 ));
                           }
 

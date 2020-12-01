@@ -58,7 +58,6 @@ decoration: BoxDecoration(
   color:Colors.black,
 ),
 child: FlatButton(
-   
   child: Text("Checkout",style: TextStyle(color: white,fontFamily: "futura",fontSize: 16),),
 ),
      ),onTap: ()=>createOrder(),

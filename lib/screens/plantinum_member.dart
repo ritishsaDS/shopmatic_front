@@ -103,23 +103,25 @@ class plantinumstate extends State<plantinum>{
             margin: EdgeInsets.all(10.0),
             child:Column(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                        child: ClipOval(
-                            child: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: lightGrey,
-                                child: Image.asset("",
-                                  /* image: categories[i]['photo'],
-                            placeholder: cupertinoActivityIndicator,*/
-                                  fit: BoxFit.fill,
-                                  height: 90,
-                                )))),
-                    Container(
-                      width: 100,
-                      child: Text(categories[i]['name'],style: TextStyle(color: darkText,fontSize: 16,fontFamily: "proxima",),overflow: TextOverflow.ellipsis,),
+                  Row(
+              children: <Widget>[
+                Container(
+                    child: ClipOval(
+                        child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: lightGrey,
+                            child: FadeInImage.assetNetwork(
+                          
+                               image: categories[i]['image'],
+                            placeholder: cupertinoActivityIndicator,
+                              fit: BoxFit.fill,
+                              height: 90,
+                            )))),
+                    Expanded(
+                                          child: Container(
+                        
+                        child: Text(categories[i]['name'],style: TextStyle(color: darkText,fontSize: 16,fontFamily: "proxima",),overflow: TextOverflow.ellipsis,),
+                      ),
                     ),
                     SizedBox(width: 40,),
                     Column(

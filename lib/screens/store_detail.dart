@@ -120,7 +120,7 @@ class storestate extends State<Store_detail> {
                                     children: <Widget>[
                                       GestureDetector(
                                         child: Container(
-                                            height: 300,
+                                            height: 350,
                                             child: Hero(
                                               tag: "imagehero",
                                               child: PageView(
@@ -418,47 +418,100 @@ class storestate extends State<Store_detail> {
                                     height: 1.5,
                                     color: Colors.grey[200],
                                   ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
                                   Container(
-                                    color: Colors.black,
-                                    child: ExpandablePanel(
-                                      theme: const ExpandableThemeData(
-                                          headerAlignment:
-                                              ExpandablePanelHeaderAlignment
-                                                  .center,
-                                          tapBodyToCollapse: true,
-                                          iconColor: Colors.white),
-                                      header: Container(
-                                          color: Colors.black,
-                                          padding: EdgeInsets.only(
-                                              top: 7.0, bottom: 7, left: 10),
-                                          child: Text(
-                                            "Reviews",
+                                      margin: EdgeInsets.all(10.0),
+                                      child: Text("Related Products",
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontFamily: "futura",
+                                              fontSize: 16))),
+                                  Container(
+                                    height: 120,
+                                     margin: EdgeInsets.only(left:10,right:10),
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                       Container(
+                                         width:150,
+                                                                                child: Column(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children:<Widget>[
+                                              GestureDetector(
+                                              child:Container(
+                                                margin: EdgeInsets.only(right:10.0,bottom:5),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    child: Image.asset(
+                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
+                                                  ))),
+                                          Container(
+                                     margin: EdgeInsets.only(left:5.0),
+                                      child: Text("Buy Roadster for men ",
                                             style: TextStyle(
-                                                fontSize: 24,
-                                                fontFamily: "proxima",
-                                                color: Colors.white),
-                                          )),
-                                      expanded: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 100,
-                                          color: Colors.white,
-                                          child: Center(
-                                            child: Text(
-                                              "No Reviews",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontFamily: "proxima",
-                                                  color: Colors.black),
-                                              softWrap: true,
-                                            ),
-                                          )),
+                                                color:darkText,
+                                                fontFamily: "futura",
+                                                fontSize: 16),maxLines: 1,)),
+                                           ]
+                                         ),
+                                       ) ,
+                                        Container(
+                                         width:150,
+                                                                                child: Column(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children:<Widget>[
+                                              GestureDetector(
+                                              child:Container(
+                                                margin: EdgeInsets.only(right:10.0,bottom:5),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    child: Image.asset(
+                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
+                                                  ))),
+                                          Container(
+                                     margin: EdgeInsets.only(left:5.0),
+                                      child: Text("Buy Roadster for men ",
+                                            style: TextStyle(
+                                                color:darkText,
+                                                fontFamily: "futura",
+                                                fontSize: 16),maxLines: 1,)),
+                                           ]
+                                         ),
+                                       ) ,
+                                       
+                                      
+                                     Container(
+                                         width:150,
+                                                                                child: Column(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children:<Widget>[
+                                              GestureDetector(
+                                              child:Container(
+                                                margin: EdgeInsets.only(right:10.0,bottom:5),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    child: Image.asset(
+                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
+                                                  ))),
+                                          Container(
+                                     margin: EdgeInsets.only(left:5.0),
+                                      child: Text("Buy Roadster for men ",
+                                            style: TextStyle(
+                                                color:darkText,
+                                                fontFamily: "futura",
+                                                fontSize: 16),maxLines: 1,)),
+                                           ]
+                                         ),
+                                       ) ,
+                                          ],
                                     ),
                                   ),
-                                  Container(
+                                    Container(
                                     margin: EdgeInsets.all(10.0),
                                     height: 1.5,
                                     color: Colors.grey[200],
@@ -752,7 +805,7 @@ class storestate extends State<Store_detail> {
 
   _buildCircleIndicator() {
     return Positioned(
-        bottom: 0.0,
+        bottom: 7.0,
         right: 130.0,
         child: Center(
             child: SmoothPageIndicator(
@@ -762,6 +815,7 @@ class storestate extends State<Store_detail> {
             dotWidth: 20,
             dotHeight: 5,
             activeDotColor: primaryColor,
+            dotColor: white
           ), // your preferred effect // PageController
         )));
   }

@@ -10,6 +10,7 @@ import 'package:shopmatic_front/utils/common.dart';
 
 import 'Grid_view.dart';
 import 'List_view.dart';
+import 'Login_screen.dart';
 import 'bottom_bar.dart';
 import 'store_detail.dart';
 
@@ -53,7 +54,7 @@ class storestate extends State<storeProducts>
               child: Stack(children: <Widget>[
           Container(
               child: isLoading
-                  ? Center(child: Image.asset(cupertinoActivityIndicator))
+                  ? Center(child: Image.asset(cupertinoActivityIndicator,height: 50,width:50))
                   : DefaultTabController(
                       length: 1,
                       child: NestedScrollView(
@@ -62,7 +63,7 @@ class storestate extends State<storeProducts>
                               new SliverAppBar(
                                   elevation: 2,
             backgroundColor: Colors.white,
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: new IconThemeData(color: Colors.pink),
                     title: Text(follow,
                               style: TextStyle(
                                   color: Colors.black,
@@ -71,6 +72,21 @@ class storestate extends State<storeProducts>
                     pinned: false,
                     floating: true,
                     forceElevated: innerBoxIsScrolled,
+                      actions: <Widget>[
+GestureDetector(
+  child:   Transform.rotate(
+  angle: 505 * pi / 270,
+  child:         Container(padding: EdgeInsets.only(right: 10),
+      child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('email');
+  Navigator.pushReplacement(context,
+      MaterialPageRoute(builder: (BuildContext ctx) => Login()));
+},
+
+)
+          ],
+        
                   ),
                               SliverList(
                                 delegate: SliverChildListDelegate(

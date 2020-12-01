@@ -115,20 +115,20 @@ followRequest, body:{
           child:Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                      child: ClipOval(
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundColor: lightGrey,
-                              child: Image.asset("",
-                                /* image: categories[i]['photo'],
-                            placeholder: cupertinoActivityIndicator,*/
-                                fit: BoxFit.fill,
-                                height: 90,
-                              )))),
-                  Text(categories[i]['name'],style: TextStyle(color: darkText,fontSize: 16,fontFamily: "proxima"),),
+              children: <Widget>[
+                Container(
+                    child: ClipOval(
+                        child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: lightGrey,
+                            child: FadeInImage.assetNetwork(
+                          
+                               image: categories[i]['image'],
+                            placeholder: cupertinoActivityIndicator,
+                              fit: BoxFit.fill,
+                              height: 90,
+                            )))),
+                  Expanded(child: Text(categories[i]['name'],style: TextStyle(color: darkText,fontSize: 16,fontFamily: "proxima"),)),
                   GestureDetector(
                       child:Container(
                           decoration: BoxDecoration(
@@ -148,6 +148,7 @@ followRequest, body:{
                         reject(categories[i]['id']);
                       }
                   ),
+                  SizedBox(width:10),
                   GestureDetector(
                       child:Container(
                           decoration: BoxDecoration(

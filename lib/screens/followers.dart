@@ -58,10 +58,10 @@ class followstate extends State<followers> {
                         child: CircleAvatar(
                             radius: 30,
                             backgroundColor: lightGrey,
-                            child: Image.asset(
-                              "",
-                              /* image: categories[i]['photo'],
-                            placeholder: cupertinoActivityIndicator,*/
+                            child: FadeInImage.assetNetwork(
+                          
+                               image: categories[i]['image'],
+                            placeholder: cupertinoActivityIndicator,
                               fit: BoxFit.fill,
                               height: 90,
                             )))),
