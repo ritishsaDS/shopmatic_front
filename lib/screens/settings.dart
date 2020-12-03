@@ -7,6 +7,7 @@ import 'package:shopmatic_front/screens/userprofile.dart';
 import 'Group_members.dart';
 import 'Home_screen.dart';
 import 'Login_screen.dart';
+import 'chat.dart';
 import 'follow_requests.dart';
 import 'manage_category.dart';
 import 'manage_products.dart';
@@ -766,7 +767,7 @@ class settings_state extends State<settings> {
                             ],
                           ),onTap:(){
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (BuildContext ctx) => profile()));
+                              MaterialPageRoute(builder: ( ctx) => WelcomeScreen()));
                         }
                         ),
                       ),

@@ -91,7 +91,9 @@ child:ClipOval(
                                   width: 110,
                                   image: productFromServer['data']['image'],
                                   placeholder: cupertinoActivityIndicator,
-                                  fit: BoxFit.fill,)))
+                                  fit: BoxFit.fill,
+                                  height: 100,
+                                  )))
                                 ),
 
                               ],

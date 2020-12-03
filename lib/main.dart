@@ -3,6 +3,7 @@ import 'package:shopmatic_front/screens/Login_screen.dart';
 import 'package:shopmatic_front/screens/SplashScreen.dart';
 
 import 'screens/Home_screen.dart';
+import 'screens/chat.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,6 +24,7 @@ class appstate extends State<MyApp> {
         '/': (context) => Splash(),
         '/login': (context) => Login(),
         '/home': (context) => Home(),
+        //'/helloworld': ( context) => DynamicLinkScreen(),
       },
 
 

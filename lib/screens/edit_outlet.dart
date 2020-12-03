@@ -101,7 +101,7 @@ class editoutletstate extends State<editOutlet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextField(
+                    TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(
                           filled: true,
@@ -126,7 +126,7 @@ class editoutletstate extends State<editOutlet> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TextField(
+                      TextFormField(
                           controller: phoneController,
                           inputFormatters: [
                             WhitelistingTextInputFormatter.digitsOnly
@@ -138,10 +138,7 @@ class editoutletstate extends State<editOutlet> {
                             labelStyle:
                                 TextStyle(fontFamily: "proxima", fontSize: 12),
                             fillColor: Colors.white,
-                            prefixIcon: Icon(
-                              Icons.loyalty,
-                              color: Colors.blue,
-                            ),
+                            
                           )),
                     ]),
               ),
@@ -152,7 +149,7 @@ class editoutletstate extends State<editOutlet> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextField(
+                    TextFormField(
                         controller: addressController,
                         decoration: InputDecoration(
                           filled: true,
@@ -161,32 +158,31 @@ class editoutletstate extends State<editOutlet> {
                           labelStyle:
                               TextStyle(fontFamily: "proxima", fontSize: 12),
                           fillColor: Colors.white,
-                          prefixIcon: Icon(
-                            Icons.content_copy,
-                            color: Colors.blue,
-                          ),
+                         
                         )),
                   ]),
             ),
             Container(
               padding: EdgeInsets.only(bottom: 10),
+             
               color: Colors.white,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextField(
-                        decoration: InputDecoration(
-                      filled: true,
-                      labelText: "Description",
-                      hintText: widget.address,
-                      labelStyle:
-                          TextStyle(fontFamily: "proxima", fontSize: 12),
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(
-                        Icons.content_copy,
-                        color: Colors.blue,
-                      ),
-                    )),
+                    TextFormField(
+                       decoration: new InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.grey, width: 1.0),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ), labelText: "Pin Code",
+                                  labelStyle: TextStyle(color: Colors.grey),
+                                  fillColor: Colors.white,
+                                  border: new OutlineInputBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(8.0),
+                                    borderSide: new BorderSide(),
+                                  ),),)
                   ]),
             ),
             Container(

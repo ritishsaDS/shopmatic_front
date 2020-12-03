@@ -261,7 +261,7 @@ GestureDetector(
                           ]))))
         ]),
       ),
-      bottomNavigationBar: BottomTabs(1, true),
+      bottomNavigationBar: BottomTabs(2, true),
     );
   }
 

@@ -117,13 +117,13 @@ class _BottomTabsState extends State<BottomTabs> {
 
                             // return;
                           } else {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WelcomeScreen(),
-                                ));
+                          //   Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => WelcomeScreen(),
+                          //       ));
+                          // }
                           }
-
                           // Navigator.popUntil(context, ModalRoute.withName('/store'));
                         },
                         child:

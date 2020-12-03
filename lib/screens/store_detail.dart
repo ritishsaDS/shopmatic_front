@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:badges/badges.dart';
 import 'package:expandable/expandable.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import 'package:shopmatic_front/screens/user_address.dart';
 import 'package:shopmatic_front/utils/common.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -47,6 +50,7 @@ class storestate extends State<Store_detail> {
   String num;
   TextEditingController textEditingController = new TextEditingController();
   int badgeData = 0;
+  bool _isCreatingLink = false;
   bool ischanged = false;
   String query = "";
 
@@ -55,9 +59,12 @@ class storestate extends State<Store_detail> {
   PageController _pageController = PageController(
     initialPage: 0,
   );
+
+  String _linkMessage;
   @override
   void initState() {
     getSingleProduct();
+    initDynamicLinks();
     super.initState();
   }
 
@@ -171,8 +178,9 @@ class storestate extends State<Store_detail> {
                                       widget.name,
                                       style: TextStyle(
                                         color: darkText,
-                                        fontFamily: "futura",
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 20,
+                                        fontFamily: "futura",
                                       ),
                                     ),
                                   ),
@@ -184,11 +192,10 @@ class storestate extends State<Store_detail> {
                                               currency +
                                                   widget.price.toString(),
                                               style: TextStyle(
-                                                fontFamily: "futura",
-                                                fontWeight: FontWeight.bold,
-                                                color: primaryColor,
-                                                fontSize: 18,
-                                              )),
+                                                  fontFamily: "futura",
+                                                  color: primaryColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 24)),
                                           SizedBox(
                                             width: 10,
                                           ),
@@ -212,30 +219,6 @@ class storestate extends State<Store_detail> {
                                           )
                                         ],
                                       )),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          'Availability:  ',
-                                          style: TextStyle(
-                                              color: lightestText,
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14),
-                                        ),
-                                        /*  Text(
-                              widget.productData['special'],
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14),
-                            ),*/
-                                      ],
-                                    ),
-                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -305,6 +288,23 @@ class storestate extends State<Store_detail> {
                                             },
                                           ),
                                           Expanded(child: SizedBox()),
+                                          GestureDetector(
+                                            child: Container(
+                                              height: 32,
+                                              width: 32,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFFF6464),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Center(
+                                                  child: Icon(
+                                                      Icons.share_rounded,
+                                                      color: white)),
+                                            ),
+                                            onTap: !_isCreatingLink
+                                                ? () => _createDynamicLink(true)
+                                                : null,
+                                          ),
                                           Container(
                                             height: 32,
                                             width: 32,
@@ -337,7 +337,7 @@ class storestate extends State<Store_detail> {
                                               borderRadius:
                                                   BorderRadius.circular(18),
                                               border: Border.all(
-                                                color: Colors.blue,
+                                                color: primaryColor,
                                               ),
                                             ),
                                             margin: EdgeInsets.only(
@@ -348,7 +348,7 @@ class storestate extends State<Store_detail> {
                                               child: Icon(
                                                 Icons.shopping_cart_outlined,
                                                 size: 25,
-                                                color: Colors.blue,
+                                                color: primaryColor,
                                               ),
                                               onPressed: () {
                                                 onP1Badge();
@@ -385,7 +385,7 @@ class storestate extends State<Store_detail> {
                                                                 BorderRadius
                                                                     .circular(
                                                                         18)),
-                                                    color: Colors.black,
+                                                    color: primaryColor,
                                                     onPressed: () {
                                                       Navigator.push(
                                                           context,
@@ -427,91 +427,123 @@ class storestate extends State<Store_detail> {
                                               fontSize: 16))),
                                   Container(
                                     height: 120,
-                                     margin: EdgeInsets.only(left:10,right:10),
+                                    margin:
+                                        EdgeInsets.only(left: 10, right: 10),
                                     child: ListView(
                                       scrollDirection: Axis.horizontal,
                                       children: [
-                                       Container(
-                                         width:150,
-                                                                                child: Column(
-                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                           children:<Widget>[
-                                              GestureDetector(
-                                              child:Container(
-                                                margin: EdgeInsets.only(right:10.0,bottom:5),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    child: Image.asset(
-                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
-                                                  ))),
-                                          Container(
-                                     margin: EdgeInsets.only(left:5.0),
-                                      child: Text("Buy Roadster for men ",
-                                            style: TextStyle(
-                                                color:darkText,
-                                                fontFamily: "futura",
-                                                fontSize: 16),maxLines: 1,)),
-                                           ]
-                                         ),
-                                       ) ,
                                         Container(
-                                         width:150,
-                                                                                child: Column(
-                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                           children:<Widget>[
-                                              GestureDetector(
-                                              child:Container(
-                                                margin: EdgeInsets.only(right:10.0,bottom:5),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    child: Image.asset(
-                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
-                                                  ))),
-                                          Container(
-                                     margin: EdgeInsets.only(left:5.0),
-                                      child: Text("Buy Roadster for men ",
-                                            style: TextStyle(
-                                                color:darkText,
-                                                fontFamily: "futura",
-                                                fontSize: 16),maxLines: 1,)),
-                                           ]
-                                         ),
-                                       ) ,
-                                       
-                                      
-                                     Container(
-                                         width:150,
-                                                                                child: Column(
-                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                           children:<Widget>[
-                                              GestureDetector(
-                                              child:Container(
-                                                margin: EdgeInsets.only(right:10.0,bottom:5),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    child: Image.asset(
-                                                        "assets/images/syore.jpg",height:90,fit: BoxFit.fitHeight,),
-                                                  ))),
-                                          Container(
-                                     margin: EdgeInsets.only(left:5.0),
-                                      child: Text("Buy Roadster for men ",
-                                            style: TextStyle(
-                                                color:darkText,
-                                                fontFamily: "futura",
-                                                fontSize: 16),maxLines: 1,)),
-                                           ]
-                                         ),
-                                       ) ,
-                                          ],
+                                          width: 150,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                    child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 10.0,
+                                                            bottom: 5),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          child: Image.asset(
+                                                            "assets/images/syore.jpg",
+                                                            height: 90,
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                          ),
+                                                        ))),
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5.0),
+                                                    child: Text(
+                                                      "Buy Roadster for men ",
+                                                      style: TextStyle(
+                                                          color: darkText,
+                                                          fontFamily: "futura",
+                                                          fontSize: 16),
+                                                      maxLines: 1,
+                                                    )),
+                                              ]),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                    child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 10.0,
+                                                            bottom: 5),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          child: Image.asset(
+                                                            "assets/images/syore.jpg",
+                                                            height: 90,
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                          ),
+                                                        ))),
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5.0),
+                                                    child: Text(
+                                                      "Buy Roadster for men ",
+                                                      style: TextStyle(
+                                                          color: darkText,
+                                                          fontFamily: "futura",
+                                                          fontSize: 16),
+                                                      maxLines: 1,
+                                                    )),
+                                              ]),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                    child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 10.0,
+                                                            bottom: 5),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          child: Image.asset(
+                                                            "assets/images/syore.jpg",
+                                                            height: 90,
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                          ),
+                                                        ))),
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5.0),
+                                                    child: Text(
+                                                      "Buy Roadster for men ",
+                                                      style: TextStyle(
+                                                          color: darkText,
+                                                          fontFamily: "futura",
+                                                          fontSize: 16),
+                                                      maxLines: 1,
+                                                    )),
+                                              ]),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                    Container(
+                                  Container(
                                     margin: EdgeInsets.all(10.0),
                                     height: 1.5,
                                     color: Colors.grey[200],
@@ -812,11 +844,10 @@ class storestate extends State<Store_detail> {
           controller: _pageController,
           count: createBannerSlider().length,
           effect: WormEffect(
-            dotWidth: 20,
-            dotHeight: 5,
-            activeDotColor: primaryColor,
-            dotColor: white
-          ), // your preferred effect // PageController
+              dotWidth: 20,
+              dotHeight: 5,
+              activeDotColor: primaryColor,
+              dotColor: white), // your preferred effect // PageController
         )));
   }
 
@@ -833,5 +864,63 @@ class storestate extends State<Store_detail> {
         child: Icon(icon),
       ),
     );
+  }
+
+  Future<void> _createDynamicLink(bool short) async {
+    setState(() {
+      _isCreatingLink = true;
+    });
+
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://shopmaticfront.page.link',
+      link: Uri.parse('https://aashya.com/topstore'),
+      androidParameters: AndroidParameters(
+        packageName: 'com.tapp.shopmatic_front',
+      ),
+      iosParameters: IosParameters(
+        bundleId: 'com.google.FirebaseCppDynamicLinksTestApp.dev',
+        minimumVersion: '0',
+      ),
+    );
+
+    Uri url;
+    if (short) {
+      final ShortDynamicLink shortLink = await parameters.buildShortLink();
+      url = shortLink.shortUrl;
+    } else {
+      url = await parameters.buildUrl();
+    }
+
+    setState(() {
+      _linkMessage = url.toString();
+      _isCreatingLink = false;
+    });
+    FlutterShare.share(
+        title: 'Example share',
+        text: "Name:" + widget.name + "\n" + "Info:" + widget.description,
+        linkUrl: _linkMessage,
+        chooserTitle: 'Example Chooser Title');
+  }
+
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      final Uri deepLink = dynamicLink?.link;
+
+      if (deepLink != null) {
+        Navigator.pushNamed(context, deepLink.path);
+      }
+    }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
+
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      Navigator.pushNamed(context, deepLink.path);
+    }
   }
 }

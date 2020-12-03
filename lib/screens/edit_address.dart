@@ -509,9 +509,10 @@ String fname="";
                                       value: value4,
                                       onChanged: (val) {
                                         setState(() {
-                                          widget.value=="1";
-                                          print(widget.value);
+                                         
                                           value4 = val;
+                                           widget.value=="1";
+                                          print(widget.value);
                                         });
                                       }),
                                 ),
