@@ -62,7 +62,7 @@ elevation: 0,
                             right: 2,
                             top: 0,
                             child: Card(
-                              color: Colors.black,
+                              color: lightestText,
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(14),

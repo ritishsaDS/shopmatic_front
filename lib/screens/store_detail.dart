@@ -146,9 +146,11 @@ class storestate extends State<Store_detail> {
                                       ),
                                       _buildCircleIndicator(),
                                       Positioned(
-                                        right: 0,
-                                        top: 0,
+                                        right: 5,
+                                        top: 5,
                                         child: Container(
+                                          width: 45,
+                                          height: 45,
                                           decoration: new BoxDecoration(
                                               color: lightGrey,
                                               borderRadius:
@@ -163,13 +165,99 @@ class storestate extends State<Store_detail> {
                                                     const Radius.circular(40.0),
                                               )),
                                           child: IconButton(
-                                            icon: Icon(Icons.close),
+                                            icon: Icon(Icons.close, size: 20),
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
                                           ),
                                         ),
-                                      )
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: 125,
+                                        child: Container(
+                                          width: 45,
+                                          height: 45,
+                                          decoration: new BoxDecoration(
+                                              color: lightGrey,
+                                              borderRadius:
+                                                  new BorderRadius.only(
+                                                topLeft:
+                                                    const Radius.circular(2.0),
+                                                topRight:
+                                                    const Radius.circular(2.0),
+                                                bottomRight:
+                                                    const Radius.circular(2.0),
+                                                bottomLeft:
+                                                    const Radius.circular(2.0),
+                                              )),
+                                          child: IconButton(
+                                            icon: Icon(Icons.message_outlined,
+                                                size: 30, color: white),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                            right: 0,
+                                            top: 175,
+                                            child: Container(
+                                              width: 45,
+                                              height: 45,
+                                              decoration: new BoxDecoration(
+                                                  color: lightGrey,
+                                                  borderRadius:
+                                                      new BorderRadius.only(
+                                                    topLeft:
+                                                        const Radius.circular(
+                                                            2.0),
+                                                    topRight:
+                                                        const Radius.circular(
+                                                            2.0),
+                                                    bottomRight:
+                                                        const Radius.circular(
+                                                            2.0),
+                                                    bottomLeft:
+                                                        const Radius.circular(
+                                                            2.0),
+                                                  )),
+                                              child: Positioned(
+                    top: -1.0,
+                    left: -6.0,child:Badge(
+                                                
+                                                showBadge: p1badge,
+                                                badgeContent: Text(
+                                                  badge.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                child: IconButton(
+                                                icon:   Icon(Icons.card_travel_outlined,size:28,color:white),
+                                                   onPressed: () {
+                                          if (badge == 0) {
+                                          } else {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Cart(
+                                                        image:
+                                                            productFromServer[
+                                                                0],
+                                                        name: widget.name,
+                                                        id: widget.data,
+                                                        price: widget.price,
+                                                        description:
+                                                            widget.description,
+                                                        Quantity: Quantity)));
+                                          }
+                                        },
+                                    
+                                                ),
+                                              ),
+                                            ),)
+                                         )
                                     ],
                                   ),
                                   Container(
@@ -288,10 +376,18 @@ class storestate extends State<Store_detail> {
                                             },
                                           ),
                                           Expanded(child: SizedBox()),
+                                        ],
+                                      )),
+                                  Container(
+                                      margin: EdgeInsets.only(
+                                          left: 10.0, right: 10),
+                                      child: Row(
+                                        children: <Widget>[
                                           GestureDetector(
                                             child: Container(
-                                              height: 32,
-                                              width: 32,
+                                              padding: EdgeInsets.all(3.0),
+                                              height: 30,
+                                              width: 30,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFFF6464),
                                                 shape: BoxShape.circle,
@@ -299,15 +395,17 @@ class storestate extends State<Store_detail> {
                                               child: Center(
                                                   child: Icon(
                                                       Icons.share_rounded,
+                                                      size: 20,
                                                       color: white)),
                                             ),
                                             onTap: !_isCreatingLink
                                                 ? () => _createDynamicLink(true)
                                                 : null,
                                           ),
+                                          SizedBox(width: 5),
                                           Container(
-                                            height: 32,
-                                            width: 32,
+                                            height: 30,
+                                            width: 30,
                                             decoration: BoxDecoration(
                                               color: Color(0xFFFF6464),
                                               shape: BoxShape.circle,
@@ -316,6 +414,7 @@ class storestate extends State<Store_detail> {
                                                 child: Icon(
                                                     Icons
                                                         .favorite_border_outlined,
+                                                    size: 20,
                                                     color: white)),
                                           )
                                         ],
@@ -330,49 +429,54 @@ class storestate extends State<Store_detail> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: <Widget>[
-                                          Container(
-                                            height: 50,
-                                            width: 58,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(18),
-                                              border: Border.all(
-                                                color: primaryColor,
+                                          Expanded(
+                                            child: Container(
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                                border: Border.all(
+                                                  color: Colors.black,
+                                                ),
                                               ),
-                                            ),
-                                            margin: EdgeInsets.only(
-                                              left: 2,
-                                              right: 4,
-                                            ),
-                                            child: FlatButton(
-                                              child: Icon(
-                                                Icons.shopping_cart_outlined,
-                                                size: 25,
-                                                color: primaryColor,
+                                              margin: EdgeInsets.only(
+                                                left: 2,
+                                                right: 4,
                                               ),
-                                              onPressed: () {
-                                                onP1Badge();
-                                              },
-                                              /* onPressed: () {
+                                              child: FlatButton(
+                                                child: Text(
+                                                  "Add to Cart",
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontFamily: "futura",
+                                                    fontWeight: FontWeight.bold,
+                                                    color: darkText,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  onP1Badge();
+                                                },
+                                                /* onPressed: () {
                                   showModalBottomSheet<void>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return  ListView.builder
                                         (
-                                          itemCount: 100,
-                                          itemBuilder: (BuildContext ctxt, int Index) {
-                                            return new Container(
-                                              margin: EdgeInsets.only(top:10),
-                                              child:Center(
+                                            itemCount: 100,
+                                            itemBuilder: (BuildContext ctxt, int Index) {
+                                              return new Container(
+                                                margin: EdgeInsets.only(top:10),
+                                                child:Center(
 
-                                                child:Index==0?Container():Text(Index.toString(),style: TextStyle(fontFamily: "proxima",fontSize: 20),)
-                                              )
-                                            );
-                                          }
+                                                  child:Index==0?Container():Text(Index.toString(),style: TextStyle(fontFamily: "proxima",fontSize: 20),)
+                                                )
+                                              );
+                                            }
                                       );
                                     },
                                   );
                                 },*/
+                                              ),
                                             ),
                                           ),
                                           Expanded(
@@ -385,16 +489,21 @@ class storestate extends State<Store_detail> {
                                                                 BorderRadius
                                                                     .circular(
                                                                         18)),
-                                                    color: primaryColor,
+                                                    color: Colors.black,
                                                     onPressed: () {
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) => Cart(
-                                                                  image: widget
-                                                                      .image,
+                                                                  image:
+                                                                      productFromServer[
+                                                                          0],
                                                                   name: widget
                                                                       .name,
+                                                                  id: widget
+                                                                      .data,
+                                                                  price: widget
+                                                                      .price,
                                                                   description:
                                                                       widget
                                                                           .description,
@@ -404,11 +513,11 @@ class storestate extends State<Store_detail> {
                                                     child: Text(
                                                       "Buy  Now".toUpperCase(),
                                                       style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white,
-                                                      ),
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontFamily: "futura"),
                                                     ),
                                                   ))),
                                         ],
@@ -736,36 +845,7 @@ class storestate extends State<Store_detail> {
                     )
                   ]))
       ]),
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-          child: Badge(
-            showBadge: p1badge,
-            badgeContent: Text(
-              badge.toString(),
-              style: TextStyle(color: Colors.white),
-            ),
-            child: Icon(
-              Icons.add_shopping_cart,
-              size: 38,
-            ),
-          ),
-        ),
-        onPressed: () {
-          if (badge == 0) {
-          } else {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Cart(
-                        image: productFromServer[0],
-                        name: widget.name,
-                        id: widget.data,
-                        price: widget.price,
-                        description: widget.description,
-                        Quantity: Quantity)));
-          }
-        },
-      ),
+      
       bottomNavigationBar: BottomTabs(1, true),
     ));
   }

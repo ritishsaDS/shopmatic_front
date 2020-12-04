@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopmatic_front/screens/chat.dart';
 import 'package:shopmatic_front/screens/story.dart';
 import 'package:shopmatic_front/utils/common.dart';
 
@@ -60,34 +61,35 @@ class storestate extends State<storeProducts>
                       child: NestedScrollView(
                           headerSliverBuilder: (context, bool innerBoxIsScrolled) {
                             return [
-                              new SliverAppBar(
-                                  elevation: 2,
-            backgroundColor: Colors.white,
-            iconTheme: new IconThemeData(color: Colors.pink),
-                    title: Text(follow,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontFamily: "futura")),
-                    pinned: false,
-                    floating: true,
-                    forceElevated: innerBoxIsScrolled,
-                      actions: <Widget>[
-GestureDetector(
-  child:   Transform.rotate(
-  angle: 505 * pi / 270,
-  child:         Container(padding: EdgeInsets.only(right: 10),
-      child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('email');
-  Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (BuildContext ctx) => Login()));
-},
+//                               new SliverAppBar(
+//                                   elevation: 2,
+//             backgroundColor: Colors.white,
+//             iconTheme: new IconThemeData(color: Colors.pink),
+//                     title: Text(follow,
+//                               style: TextStyle(
+//                                   color: Colors.black,
+//                                   fontSize: 15,
+//                                   fontFamily: "futura")),
+//                     pinned: false,
+//                     floating: true,
+//                     forceElevated: innerBoxIsScrolled,
+//                       actions: <Widget>[
+// GestureDetector(
+//   child:   Transform.rotate(
+//   angle: 505 * pi / 270,
+//   child:         Container(padding: EdgeInsets.only(right: 10),
+//       child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   prefs.remove('email');
+//   Navigator.pushReplacement(context,
+//       MaterialPageRoute(builder: (BuildContext ctx) => Login()));
+// },
 
-)
-          ],
+// )
+//           ],
         
-                  ),
+//                   ),
+                             
                               SliverList(
                                 delegate: SliverChildListDelegate(
                                   _randomHeightWidgets(context),
@@ -137,7 +139,7 @@ GestureDetector(
                                                 ),
                                               ]),
                                               Container(
-                                                  height: 50,
+                                                  height: 40,
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -147,7 +149,7 @@ GestureDetector(
                                                             right: 10,
                                                            ),
                                                         padding:
-                                                            EdgeInsets.all(10.0),
+                                                            EdgeInsets.all(8.0),
                                                         decoration: BoxDecoration(
                                                             borderRadius:
                                                                 BorderRadius
@@ -985,6 +987,9 @@ follow=productFromServer['data']  ['outlet_name'];
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                               fontFamily: "futura"))),
+                                              SizedBox(
+                                                height:7
+                                              ),
                                   Container(
                                       child: Text(
                                           productFromServer['data']
@@ -1138,13 +1143,7 @@ follow=productFromServer['data']  ['outlet_name'];
                                                                           16)),
                                                             )),
                                                         onTap: () {
-                                                          if (productFromServer[
-                                                                  'message'] ==
-                                                              "Join as Reseller") {
-                                                            _showDialog();
-                                                          } else {
-                                                            unfollowDialog();
-                                                          }
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>WelcomeScreen()));
                                                         }),
                                                   ],
                                                 ),
@@ -1163,38 +1162,23 @@ follow=productFromServer['data']  ['outlet_name'];
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column( mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                Container(
-                                    child: Text("219",
-                                        style: TextStyle(
-                                            color: darkText,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20))),
-                                Container(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Text("Reviewes",
-                                        style: TextStyle(
-                                            fontFamily: "proxima",
-                                            color: lightestText,
-                                            fontSize: 17)))
-                              ]),
-                              Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                 Container(
                                     child: Text(productFromServer['products'],
                                         style: TextStyle(
                                             color: darkText,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20))),
+                                            fontSize: 18))),
                                 Container(
                                     padding: EdgeInsets.all(5.0),
                                     child: Text("Products",
                                         style: TextStyle(
                                             fontFamily: "proxima",
                                             color: lightestText,
-                                            fontSize: 17)))
+                                            fontSize: 15)))
                               ]),
+                             
                               Column(mainAxisAlignment: MainAxisAlignment.spaceAround,children: <Widget>[
                                 Stack(children: <Widget>[
                                   Container(
@@ -1212,7 +1196,7 @@ follow=productFromServer['data']  ['outlet_name'];
                                                       color: darkText,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 20))))
+                                                      fontSize: 18))))
                                 ]),
                                 Container(
                                     padding: EdgeInsets.all(5.0),
@@ -1220,8 +1204,25 @@ follow=productFromServer['data']  ['outlet_name'];
                                         style: TextStyle(
                                             fontFamily: "proxima",
                                             color: lightestText,
-                                            fontSize: 17)))
+                                            fontSize: 15)))
                               ]),
+                              Column( mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                Container(
+                                    child: Text("219",
+                                        style: TextStyle(
+                                            color: darkText,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))),
+                                Container(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Text("Reviewes",
+                                        style: TextStyle(
+                                            fontFamily: "proxima",
+                                            color: lightestText,
+                                            fontSize: 15)))
+                              ]),
+                           
                             ]),
 
                         SizedBox(height: 5),

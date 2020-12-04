@@ -21,6 +21,7 @@ const transparentBlack = Color(0xa0000000);
 const dividerColor = Color(0xffeeeeee);
 String currency="\₹";
 int badge=0;bool cartOnHold = false;
+int badge1=0;
 int itemToDelete = 0;
 int cartCount = 0;
 bool gettingCartId = false;
@@ -74,6 +75,8 @@ void saveCartToLocal(dynamic image,dynamic price,dynamic id,dynamic quantity) as
 }
 
 var p1badge = false;
+var p2badge = false;
+
 const domainURL = 'https://aashya.com/';
 String storeListingApi = domainURL+ "topStore/outlets/listing/1";
 String profileApi = domainURL+ "topStore/outlets/byId/";

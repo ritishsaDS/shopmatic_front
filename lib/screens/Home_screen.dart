@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
+import 'package:badges/badges.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,14 +51,24 @@ class Homestate extends State<Home> {
           
           actions: <Widget>[
 GestureDetector(
-  child:   Transform.rotate(
-  angle: 505 * pi / 270,
-  child:         Container(padding: EdgeInsets.only(right: 10),
-      child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('email');
-  Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (BuildContext ctx) => Login()));
+  
+  child:         Container(padding: EdgeInsets.only(right: 20,bottom:10,top:10),
+      child:  Badge(
+            showBadge: p2badge,
+            badgeContent: Text(
+              badge1.toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+            child: Icon(
+              Icons.send,
+              size:32,
+              color:primaryColor,
+            ),
+          )),
+       onTap: () {
+  
+  // Navigator.pushReplacement(context,
+  //     MaterialPageRoute(builder: ( context) => WelcomeScreen()));
 },
 
 )
