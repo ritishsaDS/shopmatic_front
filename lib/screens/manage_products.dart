@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shopmatic_front/utils/common.dart';
+import 'dart:convert' show json, utf8;
 
 import 'add_product.dart';
 import 'manage_productListing.dart';
@@ -56,7 +58,11 @@ class stateproducts extends State<manageproducts> {
         ),
         backgroundColor: white,
       ),
-      body: ListView(children: getProducts()),
+      body:Stack(children: <Widget>[
+      Container(
+          child: isLoading
+              ? Center(child: Image.asset(cupertinoActivityIndicator))
+              : ListView(children: getProducts()))]),
       floatingActionButton: Container(
         margin: EdgeInsets.only(left: 50, right: 30),
         width: MediaQuery.of(context).size.width,
@@ -91,7 +97,7 @@ class stateproducts extends State<manageproducts> {
         print(responseJson.toString() + "hello");
         if (response.statusCode == 200) {
           productFromServer = responseJson['data'];
-          print('jhifuh' + productFromServer.toString());
+         
         }
         setState(() {
           isError = false;
@@ -117,11 +123,10 @@ class stateproducts extends State<manageproducts> {
     List<Widget> productLists = new List();
     List products = productFromServer as List;
     for (int i = 0; i < products.length; i++) {
-      print("sdujh" + products.toString());
       productLists.add(product_listing(
           id: products[i]['id'],
           name: products[i]['name'],
-          desc: products[i]['description'],
+      desc:  (  products[i]['description']),
           oprice: products[i]['price'],
           gprice: products[i]['gold_discount'],
           sprice: products[i]['silver_discount'],

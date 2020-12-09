@@ -767,7 +767,7 @@ class settings_state extends State<settings> {
                             ],
                           ),onTap:(){
                           Navigator.push(context,
-                              MaterialPageRoute(builder: ( ctx) => WelcomeScreen()));
+                              MaterialPageRoute(builder: (context) => profile()));
                         }
                         ),
                       ),

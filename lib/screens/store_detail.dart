@@ -1,17 +1,15 @@
 import 'dart:convert';
-
+import 'dart:convert' show utf8;
 import 'package:badges/badges.dart';
-import 'package:expandable/expandable.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:loading_gifs/loading_gifs.dart';
-import 'package:shopmatic_front/screens/user_address.dart';
 import 'package:shopmatic_front/utils/common.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'bottom_bar.dart';
 import 'cart.dart';
 import 'demo.dart';
@@ -19,7 +17,7 @@ import 'demo.dart';
 class Store_detail extends StatefulWidget {
   VoidCallback onP1Badge;
   dynamic image;
-
+dynamic phone;
   dynamic data;
   dynamic id;
   dynamic name;
@@ -31,14 +29,13 @@ class Store_detail extends StatefulWidget {
       this.image,
       this.id,
       this.data,
+      this.phone,
       this.name,
       this.description,
       this.price});
 
   storestate createState() => storestate();
 }
-
-class FeatureProduct {}
 
 class storestate extends State<Store_detail> {
   String selected = "first";
@@ -53,16 +50,18 @@ class storestate extends State<Store_detail> {
   bool _isCreatingLink = false;
   bool ischanged = false;
   String query = "";
-
+  String ds = "145, 151, 240, 159, 152, 152, 70, 97, 98, 114, 105, 99, 32";
+  List<int> bytes;
+  String d;
   bool isError = false;
   bool isLoading = false;
   PageController _pageController = PageController(
     initialPage: 0,
   );
-
   String _linkMessage;
   @override
   void initState() {
+    
     getSingleProduct();
     initDynamicLinks();
     super.initState();
@@ -109,7 +108,7 @@ class storestate extends State<Store_detail> {
     String quantity = Quantity.toString();
     return SafeArea(
         child: Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       resizeToAvoidBottomPadding: true,
       body: Stack(children: <Widget>[
         Container(
@@ -172,93 +171,7 @@ class storestate extends State<Store_detail> {
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        right: 0,
-                                        top: 125,
-                                        child: Container(
-                                          width: 45,
-                                          height: 45,
-                                          decoration: new BoxDecoration(
-                                              color: lightGrey,
-                                              borderRadius:
-                                                  new BorderRadius.only(
-                                                topLeft:
-                                                    const Radius.circular(2.0),
-                                                topRight:
-                                                    const Radius.circular(2.0),
-                                                bottomRight:
-                                                    const Radius.circular(2.0),
-                                                bottomLeft:
-                                                    const Radius.circular(2.0),
-                                              )),
-                                          child: IconButton(
-                                            icon: Icon(Icons.message_outlined,
-                                                size: 30, color: white),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                            right: 0,
-                                            top: 175,
-                                            child: Container(
-                                              width: 45,
-                                              height: 45,
-                                              decoration: new BoxDecoration(
-                                                  color: lightGrey,
-                                                  borderRadius:
-                                                      new BorderRadius.only(
-                                                    topLeft:
-                                                        const Radius.circular(
-                                                            2.0),
-                                                    topRight:
-                                                        const Radius.circular(
-                                                            2.0),
-                                                    bottomRight:
-                                                        const Radius.circular(
-                                                            2.0),
-                                                    bottomLeft:
-                                                        const Radius.circular(
-                                                            2.0),
-                                                  )),
-                                              child: Positioned(
-                    top: -1.0,
-                    left: -6.0,child:Badge(
-                                                
-                                                showBadge: p1badge,
-                                                badgeContent: Text(
-                                                  badge.toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                child: IconButton(
-                                                icon:   Icon(Icons.card_travel_outlined,size:28,color:white),
-                                                   onPressed: () {
-                                          if (badge == 0) {
-                                          } else {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => Cart(
-                                                        image:
-                                                            productFromServer[
-                                                                0],
-                                                        name: widget.name,
-                                                        id: widget.data,
-                                                        price: widget.price,
-                                                        description:
-                                                            widget.description,
-                                                        Quantity: Quantity)));
-                                          }
-                                        },
-                                    
-                                                ),
-                                              ),
-                                            ),)
-                                         )
-                                    ],
+                                     ],
                                   ),
                                   Container(
                                     margin: EdgeInsets.all(10.0),
@@ -311,41 +224,6 @@ class storestate extends State<Store_detail> {
                                     height: 10,
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 10.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          'SKU: ',
-                                          style: TextStyle(
-                                              color: lightestText,
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14),
-                                        ),
-                                        Text(
-                                          widget.name.replaceAll("&amp;", "&"),
-                                          style: TextStyle(
-                                              color: primaryColor,
-                                              fontWeight: FontWeight.normal,
-                                              fontFamily: "proxima",
-                                              fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 10, right: 10, top: 10),
-                                    child: Text(
-                                      widget.description,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "proxima",
-                                          color: lightestText,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                  Container(
                                       margin: EdgeInsets.all(10.0),
                                       child: Row(
                                         children: <Widget>[
@@ -389,7 +267,7 @@ class storestate extends State<Store_detail> {
                                               height: 30,
                                               width: 30,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFFF6464),
+                                                color: lightestText,
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Center(
@@ -407,7 +285,7 @@ class storestate extends State<Store_detail> {
                                             height: 30,
                                             width: 30,
                                             decoration: BoxDecoration(
-                                              color: Color(0xFFFF6464),
+                                              color: lightestText,
                                               shape: BoxShape.circle,
                                             ),
                                             child: Center(
@@ -457,25 +335,25 @@ class storestate extends State<Store_detail> {
                                                   onP1Badge();
                                                 },
                                                 /* onPressed: () {
-                                  showModalBottomSheet<void>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return  ListView.builder
-                                        (
-                                            itemCount: 100,
-                                            itemBuilder: (BuildContext ctxt, int Index) {
-                                              return new Container(
-                                                margin: EdgeInsets.only(top:10),
-                                                child:Center(
-
-                                                  child:Index==0?Container():Text(Index.toString(),style: TextStyle(fontFamily: "proxima",fontSize: 20),)
-                                                )
-                                              );
-                                            }
-                                      );
-                                    },
-                                  );
-                                },*/
+                                       showModalBottomSheet<void>(
+                                         context: context,
+                                         builder: (BuildContext context) {
+                                           return  ListView.builder
+                                             (
+                                                 itemCount: 100,
+                                                 itemBuilder: (BuildContext ctxt, int Index) {
+                                                   return new Container(
+                                                     margin: EdgeInsets.only(top:10),
+                                                     child:Center(
+     
+                                                       child:Index==0?Container():Text(Index.toString(),style: TextStyle(fontFamily: "proxima",fontSize: 20),)
+                                                     )
+                                                   );
+                                                 }
+                                           );
+                                         },
+                                       );
+                                     },*/
                                               ),
                                             ),
                                           ),
@@ -522,6 +400,20 @@ class storestate extends State<Store_detail> {
                                                   ))),
                                         ],
                                       )),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    child: Text(
+                                      widget.description,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontFamily: "proxima",
+                                          color: lightestText,
+                                          fontSize: 14),
+                                      maxLines: 10,
+                                    ),
+                                  ),
                                   Container(
                                     margin: EdgeInsets.all(10.0),
                                     height: 1.5,
@@ -657,195 +549,84 @@ class storestate extends State<Store_detail> {
                                     height: 1.5,
                                     color: Colors.grey[200],
                                   ),
-                                  Container(
-                                      margin:
-                                          EdgeInsets.only(left: 10, right: 10),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Visibility(
-                                            visible: view,
-                                            maintainState: view,
-                                            child: Column(
-                                              children: <Widget>[
-                                                Row(children: <Widget>[
-                                                  Icon(Icons.local_shipping),
-                                                  Text(
-                                                      "   When will you recieve your order?",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: darkText,
-                                                      ))
-                                                ]),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                TextField(
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  controller:
-                                                      textEditingController,
-                                                  onChanged: (text) {
-                                                    // print("jnjno" + resultText);
-                                                    query = text;
-                                                    ischanged = true;
-                                                    setState(() {
-                                                      if (query != "") {
-                                                        viewVisibletext = false;
-                                                      }
-                                                    });
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2.0),
-                                                        borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.0,
-                                                        ),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2.0),
-                                                        borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.0,
-                                                        ),
-                                                      ),
-                                                      hintText: 'Enter Pincode',
-                                                      suffixIcon: Container(
-                                                        width: 165,
-                                                        child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: <Widget>[
-                                                              Visibility(
-                                                                  maintainState:
-                                                                      false,
-                                                                  visible:
-                                                                      viewVisibletext,
-                                                                  child: Text(
-                                                                      "Enter Pincode    ",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .red,
-                                                                        fontFamily:
-                                                                            "proxima",
-                                                                      ))),
-                                                              GestureDetector(
-                                                                child: Text(
-                                                                    " Check   ",
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontFamily:
-                                                                            "proxima",
-                                                                        fontSize:
-                                                                            14)),
-                                                                onTap: () {
-                                                                  print("jhvsdjbk" +
-                                                                      textEditingController
-                                                                          .text
-                                                                          .length
-                                                                          .toString());
-                                                                  if (textEditingController
-                                                                          .text ==
-                                                                      "") {
-                                                                    setState(
-                                                                        () {
-                                                                      if (textEditingController
-                                                                              .text ==
-                                                                          "") {
-                                                                        setState(
-                                                                            () {
-                                                                          showText();
-                                                                        });
-                                                                      } else {
-                                                                        setState(
-                                                                            () {
-                                                                          hideWidget();
-                                                                        });
-                                                                      }
-                                                                    });
-                                                                  } else {
-                                                                    showPincode();
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ]),
-                                                      )),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Visibility(
-                                              visible: viewPincode,
-                                              maintainState: viewPincode,
-                                              child: Column(children: <Widget>[
-                                                Row(children: <Widget>[
-                                                  Icon(Icons.local_shipping),
-                                                  textEditingController
-                                                              .text.length ==
-                                                          6
-                                                      ? Text(
-                                                          "  With in 10-12 business days to " +
-                                                              textEditingController
-                                                                  .text,
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: darkText))
-                                                      : Text(
-                                                          "  We cant deliver here ",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: darkText))
-                                                ]),
-                                                GestureDetector(
-                                                    child: Text(
-                                                        "Try different pincode",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: const Color(
-                                                                0xFF07413C))),
-                                                    onTap: () {
-                                                      hidePincode();
-                                                      textEditingController
-                                                          .clear();
-                                                    })
-                                              ])),
-                                        ],
-                                      )),
                                   SizedBox(
                                     height: 35,
                                   ),
                                 ]),
 
                             /* HorizontalProductList(
-                          1,
-
-                          widget.productData['category_id'],
-                          'Related Products',
-                          widget.productData['image'])*/ /**/
+                               1,
+     
+                               widget.productData['category_id'],
+                               'Related Products',
+                               widget.productData['image'])*/ /**/
                           ],
                         ),
                       ),
                     )
                   ]))
       ]),
-      
+      floatingActionButton: Container(
+       margin:EdgeInsets.only(
+         left:MediaQuery.of(context).size.width-30,
+       ),
+              child: Column(
+          children: <Widget>[
+            SizedBox(height: 110),
+          Container(
+             
+                          child: IconButton(
+                    icon: Icon(Icons.call, size: 40, color: Colors.black),
+                    onPressed: () {
+                    launch('tel://${widget.phone}');
+                    },
+                  ),
+             ),
+        
+         
+           
+            Badge(
+                                                  showBadge: p1badge,
+                                                
+                                                  badgeContent: Text(
+                                                    badge.toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                        Icons
+                                                            .card_travel_outlined,
+                                                        size: 40,
+                                                        color:  Colors.black),
+                                                    onPressed: () {
+                                                      if (badge == 0) {
+                                                      } else {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => Cart(
+                                                                    image:
+                                                                        productFromServer[
+                                                                            0],
+                                                                    name: widget
+                                                                        .name,
+                                                                    id: widget
+                                                                        .data,
+                                                                    price: widget
+                                                                        .price,
+                                                                    description:
+                                                                        widget
+                                                                            .description,
+                                                                    Quantity:
+                                                                        Quantity)));
+                                                      }
+                                                    },
+                                                  ),
+                                                ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomTabs(1, true),
     ));
   }
@@ -869,14 +650,12 @@ class storestate extends State<Store_detail> {
           await http.post(SingleproductAPi, body: {"id": widget.data});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
 
         productFromServer = responseJson['data'];
 
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -885,7 +664,6 @@ class storestate extends State<Store_detail> {
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -906,7 +684,7 @@ class storestate extends State<Store_detail> {
             image: bannerList[i],
             placeholder: cupertinoActivityIndicator,
             width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
+            fit: BoxFit.fitHeight,
           ),
         );
       }
@@ -1002,5 +780,13 @@ class storestate extends State<Store_detail> {
     if (deepLink != null) {
       Navigator.pushNamed(context, deepLink.path);
     }
+  }
+
+  void utf8convert() {
+    bytes = widget.description.toString().codeUnits;
+
+    utf8.decode(bytes);
+
+    print(String.fromCharCodes(bytes));
   }
 }

@@ -1,5 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert' show json, utf8;
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -15,7 +16,7 @@ import 'package:http/http.dart' as http;
 class product_listing extends StatefulWidget {
   dynamic id;
   dynamic name;
-  dynamic desc;
+ dynamic desc;
   dynamic oprice;
   dynamic gprice;
   dynamic sprice;
@@ -37,10 +38,13 @@ class product_listing extends StatefulWidget {
 class stateproduct_listing extends State<product_listing> {
   bool isError = false;
   bool isLoading = false;
+  String decoded;
   @override
   void initState() {
-    print("nihodsfijopdf" + widget.oprice);
+  
+    
     getProductsserver();
+
     super.initState();
   }
 
@@ -69,7 +73,7 @@ class stateproduct_listing extends State<product_listing> {
                       style: TextStyle(
                           fontFamily: "ProximaNova",
                           fontSize: 15,
-                          fontWeight: FontWeight.bold)),
+                          fontWeight: FontWeight.bold),maxLines: 3,overflow: TextOverflow.ellipsis,),
                   trailing: Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

@@ -78,7 +78,7 @@ var p1badge = false;
 var p2badge = false;
 
 const domainURL = 'https://aashya.com/';
-String storeListingApi = domainURL+ "topStore/outlets/listing/1";
+String storeListingApi = domainURL+ "topStore/outlets/listing";
 String profileApi = domainURL+ "topStore/outlets/byId/";
 String StoriesApi = domainURL+ "topStore/stories/byId/";
 String CategoriesApi = domainURL+ "topStore/categories/byId/";
@@ -119,5 +119,6 @@ String editaddressapi = domainURL+ "topStore/user/editaddress";
 String blockOutletApi = domainURL+ "topStore/user/blockOutlet";
 String editProductimage=domainURL+'topStore/products/editProductImage';
 String deletOutletapi = domainURL+ "topStore/outlets/delete";
+String outletFollowedbyUser=domainURL+"topStore/User/followedOutlets/";
 
 

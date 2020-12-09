@@ -11,6 +11,7 @@ import 'Home_screen.dart';
 import 'chat.dart';
 import 'demo.dart';
 import 'follow_requests.dart';
+import 'followedOutlets.dart';
 import 'followers.dart';
 import 'orders.dart';
 
@@ -117,12 +118,12 @@ class _BottomTabsState extends State<BottomTabs> {
 
                             // return;
                           } else {
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => WelcomeScreen(),
-                          //       ));
-                          // }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => followed(),
+                                ));
+                          
                           }
                           // Navigator.popUntil(context, ModalRoute.withName('/store'));
                         },

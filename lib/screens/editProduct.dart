@@ -532,7 +532,7 @@ query=widget.name;
   }
 
   Future<void> addproduct(
-      String category, String name, String desc, base64Image, String price,String goldprice,String silverprice,String plprice) async {
+       String name, String desc, base64Image, String price,String goldprice,String silverprice,String plprice) async {
     isLoading = true;
     try {
       print("josdfjhu");
@@ -637,7 +637,8 @@ query=widget.name;
 
     setStatus('Uploading Image...');
     if (null == tmpFile) {
-        addproduct("1",productName,productDesc,base64Image,price.text,gold_price.text,silver_price.text,pl_price.text);
+      print("ojpsdfjpoidfopj"+productDesc);
+        addproduct(productName,productDesc,base64Image,price.text,gold_price.text,silver_price.text,pl_price.text);
       setStatus(errMessage);
       return;
     }

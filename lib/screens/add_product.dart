@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
-
+import 'dart:convert' show json, utf8;
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +22,7 @@ class addproductstate extends State<addproduct> {
   bool viewVisible = false;
   File imageURI;
   Future<File> imageFile;
+  
   String localImagePath;
   String caption = "";
   Future<File> file;
@@ -42,6 +43,7 @@ class addproductstate extends State<addproduct> {
   TextEditingController silver = TextEditingController();
   TextEditingController platinum = TextEditingController();
   TextEditingController price = TextEditingController();
+    Utf8Codec utf8 = Utf8Codec();
 
   void hideWidget() {
     setState(() {
@@ -354,12 +356,9 @@ class addproductstate extends State<addproduct> {
                   children: <Widget>[
                     TextField(
                       controller: description,
-                      onChanged: (text) {
-                        print("Text $text");
-                      },
                       decoration: InputDecoration(
                           filled: true,
-                          labelText: "Product Description",
+                          labelText: "Product description",
                           labelStyle: TextStyle(
                               fontFamily: "ProximaNova", fontSize: 12),
                           fillColor: Colors.white,
@@ -422,15 +421,16 @@ class addproductstate extends State<addproduct> {
   }
 
   Future<void> addproduct(
-      String category, String name, String desc,String price, String gold, String silver,String platinum, base64Image,base64Image1,base64Image2,base64Image3) async {
+     String name, String desc,String price, String gold, String silver,String platinum, base64Image,base64Image1,base64Image2,base64Image3) async {
     isLoading = true;
     try {
-      print("josdfjhu");
+      print(desc+"knnjd");
       final response = await http.post(addProductApi, body: {
         "category_id": "1",
         "name": name,
+         "description":desc,
         "outlet_id": "23",
-        "description": desc,
+       
         "image": base64Image + ","+base64Image1+","+base64Image2+","+base64Image3,
         "silver_discount":silver,
         "gold_discount":gold,
@@ -456,7 +456,7 @@ class addproductstate extends State<addproduct> {
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
+     print(e.toString());
       setState(() {
         isError = true;
         isLoading = false;
@@ -723,6 +723,7 @@ class addproductstate extends State<addproduct> {
   }
 
   startUpload() {
+    
     setStatus('Uploading Image...');
     if (null == tmpFile) {
       setStatus(errMessage);
@@ -736,7 +737,7 @@ class addproductstate extends State<addproduct> {
     String dplatinum=platinum.text;
 
 
-    addproduct("1",productName,productDesc,oprice,dgold,dsilver,dplatinum,base64Image,base64Image2,base64Image3,base64Image4);
+    addproduct(productName,productDesc,oprice,dgold,dsilver,dplatinum,base64Image,base64Image2,base64Image3,base64Image4);
   }
 
   chooseImage() {

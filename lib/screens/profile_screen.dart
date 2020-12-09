@@ -168,7 +168,7 @@ List<String> splita=[];
                                   )),
                                 onTap: () {
                                    //getfollowers();
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => editOutlet(

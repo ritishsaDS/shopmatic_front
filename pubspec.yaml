@@ -58,6 +58,7 @@ dependencies:
   flutter_share: ^1.0.3
   path_provider: ^1.6.7
   firebase_core: ^0.5.2+1
+  html_unescape: 
   flutter_slidable: 
 
 

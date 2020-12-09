@@ -84,7 +84,7 @@ class cartstate extends State<Cart> {
                             borderRadius: BorderRadius.circular(12.0),
                             child: FadeInImage.assetNetwork(
                               image: widget.image,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                               placeholder: cupertinoActivityIndicator,
                               height: 90.0,
                               width: 100.0,

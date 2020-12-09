@@ -148,8 +148,10 @@ GestureDetector(
   Future<void> getStore() async {
     isLoading = true;
     try {
-      final response = await http.get(
-        storeListingApi,
+      final response = await http.post(
+        storeListingApi,body: {
+          "place_id":"1"
+        }
       );
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);

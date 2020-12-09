@@ -31,8 +31,9 @@ class storestate extends State<storeProducts>
   TabController _controller;
   String id;
   TextEditingController reason = TextEditingController();
-
-  String follow="";
+  String o_products = "";
+  String o_resellers = "";
+  String follow = "";
 
   @override
   void initState() {
@@ -52,49 +53,22 @@ class storestate extends State<storeProducts>
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: SafeArea(
-              child: Stack(children: <Widget>[
+        child: Stack(children: <Widget>[
           Container(
               child: isLoading
-                  ? Center(child: Image.asset(cupertinoActivityIndicator,height: 50,width:50))
+                  ? Center(
+                      child: Image.asset(cupertinoActivityIndicator,
+                          height: 50, width: 50))
                   : DefaultTabController(
                       length: 1,
                       child: NestedScrollView(
-                          headerSliverBuilder: (context, bool innerBoxIsScrolled) {
+                          headerSliverBuilder:
+                              (context, bool innerBoxIsScrolled) {
                             return [
-//                               new SliverAppBar(
-//                                   elevation: 2,
-//             backgroundColor: Colors.white,
-//             iconTheme: new IconThemeData(color: Colors.pink),
-//                     title: Text(follow,
-//                               style: TextStyle(
-//                                   color: Colors.black,
-//                                   fontSize: 15,
-//                                   fontFamily: "futura")),
-//                     pinned: false,
-//                     floating: true,
-//                     forceElevated: innerBoxIsScrolled,
-//                       actions: <Widget>[
-// GestureDetector(
-//   child:   Transform.rotate(
-//   angle: 505 * pi / 270,
-//   child:         Container(padding: EdgeInsets.only(right: 10),
-//       child: Icon(Icons.send_outlined,size: 30,))),onTap: ()async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   prefs.remove('email');
-//   Navigator.pushReplacement(context,
-//       MaterialPageRoute(builder: (BuildContext ctx) => Login()));
-// },
-
-// )
-//           ],
-        
-//                   ),
-                             
                               SliverList(
                                 delegate: SliverChildListDelegate(
                                   _randomHeightWidgets(context),
                                 ),
-                               
                               ),
                             ];
                           },
@@ -103,23 +77,22 @@ class storestate extends State<storeProducts>
                             Container(
                               child: isLoading
                                   ? Center(
-                                      child:
-                                          Image.asset(cupertinoActivityIndicator))
+                                      child: Image.asset(
+                                          cupertinoActivityIndicator))
                                   : productFromServer['message'] == "Joined"
                                       ? Container(
                                           margin: EdgeInsets.all(10.0),
                                           child: Column(
                                             children: <Widget>[
-                                               Row(children: [
+                                              Row(children: [
                                                 Expanded(
                                                   child: Container(
-                                                     margin: EdgeInsets.only(
-                                                           
-                                                            bottom: 10),
+                                                    margin: EdgeInsets.only(
+                                                        bottom: 10),
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                8.0),
+                                                            BorderRadius
+                                                                .circular(8.0),
                                                         color: dividerColor),
                                                     child: TextField(
                                                       decoration: InputDecoration(
@@ -146,8 +119,8 @@ class storestate extends State<storeProducts>
                                                     children: <Widget>[
                                                       Container(
                                                         margin: EdgeInsets.only(
-                                                            right: 10,
-                                                           ),
+                                                          right: 10,
+                                                        ),
                                                         padding:
                                                             EdgeInsets.all(8.0),
                                                         decoration: BoxDecoration(
@@ -177,12 +150,12 @@ class storestate extends State<storeProducts>
                                                               0.73,
                                                           child: ListView(
                                                               scrollDirection:
-                                                                  Axis.horizontal,
+                                                                  Axis
+                                                                      .horizontal,
                                                               children:
                                                                   getTopcategories()))
                                                     ],
                                                   )),
-                                             
                                               SizedBox(height: 7),
                                               Expanded(
                                                 child: TabBarView(
@@ -214,7 +187,9 @@ class storestate extends State<storeProducts>
                                             children: <Widget>[
                                               Container(
                                                   margin: EdgeInsets.only(
-                                                      top: 5, left: 5, right: 5),
+                                                      top: 5,
+                                                      left: 5,
+                                                      right: 5),
                                                   padding: EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -234,7 +209,8 @@ class storestate extends State<storeProducts>
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text("This Account is Private",
+                                                  Text(
+                                                      "This Account is Private",
                                                       style: TextStyle(
                                                           color: darkText,
                                                           fontFamily: "futura",
@@ -263,7 +239,7 @@ class storestate extends State<storeProducts>
                           ]))))
         ]),
       ),
-      bottomNavigationBar: BottomTabs(2, true),
+      bottomNavigationBar: BottomTabs(1, true),
     );
   }
 
@@ -277,20 +253,18 @@ class storestate extends State<storeProducts>
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     id = prefs.getString('intValue');
-    print("isdds" + id);
     try {
       final response = await http
           .post(profileApi, body: {"outlet_id": widget.data, "user_id": id});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
 
         productFromServer = responseJson;
-follow=productFromServer['data']  ['outlet_name'];
+        follow = productFromServer['data']['outlet_name'];
+        o_products = productFromServer['products'];
         setState(() {
           isError = false;
 
-          print('setstate');
         });
       } else {
         setState(() {
@@ -299,7 +273,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -313,20 +286,17 @@ follow=productFromServer['data']  ['outlet_name'];
   Future<void> getStories() async {
     isLoading = true;
     try {
-      print("josdfjhu");
       final response = await http.get(
         StoriesApi + widget.data,
       );
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
         if (response.statusCode == 200) {
           storyfromserver = responseJson['data'];
         }
         setState(() {
           isError = false;
 
-          print('setstate');
         });
       } else {
         setState(() {
@@ -335,7 +305,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -382,20 +351,17 @@ follow=productFromServer['data']  ['outlet_name'];
   Future<void> getCategories() async {
     isLoading = true;
     try {
-      print("josdfjhu");
       final response = await http.get(
         CategoriesApi + widget.data,
       );
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
         if (response.statusCode == 200) {
           categoryfromserver = responseJson['data'] as List;
         }
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -404,7 +370,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -455,11 +420,7 @@ follow=productFromServer['data']  ['outlet_name'];
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     id = prefs.getString('intValue');
-    print("isdds" + id);
     try {
-      print("nofjkdf" + id);
-
-      print("josdfjhu");
 
       final response = await http.post(followOutlet, body: {
         "user_id": id,
@@ -469,7 +430,6 @@ follow=productFromServer['data']  ['outlet_name'];
       });
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
               context,
@@ -479,7 +439,6 @@ follow=productFromServer['data']  ['outlet_name'];
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -488,7 +447,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -619,14 +577,13 @@ follow=productFromServer['data']  ['outlet_name'];
       });
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
 
         followersfromserver = responseJson;
+        o_resellers = followersfromserver['total followers'];
 
         setState(() {
           isError = false;
           isLoading = true;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -635,7 +592,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -653,7 +609,6 @@ follow=productFromServer['data']  ['outlet_name'];
           body: {"user_id": id, "outlet_id": widget.data});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -662,7 +617,6 @@ follow=productFromServer['data']  ['outlet_name'];
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -671,7 +625,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -688,7 +641,6 @@ follow=productFromServer['data']  ['outlet_name'];
     List<Widget> productLists = new List();
     List products = productFromdddServer as List;
     for (int i = 0; i < products.length; i++) {
-      print("sdujh" + products.toString());
       if (productFromServer['message'] == "Joined") {
         productLists.add(Stack(children: <Widget>[
           Container(
@@ -709,6 +661,7 @@ follow=productFromServer['data']  ['outlet_name'];
                                       builder: (context) => Store_detail(
                                           data: products[i]['id'],
                                           name: products[i]['name'],
+                                                      phone: productFromServer['data']['phone'],
                                           description: products[i]
                                               ['description'],
                                           price: products[i]['price'])),
@@ -729,6 +682,7 @@ follow=productFromServer['data']  ['outlet_name'];
                                           builder: (context) => Store_detail(
                                               data: products[i]['id'],
                                               name: products[i]['name'],
+                                                      phone: productFromServer['data']['phone'],
                                               description: products[i]
                                                   ['description'],
                                               price: products[i]
@@ -751,6 +705,8 @@ follow=productFromServer['data']  ['outlet_name'];
                                                   Store_detail(
                                                       data: products[i]['id'],
                                                       name: products[i]['name'],
+                                                                                                            phone: productFromServer['data']['phone'],
+
                                                       description: products[i]
                                                           ['description'],
                                                       price: products[i]
@@ -772,6 +728,7 @@ follow=productFromServer['data']  ['outlet_name'];
                                                   Store_detail(
                                                       data: products[i]['id'],
                                                       name: products[i]['name'],
+                                                      phone: productFromServer['data']['phone'],
                                                       description: products[i]
                                                           ['description'],
                                                       price: products[i]
@@ -825,21 +782,17 @@ follow=productFromServer['data']  ['outlet_name'];
   Future<void> getProductsserver() async {
     isLoading = true;
     try {
-      print("josdfhbvfghbhzsjhu");
       final response = await http.get(
         ProductsApi + widget.data,
       );
-      // print("iugdsgfh" + widget.data.toString());
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        print(responseJson.toString() + "hello");
         if (response.statusCode == 200) {
           productFromdddServer = responseJson['data'];
         }
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -848,7 +801,6 @@ follow=productFromServer['data']  ['outlet_name'];
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
@@ -860,7 +812,6 @@ follow=productFromServer['data']  ['outlet_name'];
     List<Widget> productLists = new List();
     List products = productFromdddServer as List;
     for (int i = 0; i < products.length; i++) {
-      print("sdujh" + products.toString());
       productLists.add(GestureDetector(
           child: productFromServer['data']['outlet_group'] == "0"
               ? GestureDetector(
@@ -987,18 +938,17 @@ follow=productFromServer['data']  ['outlet_name'];
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                               fontFamily: "futura"))),
-                                              SizedBox(
-                                                height:7
-                                              ),
+                                  SizedBox(height: 7),
                                   Container(
                                       child: Text(
-                                          productFromServer['data']
-                                              ['short_desc'],
-                                          style: TextStyle(
-                                            fontFamily: "proxima",
-                                            color: lightestText,
-                                            fontSize: 14,
-                                          ),maxLines: 4,)),
+                                    productFromServer['data']['short_desc'],
+                                    style: TextStyle(
+                                      fontFamily: "proxima",
+                                      color: lightestText,
+                                      fontSize: 14,
+                                    ),
+                                    maxLines: 4,
+                                  )),
                                   SizedBox(height: 10),
                                   Row(
                                     children: <Widget>[
@@ -1143,7 +1093,12 @@ follow=productFromServer['data']  ['outlet_name'];
                                                                           16)),
                                                             )),
                                                         onTap: () {
-                                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>WelcomeScreen()));
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          WelcomeScreen()));
                                                         }),
                                                   ],
                                                 ),
@@ -1162,67 +1117,72 @@ follow=productFromServer['data']  ['outlet_name'];
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                Container(
-                                    child: Text(productFromServer['products'],
-                                        style: TextStyle(
-                                            color: darkText,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18))),
-                                Container(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Text("Products",
-                                        style: TextStyle(
-                                            fontFamily: "proxima",
-                                            color: lightestText,
-                                            fontSize: 15)))
-                              ]),
-                             
-                              Column(mainAxisAlignment: MainAxisAlignment.spaceAround,children: <Widget>[
-                                Stack(children: <Widget>[
-                                  Container(
-                                      child: isLoading
-                                          ? Center(
-                                              child: Image.asset(
-                                              cupertinoActivityIndicator,
-                                              height: 0,
-                                            ))
-                                          : Container(
-                                              child: Text(
-                                                  followersfromserver[
-                                                      'total followers'],
-                                                  style: TextStyle(
-                                                      color: darkText,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 18))))
-                                ]),
-                                Container(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Text("Resellers",
-                                        style: TextStyle(
-                                            fontFamily: "proxima",
-                                            color: lightestText,
-                                            fontSize: 15)))
-                              ]),
-                              Column( mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                Container(
-                                    child: Text("219",
-                                        style: TextStyle(
-                                            color: darkText,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18))),
-                                Container(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Text("Reviewes",
-                                        style: TextStyle(
-                                            fontFamily: "proxima",
-                                            color: lightestText,
-                                            fontSize: 15)))
-                              ]),
-                           
+                              Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                        child: Text(o_products,
+                                            style: TextStyle(
+                                                color: darkText,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18))),
+                                    Container(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Text("Products",
+                                            style: TextStyle(
+                                                fontFamily: "proxima",
+                                                color: lightestText,
+                                                fontSize: 15)))
+                                  ]),
+                              Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Stack(children: <Widget>[
+                                      Container(
+                                          child: isLoading
+                                              ? Center(
+                                                  child: Image.asset(
+                                                  cupertinoActivityIndicator,
+                                                  height: 0,
+                                                ))
+                                              : Container(
+                                                  child: Text(
+                                                      followersfromserver[
+                                                          'total followers'],
+                                                      style: TextStyle(
+                                                          color: darkText,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 18))))
+                                    ]),
+                                    Container(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Text("Resellers",
+                                            style: TextStyle(
+                                                fontFamily: "proxima",
+                                                color: lightestText,
+                                                fontSize: 15)))
+                                  ]),
+                              Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Container(
+                                        child: Text("219",
+                                            style: TextStyle(
+                                                color: darkText,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18))),
+                                    Container(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Text("Reviewes",
+                                            style: TextStyle(
+                                                fontFamily: "proxima",
+                                                color: lightestText,
+                                                fontSize: 15)))
+                                  ]),
                             ]),
 
                         SizedBox(height: 5),
