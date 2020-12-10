@@ -13,14 +13,18 @@ import 'package:shopmatic_front/utils/common.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:http/http.dart' as http;
 
-class followed extends StatefulWidget{
-  followedstate createState()=> followedstate();
+class followed extends StatefulWidget {
+  followedstate createState() => followedstate();
 }
-class followedstate extends State<followed>{
+
+class followedstate extends State<followed> {
   bool isError = false;
   bool isLoading = false;
-  String id="";
-   @override
+  String id = "";
+  String outlet_id = "";
+  String image="";
+  String name="";
+  @override
   void initState() {
     getFollowersapi();
     super.initState();
@@ -30,19 +34,21 @@ class followedstate extends State<followed>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          elevation: 1,
-         backgroundColor: white,
-          iconTheme: new IconThemeData(color: Colors.black),
-          title: Text("Followers", style: TextStyle(color: darkText,fontFamily: "futura")),
-        ),
-        body: Stack(children: <Widget>[
-      Container(
-          child: isLoading
-              ? Center(child: Image.asset(cupertinoActivityIndicator))
-              :ListView(
-          children: getfollowers()))]),
-        bottomNavigationBar: BottomTabs(2, true),);
+      appBar: AppBar(
+        elevation: 1,
+        backgroundColor: white,
+        iconTheme: new IconThemeData(color: Colors.black),
+        title: Text("Followed Outlets",
+            style: TextStyle(color: darkText, fontFamily: "futura")),
+      ),
+      body: Stack(children: <Widget>[
+        Container(
+            child: isLoading
+                ? Center(child: Image.asset(cupertinoActivityIndicator))
+                : ListView(children: getfollowers()))
+      ]),
+      bottomNavigationBar: BottomTabs(2, true),
+    );
   }
 
   List<Widget> getfollowers() {
@@ -61,11 +67,10 @@ class followedstate extends State<followed>{
                             radius: 30,
                             backgroundColor: lightGrey,
                             child: FadeInImage.assetNetwork(
-                          
-                               image: categories[i]['logo'],
-                            placeholder: cupertinoActivityIndicator,
+                              image: categories[i]['logo'],
+                              placeholder: cupertinoActivityIndicator,
                               fit: BoxFit.cover,
-                              width:60,
+                              width: 60,
                               height: 90,
                             )))),
                 Expanded(
@@ -74,7 +79,7 @@ class followedstate extends State<followed>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      " " + categories[i]['outlet_name'],
+                      "  " + categories[i]['outlet_name'],
                       style: TextStyle(
                         color: darkText,
                         fontSize: 16,
@@ -96,70 +101,28 @@ class followedstate extends State<followed>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    
                     GestureDetector(
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6.0),
-                                border: Border.all(color: Colors.blue)),
-                            padding: EdgeInsets.all(5.0),
-                            child: Center(
-                              child: Text("" + "Following" + "",
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: 16)),
-                            )),
-                        ),
-                        SizedBox( width:5,),
-                    // Positioned(
-                    //       right: 0,
-                    //       top: 0,
-                    //       child: GestureDetector(
-                    //         child: PopupMenuButton(
-                    //             itemBuilder: (context) {
-                    //               return <PopupMenuItem>[
-                    //                 PopupMenuItem(child:
-                    //                categories[i]["outlet_group"] == "0"
-                    //     ? GestureDetector(
-                    //                   child: Text('Add In group'),
-                    //                   onTap: () {
-                    //                   //   setState(() {
-                    //                   //     deleteAlbum(
-                    //                   // categories[i]['story_id']);
-                    //                   //   });
-                    //                   },
-
-
-                    //                 ):GestureDetector(
-                    //                   child: Text('Remove From Group'),
-                    //                   onTap: () {
-                    //                   //   setState(() {
-                    //                   //     deleteAlbum(
-                    //                   // categories[i]['story_id']);
-                    //                   //   });
-                    //                   },
-
-
-                    //                 )),
-                    //                  PopupMenuItem(child:
-                    //                 GestureDetector(
-                    //                   child: Text('Remove'),
-                    //                   onTap: () {
-                    //                   remove(categories[i]['id']);
-                    //                   },
-
-
-                    //                 ))
-                    //               ];
-                    //             },
-                    //             child: Icon(Icons.more_vert, color: darkText,
-
-                    //             )
-                    //         ), onTap: () {},
-                    //       )
-
-                    //   )
-                    // 
-                    ],
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6.0),
+                              border: Border.all(color: Colors.blue)),
+                          padding: EdgeInsets.all(5.0),
+                          child: Center(
+                            child: Text("" + "Following" + "",
+                                style: TextStyle(
+                                    color: Colors.blue, fontSize: 16)),
+                          )),
+                      onTap: () {
+                        outlet_id = categories[i]['outlet_id'];
+                        image=categories[i]['logo'];
+                        name=categories[i]['outlet_name'];
+                      unfollowDialog();
+                         },
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
                 )
               ],
             ),
@@ -179,7 +142,7 @@ class followedstate extends State<followed>{
 
   Future<void> getFollowersapi() async {
     isLoading = true;
-     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     id = prefs.getString('intValue');
     try {
@@ -191,7 +154,6 @@ class followedstate extends State<followed>{
 
         requestfromserver = responseJson['data'] as List;
 
-
         setState(() {
           isError = false;
           isLoading = false;
@@ -207,24 +169,95 @@ class followedstate extends State<followed>{
         isError = true;
         isLoading = false;
       });
-     
     }
   }
-
-  Future<void> remove(String aid) async {
+unfollowDialog() async {
+                          await showDialog<String>(
+                            context: context,
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10),
+                              height: 100,
+                              child: new AlertDialog(
+                                contentPadding: EdgeInsets.all(16.0),
+                                content: Container(
+                                  height: 250,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Center(
+                                        child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 5, right: 5),
+                                            height: 100,
+                                            width: 90,
+                                            child: ClipOval(
+                                              child: FadeInImage.assetNetwork(
+                                                image: image,
+                                                placeholder:
+                                                    cupertinoActivityIndicator,
+                                                height: 90,
+                                                width: 70,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      FlatButton(
+                                          child: Text(
+                                            'Unfollow',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () => unfollow()),
+                                      Divider(
+                                        thickness: 1.5,
+                                        color: dividerColor,
+                                        height: 3,
+                                      ),
+                                      FlatButton(
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context)),
+                                      Divider(
+                                        thickness: 1.5,
+                                        color: dividerColor,
+                                        height: 3,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                     
+  Future<void> unfollow() async {
     isLoading = true;
     try {
       final response = await http
-          .post(removeFollower, body: {"user_id": aid, "outlet_id": "23"});
+          .post(unfollowOutlet, body: {"user_id": id, "outlet_id": outlet_id});
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => followers()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (ctx) => followed()));
 
         setState(() {
           isError = false;
           isLoading = false;
-          print('setstate');
         });
       } else {
         setState(() {
@@ -233,12 +266,13 @@ class followedstate extends State<followed>{
         });
       }
     } catch (e) {
-      print("uhdfuhdfuh");
       setState(() {
         isError = true;
         isLoading = false;
       });
+      // productFromServer = new List();
+
+      // showToast('Something went wrong');
     }
   }
-
-  }
+}

@@ -22,7 +22,8 @@ class addproductstate extends State<addproduct> {
   bool viewVisible = false;
   File imageURI;
   Future<File> imageFile;
-  
+  String _mySelection;
+  String did="";
   String localImagePath;
   String caption = "";
   Future<File> file;
@@ -50,6 +51,11 @@ class addproductstate extends State<addproduct> {
       viewVisible = false;
       viewVisibles = true;
     });
+  }
+ @override
+  void initState() {
+  getCategories();
+    super.initState();
   }
 
   bool viewVisibles = true;
@@ -369,29 +375,30 @@ class addproductstate extends State<addproduct> {
                     )
                   ],
                 )),
-            Container(
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TextField(
-                      controller: cat,
-                      onChanged: (text) {
-                        print("Text $text");
-                      },
-                      decoration: InputDecoration(
-                          filled: true,
-                          labelText: "Category",
-                          labelStyle: TextStyle(
-                              fontFamily: "ProximaNova", fontSize: 12),
-                          fillColor: Colors.white,
-                          prefixIcon: Icon(
-                            Icons.image,
-                            color: Colors.blue,
-                          )),
+                Container(
+                  padding:EdgeInsets.all(5.0),
+                  child:DropdownButton<String>(
+                    hint: Text("    All Categories   ",style:TextStyle(fontSize:18,fontFamily:"futura")),
+                  items: categoryfromserver.map<DropdownMenuItem<String>>((value) =>
+                     new DropdownMenuItem<String>(
+                        
+                      value: value["category_id"].toString(),
+                      child:  Text("     "+value["category_name"],style:TextStyle(fontSize:20,fontFamily:"futura")),
                     )
-                  ],
-                )),
+                  ).toList(),
+                  onChanged: (newVal) {
+            setState(() {
+              _mySelection = newVal;
+
+            
+                print(_mySelection);
+            });
+          
+          },
+          value: _mySelection,
+                ),
+              
+                ),
             Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
@@ -426,7 +433,7 @@ class addproductstate extends State<addproduct> {
     try {
       print(desc+"knnjd");
       final response = await http.post(addProductApi, body: {
-        "category_id": "1",
+        "category_id": _mySelection,
         "name": name,
          "description":desc,
         "outlet_id": "23",
@@ -590,7 +597,6 @@ class addproductstate extends State<addproduct> {
       },
     );
   }
-
   Widget image3(){
     return FutureBuilder<File>(
       future: file2,
@@ -721,11 +727,39 @@ class addproductstate extends State<addproduct> {
       },
     );
   }
+ List<Widget> getTopcategories() {
+    List<Widget> productLists = new List();
+    List categories = categoryfromserver;
+
+    for (int i = 0; i < categories.length; i++) {
+      productLists.add(  new DropdownButton<String>(
+                  items: categoryfromserver.map<DropdownMenuItem<String>>((value) =>
+                     new DropdownMenuItem<String>(
+                      value: value["category_id"].toString(),
+                      child: new Text(value["category_name"].toString()),
+                    )
+                  ).toList(),
+                  onChanged: (newVal) {
+            setState(() {
+              _mySelection = newVal;
+
+              did=categories[i]["category_id"];
+                print(newVal);
+            });
+          
+          },
+          value: _mySelection,
+                ),
+              );}
+    return productLists;
+  }
 
   startUpload() {
     
     setStatus('Uploading Image...');
     if (null == tmpFile) {
+      print(base64Image+base64Image2+base64Image3+base64Image4);
+
       setStatus(errMessage);
       return;
     }
@@ -735,7 +769,7 @@ class addproductstate extends State<addproduct> {
     String dgold=gold.text;
     String dsilver=silver.text;
     String dplatinum=platinum.text;
-
+print(base64Image+base64Image2+base64Image3+base64Image4);
 
     addproduct(productName,productDesc,oprice,dgold,dsilver,dplatinum,base64Image,base64Image2,base64Image3,base64Image4);
   }
@@ -753,4 +787,35 @@ class addproductstate extends State<addproduct> {
       status = message;
     });
   }
+    dynamic categoryfromserver = new List();
+
+  Future<void> getCategories() async {
+    isLoading = true;
+    try {
+      final response = await http.get(
+        CategoriesApi + "23",
+      );
+      if (response.statusCode == 200) {
+        final responseJson = json.decode(response.body);
+        if (response.statusCode == 200) {
+          categoryfromserver = responseJson['data'] as List;
+        }
+        setState(() {
+          isError = false;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
+    }
+  }
+
 }

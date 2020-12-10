@@ -34,7 +34,7 @@ class storestate extends State<storeProducts>
   String o_products = "";
   String o_resellers = "";
   String follow = "";
-
+ String selected = "first";
   @override
   void initState() {
     getProfile();
@@ -390,7 +390,9 @@ class storestate extends State<storeProducts>
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               color: white,
-              border: Border.all(color: lightGrey)),
+              border: Border.all(
+                              color: selected == categories[i]['category_name'] ? Colors.blue : lightGrey,
+                                                             )),
           child: Center(
               child: Text(
             "  " + categories[i]['category_name'] + "  ",
@@ -399,16 +401,10 @@ class storestate extends State<storeProducts>
           )),
         ),
         onTap: () {
-          setState(() {
-            /*   if (products[i]["isactive"] == "true") {
-              catColor = lightGrey;
-              print(products[i]["category_id"] + "true");
-            } else if (products[i]["isactive"] == "false") {
-              catColor = white;
-
-              print("false");
-            }*/
-          });
+           setState(() {
+                          selected = categories[i]['category_name'];
+                         
+                        });
         },
       ));
     }
@@ -577,6 +573,16 @@ class storestate extends State<storeProducts>
       });
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
+
+        followersfromserver = responseJson;
+        o_resellers = followersfromserver['total followers'];
+
+        setState(() {
+          isError = false;
+          isLoading = true;
+        });
+      }else if(response.statusCode == 404){
+final responseJson = json.decode(response.body);
 
         followersfromserver = responseJson;
         o_resellers = followersfromserver['total followers'];

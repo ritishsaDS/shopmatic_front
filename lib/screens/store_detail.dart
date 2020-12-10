@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:convert' show utf8;
+import 'dart:typed_data';
 import 'package:badges/badges.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,8 +62,9 @@ class storestate extends State<Store_detail> {
   String _linkMessage;
   @override
   void initState() {
-    
+    d=widget.description;
     getSingleProduct();
+    
     initDynamicLinks();
     super.initState();
   }
@@ -587,7 +589,7 @@ class storestate extends State<Store_detail> {
            
             Badge(
                                                   showBadge: p1badge,
-                                                
+                                              
                                                   badgeContent: Text(
                                                     badge.toString(),
                                                     style: TextStyle(
