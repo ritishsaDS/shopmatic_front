@@ -120,3 +120,5 @@ String blockOutletApi = domainURL+ "topStore/user/blockOutlet";
 String editProductimage=domainURL+'topStore/products/editProductImage';
 String deletOutletapi = domainURL+ "topStore/outlets/delete";
 String outletFollowedbyUser=domainURL+"topStore/User/followedOutlets/";
+String productfromCat=domainURL+"topStore/products/productBycatId/";
+

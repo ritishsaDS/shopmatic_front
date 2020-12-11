@@ -150,7 +150,7 @@ GestureDetector(
     try {
       final response = await http.post(
         storeListingApi,body: {
-          "place_id":"1"
+         // "place_id":"1"
         }
       );
       if (response.statusCode == 200) {
@@ -182,7 +182,13 @@ GestureDetector(
   List<Widget> createProduct() {
     List<Widget> productList = new List();
     for (int i = 0; i < productFromServer.length; i++) {
-      productList.add(storescreen(productFromServer[i]));
+      if(productFromServer[i]['status']=="1"){
+          productList.add(storescreen(productFromServer[i]));
+      }
+      else{
+
+      }
+    
     }
 
     /* try {

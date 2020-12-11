@@ -22,7 +22,7 @@ class categorystate extends State<addcategory>{
 
   @override
   void initState() {
-print("ibjfdojhifd"+widget.id);
+    print(widget.text);
     super.initState();
   }
   @override

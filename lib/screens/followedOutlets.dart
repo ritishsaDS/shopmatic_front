@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopmatic_front/screens/bottom_bar.dart';
+import 'package:shopmatic_front/screens/store_products.dart';
 import 'package:shopmatic_front/screens/story.dart';
 import 'package:shopmatic_front/screens/tab2.dart';
 import 'package:shopmatic_front/utils/common.dart';
@@ -61,18 +62,27 @@ class followedstate extends State<followed> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                    child: ClipOval(
-                        child: CircleAvatar(
-                            radius: 30,
-                            backgroundColor: lightGrey,
-                            child: FadeInImage.assetNetwork(
-                              image: categories[i]['logo'],
-                              placeholder: cupertinoActivityIndicator,
-                              fit: BoxFit.cover,
-                              width: 60,
-                              height: 90,
-                            )))),
+                GestureDetector(
+                                  child: Container(
+                      child: ClipOval(
+                          child: CircleAvatar(
+                              radius: 30,
+                              backgroundColor: lightGrey,
+                              child: FadeInImage.assetNetwork(
+                                image: categories[i]['logo'],
+                                placeholder: cupertinoActivityIndicator,
+                                fit: BoxFit.cover,
+                                width: 60,
+                                height: 90,
+                              )))),onTap:(){
+                                 Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => storeProducts(
+                        data: categories[i]['outlet_id'],
+                      )));
+                              }
+                ),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

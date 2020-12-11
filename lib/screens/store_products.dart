@@ -34,14 +34,15 @@ class storestate extends State<storeProducts>
   String o_products = "";
   String o_resellers = "";
   String follow = "";
- String selected = "first";
+  String selected = "selected";
+  String catId="";
   @override
   void initState() {
     getProfile();
     getFollowersapi();
     getStories();
     getCategories();
-    getProductsserver();
+    getProductsserver(catId);
     _controller = new TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -117,30 +118,38 @@ class storestate extends State<storeProducts>
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: <Widget>[
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          right: 10,
+                                                      GestureDetector(
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            right: 10,
+                                                          ),
+                                                          padding:
+                                                              EdgeInsets.all(8.0),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          6.0),
+                                                              color: lightGrey,
+                                                              border: Border.all(
+                                                                  color: selected == "all"
+                    ? Colors.blue
+                    : lightGrey,)),
+                                                          child: Center(
+                                                              child: Text(
+                                                            "  All  ",
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    "proxima",
+                                                                color: darkText,
+                                                                fontSize: 16),
+                                                          )),
                                                         ),
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        6.0),
-                                                            color: lightGrey,
-                                                            border: Border.all(
-                                                                color:
-                                                                    lightGrey)),
-                                                        child: Center(
-                                                            child: Text(
-                                                          "  All  ",
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  "proxima",
-                                                              color: darkText,
-                                                              fontSize: 16),
-                                                        )),
+                                                        onTap: (){
+                                                           selected = "all";
+                                                          catId="";
+                                                          getProductsserver(catId);
+                                                        },
                                                       ),
                                                       Container(
                                                           width: MediaQuery.of(
@@ -247,6 +256,7 @@ class storestate extends State<storeProducts>
   dynamic storyfromserver = new List();
   dynamic categoryfromserver = new List();
   dynamic followersfromserver = new List();
+  dynamic productfromcategory = new List();
 
   Future<void> getProfile() async {
     isLoading = true;
@@ -264,7 +274,6 @@ class storestate extends State<storeProducts>
         o_products = productFromServer['products'];
         setState(() {
           isError = false;
-
         });
       } else {
         setState(() {
@@ -296,7 +305,6 @@ class storestate extends State<storeProducts>
         }
         setState(() {
           isError = false;
-
         });
       } else {
         setState(() {
@@ -391,8 +399,10 @@ class storestate extends State<storeProducts>
               borderRadius: BorderRadius.circular(6.0),
               color: white,
               border: Border.all(
-                              color: selected == categories[i]['category_name'] ? Colors.blue : lightGrey,
-                                                             )),
+                color: selected == categories[i]['category_name']
+                    ? Colors.blue
+                    : lightGrey,
+              )),
           child: Center(
               child: Text(
             "  " + categories[i]['category_name'] + "  ",
@@ -401,10 +411,12 @@ class storestate extends State<storeProducts>
           )),
         ),
         onTap: () {
-           setState(() {
-                          selected = categories[i]['category_name'];
-                         
-                        });
+          setState(() {
+            selected = categories[i]['category_name'];
+
+            catId=categories[i]['category_id'];
+            getProductsserver(catId);
+          });
         },
       ));
     }
@@ -417,7 +429,6 @@ class storestate extends State<storeProducts>
 
     id = prefs.getString('intValue');
     try {
-
       final response = await http.post(followOutlet, body: {
         "user_id": id,
         "outlet_id": widget.data,
@@ -432,6 +443,40 @@ class storestate extends State<storeProducts>
               MaterialPageRoute(
                   builder: (context) => storeProducts(data: widget.data)));
         }
+        setState(() {
+          isError = false;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getproductbyCatid(String sadfs) async {
+    print(sadfs);
+    try {
+      final response = await http.post(productfromCat,
+          body: {"outlet_id": "23", "category_id": sadfs});
+print(response.statusCode);
+      if (response.statusCode == 200) {
+        final responseJson = json.decode(response.body);
+        productfromcategory = responseJson['data'] as List;
+        print("sfrdfs" + productfromcategory.toString());
+      
+
+        setState(() {
+          print("sfrdfs" + productfromcategory);
+        });
+
         setState(() {
           isError = false;
           isLoading = false;
@@ -581,8 +626,8 @@ class storestate extends State<storeProducts>
           isError = false;
           isLoading = true;
         });
-      }else if(response.statusCode == 404){
-final responseJson = json.decode(response.body);
+      } else if (response.statusCode == 404) {
+        final responseJson = json.decode(response.body);
 
         followersfromserver = responseJson;
         o_resellers = followersfromserver['total followers'];
@@ -667,7 +712,8 @@ final responseJson = json.decode(response.body);
                                       builder: (context) => Store_detail(
                                           data: products[i]['id'],
                                           name: products[i]['name'],
-                                                      phone: productFromServer['data']['phone'],
+                                          phone: productFromServer['data']
+                                              ['phone'],
                                           description: products[i]
                                               ['description'],
                                           price: products[i]['price'])),
@@ -688,7 +734,8 @@ final responseJson = json.decode(response.body);
                                           builder: (context) => Store_detail(
                                               data: products[i]['id'],
                                               name: products[i]['name'],
-                                                      phone: productFromServer['data']['phone'],
+                                              phone: productFromServer['data']
+                                                  ['phone'],
                                               description: products[i]
                                                   ['description'],
                                               price: products[i]
@@ -711,10 +758,11 @@ final responseJson = json.decode(response.body);
                                                   Store_detail(
                                                       data: products[i]['id'],
                                                       name: products[i]['name'],
-                                                                                                            phone: productFromServer['data']['phone'],
-
-                                                      description: products[i]
-                                                          ['description'],
+                                                      phone: productFromServer[
+                                                          'data']['phone'],
+                                                      description:
+                                                          products[i]
+                                                              ['description'],
                                                       price: products[i]
                                                           ['goldprice'])),
                                         );
@@ -734,9 +782,11 @@ final responseJson = json.decode(response.body);
                                                   Store_detail(
                                                       data: products[i]['id'],
                                                       name: products[i]['name'],
-                                                      phone: productFromServer['data']['phone'],
-                                                      description: products[i]
-                                                          ['description'],
+                                                      phone: productFromServer[
+                                                          'data']['phone'],
+                                                      description:
+                                                          products[i]
+                                                              ['description'],
                                                       price: products[i]
                                                           ['platinumprice'])),
                                         );
@@ -785,11 +835,14 @@ final responseJson = json.decode(response.body);
     return productLists;
   }
 
-  Future<void> getProductsserver() async {
+  Future<void> getProductsserver(String uyhfewuh) async {
     isLoading = true;
     try {
-      final response = await http.get(
-        ProductsApi + widget.data,
+      final response = await http.post(
+        ProductsApi ,body:{
+          "outlet_id":widget.data,
+          "category_id":uyhfewuh
+        }
       );
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);

@@ -11,6 +11,7 @@ import 'package:shopmatic_front/utils/common.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../DefaultButton.dart';
 import 'bottom_bar.dart';
 import 'cart.dart';
 import 'demo.dart';
@@ -18,7 +19,7 @@ import 'demo.dart';
 class Store_detail extends StatefulWidget {
   VoidCallback onP1Badge;
   dynamic image;
-dynamic phone;
+  dynamic phone;
   dynamic data;
   dynamic id;
   dynamic name;
@@ -50,6 +51,7 @@ class storestate extends State<Store_detail> {
   int badgeData = 0;
   bool _isCreatingLink = false;
   bool ischanged = false;
+  bool descTextShowFlag = false;
   String query = "";
   String ds = "145, 151, 240, 159, 152, 152, 70, 97, 98, 114, 105, 99, 32";
   List<int> bytes;
@@ -62,9 +64,9 @@ class storestate extends State<Store_detail> {
   String _linkMessage;
   @override
   void initState() {
-    d=widget.description;
+    d = widget.description;
     getSingleProduct();
-    
+
     initDynamicLinks();
     super.initState();
   }
@@ -173,247 +175,199 @@ class storestate extends State<Store_detail> {
                                           ),
                                         ),
                                       ),
-                                     ],
+                                    ],
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      widget.name,
-                                      style: TextStyle(
-                                        color: darkText,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        fontFamily: "futura",
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 10.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                              currency +
-                                                  widget.price.toString(),
-                                              style: TextStyle(
-                                                  fontFamily: "futura",
-                                                  color: primaryColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24)),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(currency + "900",
-                                              style: TextStyle(
-                                                  color: mostlight,
-                                                  fontFamily: "proxima",
-                                                  fontSize: 16,
-                                                  decoration: TextDecoration
-                                                      .lineThrough)),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            color: Colors.red,
-                                            child: Text(" 65% OFF ",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontFamily: 'proxima')),
-                                          )
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.all(10.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          buildOutlineButton(
-                                              icon: Icons.remove,
-                                              press: () {
-                                                setState(() {
-                                                  if (Quantity == 1) {
-                                                  } else {
-                                                    Quantity--;
-                                                  }
-                                                });
-                                              }),
-                                          Container(
-                                              child: Text(
-                                            "   " + quantity + "   ",
-                                            style: TextStyle(
-                                                fontFamily: "futura",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                          )),
-                                          buildOutlineButton(
-                                            icon: Icons.add,
-                                            press: () {
-                                              setState(() {
-                                                Quantity++;
-                                              });
-                                            },
-                                          ),
-                                          Expanded(child: SizedBox()),
-                                        ],
-                                      )),
-                                  Container(
-                                      margin: EdgeInsets.only(
-                                          left: 10.0, right: 10),
-                                      child: Row(
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            child: Container(
-                                              padding: EdgeInsets.all(3.0),
-                                              height: 30,
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                color: lightestText,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Center(
-                                                  child: Icon(
-                                                      Icons.share_rounded,
-                                                      size: 20,
-                                                      color: white)),
-                                            ),
-                                            onTap: !_isCreatingLink
-                                                ? () => _createDynamicLink(true)
-                                                : null,
-                                          ),
-                                          SizedBox(width: 5),
-                                          Container(
-                                            height: 30,
-                                            width: 30,
-                                            decoration: BoxDecoration(
-                                              color: lightestText,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Center(
-                                                child: Icon(
-                                                    Icons
-                                                        .favorite_border_outlined,
-                                                    size: 20,
-                                                    color: white)),
-                                          )
-                                        ],
-                                      )),
-                                  Container(
-                                      margin: EdgeInsets.only(
-                                        top: 15,
-                                        right: 5,
-                                        left: 10,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Container(
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                                border: Border.all(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              margin: EdgeInsets.only(
-                                                left: 2,
-                                                right: 4,
-                                              ),
-                                              child: FlatButton(
+                                  TopRoundedContainer(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 15,
+                                        ),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                               
                                                 child: Text(
-                                                  "Add to Cart",
+                                                  widget.name,
                                                   style: TextStyle(
-                                                    fontSize: 17,
-                                                    fontFamily: "futura",
-                                                    fontWeight: FontWeight.bold,
                                                     color: darkText,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    fontFamily: "futura",
                                                   ),
                                                 ),
-                                                onPressed: () {
-                                                  onP1Badge();
-                                                },
-                                                /* onPressed: () {
-                                       showModalBottomSheet<void>(
-                                         context: context,
-                                         builder: (BuildContext context) {
-                                           return  ListView.builder
-                                             (
-                                                 itemCount: 100,
-                                                 itemBuilder: (BuildContext ctxt, int Index) {
-                                                   return new Container(
-                                                     margin: EdgeInsets.only(top:10),
-                                                     child:Center(
-     
-                                                       child:Index==0?Container():Text(Index.toString(),style: TextStyle(fontFamily: "proxima",fontSize: 20),)
-                                                     )
-                                                   );
-                                                 }
-                                           );
-                                         },
-                                       );
-                                     },*/
                                               ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                              child: SizedBox(
-                                                  height: 50,
-                                                  child: FlatButton(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        18)),
-                                                    color: Colors.black,
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => Cart(
-                                                                  image:
-                                                                      productFromServer[
-                                                                          0],
-                                                                  name: widget
-                                                                      .name,
-                                                                  id: widget
-                                                                      .data,
-                                                                  price: widget
-                                                                      .price,
-                                                                  description:
-                                                                      widget
-                                                                          .description,
-                                                                  Quantity:
-                                                                      Quantity)));
-                                                    },
-                                                    child: Text(
-                                                      "Buy  Now".toUpperCase(),
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                          fontFamily: "futura"),
-                                                    ),
-                                                  ))),
-                                        ],
+                                              Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 10.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Text(
+                                                          currency +
+                                                              widget.price
+                                                                  .toString(),
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  "futura",
+                                                              color:
+                                                                  primaryColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 24)),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(currency + "900",
+                                                          style: TextStyle(
+                                                              color: mostlight,
+                                                              fontFamily:
+                                                                  "proxima",
+                                                              fontSize: 16,
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough)),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Container(
+                                                        color: Colors.red,
+                                                        child: Text(" 65% OFF ",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 16,
+                                                                fontFamily:
+                                                                    'proxima')),
+                                                      )
+                                                    ],
+                                                  )),
+                                              
+                                              Container(
+                                                  margin: EdgeInsets.only(top:10.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      buildOutlineButton(
+                                                          icon: Icons.remove,
+                                                          press: () {
+                                                            setState(() {
+                                                              if (Quantity ==
+                                                                  1) {
+                                                              } else {
+                                                                Quantity--;
+                                                              }
+                                                            });
+                                                          }),
+                                                      Container(
+                                                          child: Text(
+                                                        "   " +
+                                                            quantity +
+                                                            "   ",
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                "futura",
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 14),
+                                                      )),
+                                                      buildOutlineButton(
+                                                        icon: Icons.add,
+                                                        press: () {
+                                                          setState(() {
+                                                            Quantity++;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                          child: SizedBox()),
+                                                    ],
+                                                  )),
+                                            Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          
+          child: Row(
+                      children:[ Expanded(
+                                              child: Text(
+              "Description",
+              style: TextStyle(
+                color: darkText,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontFamily: "futura",
+              ),
+            ),
+                      ),
+              Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: EdgeInsets.all((15)),
+            width: (64),
+            decoration: BoxDecoration(
+              color: Color(0xFFFFE6E6),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: Icon(
+              Icons.favorite,
+              size: (16),
+              color: Color(0xFFFF4848),
+            ),
+          ),
+        ),
+      
+                      ]),
+        ),
+        Container(
+          
+          child: Text(
+           widget.description,
+            style: TextStyle(fontSize: 15,fontFamily: "proxima",color:lightText),
+            maxLines: descTextShowFlag ? 8 : 2,textAlign: TextAlign.start,
+          ),
+        ),
+        Container(
+        padding: EdgeInsets.only(top:5),
+          
+          child: GestureDetector(
+            onTap: () {setState(() {
+                descTextShowFlag = !descTextShowFlag; 
+                });},
+            child: Row(
+              children: [
+                descTextShowFlag ? Text("Show Less",style: TextStyle(color: Colors.pink,fontFamily: "futura"),) :  Text("Show More",style: TextStyle(color: Colors.pink,fontFamily: "futura")),
+                SizedBox(width: 5),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: Colors.pink,
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height:10
+        )
+      ],
+    )
+  
+                                            ]),
                                       )),
-                                  SizedBox(height: 10),
                                   Container(
-                                    margin:
-                                        EdgeInsets.only(left: 10, right: 10),
-                                    child: Text(
-                                      widget.description,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "proxima",
-                                          color: lightestText,
-                                          fontSize: 14),
-                                      maxLines: 10,
+                                    margin:EdgeInsets.only(left:20.0,right:20.0,top:10),
+                                                                      child: Column(
+                                      children: [
+                                     DefaultButton(
+                                                          text: "Add To Cart",
+                                                          press: () {},
+                                                        ), ],
                                     ),
                                   ),
                                   Container(
@@ -569,63 +523,49 @@ class storestate extends State<Store_detail> {
                   ]))
       ]),
       floatingActionButton: Container(
-       margin:EdgeInsets.only(
-         left:MediaQuery.of(context).size.width-30,
-       ),
-              child: Column(
+        
+        child: Column(
           children: <Widget>[
             SizedBox(height: 110),
-          Container(
-             
-                          child: IconButton(
-                    icon: Icon(Icons.call, size: 40, color: Colors.black),
-                    onPressed: () {
+            Container(
+                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(2.0),color: dividerColor),
+                              child: IconButton(
+                  icon: Icon(Icons.call, size: 30, color: Colors.black),
+                  onPressed: () {
                     launch('tel://${widget.phone}');
-                    },
-                  ),
-             ),
-        
-         
-           
+                  },
+                ),
+              ),
+         SizedBox(
+           height:5
+         ),
             Badge(
-                                                  showBadge: p1badge,
-                                              
-                                                  badgeContent: Text(
-                                                    badge.toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  child: IconButton(
-                                                    icon: Icon(
-                                                        Icons
-                                                            .card_travel_outlined,
-                                                        size: 40,
-                                                        color:  Colors.black),
-                                                    onPressed: () {
-                                                      if (badge == 0) {
-                                                      } else {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) => Cart(
-                                                                    image:
-                                                                        productFromServer[
-                                                                            0],
-                                                                    name: widget
-                                                                        .name,
-                                                                    id: widget
-                                                                        .data,
-                                                                    price: widget
-                                                                        .price,
-                                                                    description:
-                                                                        widget
-                                                                            .description,
-                                                                    Quantity:
-                                                                        Quantity)));
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
+              showBadge: p1badge,
+              badgeContent: Text(
+                badge.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+              child: Container(
+                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(2.0),color: dividerColor),child: IconButton(
+                icon: Icon(Icons.card_travel_outlined,
+                    size: 30, color: Colors.black),
+                onPressed: () {
+                  if (badge == 0) {
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Cart(
+                                image: productFromServer[0],
+                                name: widget.name,
+                                id: widget.data,
+                                price: widget.price,
+                                description: widget.description,
+                                Quantity: Quantity)));
+                  }
+                },
+              ),
+            )),
           ],
         ),
       ),
@@ -790,5 +730,119 @@ class storestate extends State<Store_detail> {
     utf8.decode(bytes);
 
     print(String.fromCharCodes(bytes));
+  }
+}
+
+class TopRoundedContainer extends StatelessWidget {
+  const TopRoundedContainer({
+    Key key,
+    @required this.color,
+    @required this.child,
+  }) : super(key: key);
+
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: (20)),
+      padding: EdgeInsets.only(top: (20)),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class ProductDescription extends StatelessWidget {
+  const ProductDescription({
+    Key key,
+    this.pressOnSeeMore,
+  }) : super(key: key);
+
+  final GestureTapCallback pressOnSeeMore;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: (20)),
+          child: Text(
+            "Description",
+            style: TextStyle(
+              color: darkText,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              fontFamily: "futura",
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: EdgeInsets.all((15)),
+            width: (64),
+            decoration: BoxDecoration(
+              color: Color(0xFFFFE6E6),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: Icon(
+              Icons.favorite,
+              size: (16),
+              color: Color(0xFFFF4848),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            left: (20),
+            right: (64),
+          ),
+          child: Text(
+            "  A shirt is a cloth garment for the upper body (from the neck to the waist). Originally an undergarment worn exclusively by men, it has become, in American English, a catch-all term for a broad variety of upper-body garments and undergarments.",
+            style: TextStyle(fontSize: 10),
+            maxLines: 3,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: (20),
+            vertical: 10,
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                Text(
+                  "See More Detail",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      color: Colors.pink),
+                ),
+                SizedBox(width: 5),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 12,
+                  color: Colors.pink,
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

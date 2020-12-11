@@ -55,7 +55,7 @@ class Grid_state extends State<Grid> {
                                   placeholder: cupertinoActivityIndicator,
                                   height: 180,
                                   width: 170,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.fitHeight,
                                 )),
                             Positioned(
                               right: 2,

@@ -95,14 +95,8 @@ class editproductstate extends State<editproduct> {
      price = TextEditingController(text: widget.oprice);
     silver_price = TextEditingController(text: widget.sprice);
     gold_price = TextEditingController(text: widget.gprice);
-    iid1=widget.pid[0];
-    iid2=widget.pid[1];
-    iid3=widget.pid[2];
-    iid4=widget.pid[3];
-    print("bjihdsjnodsoi"+iid1.toString());
-      print("bjihdsjnodsoi"+iid2.toString());
-        print("bjihdsjnodsoi"+iid3.toString());
-          print("bjihdsjnodsoi"+iid4.toString());
+   print(widget.image.length);
+   
     super.initState();
   }
   
@@ -128,10 +122,10 @@ query=widget.name;
         body: ListView(
           children: <Widget>[
           Container(
-
+height: 120,
              color: background,
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.center,
+             child: ListView(
+             scrollDirection: Axis.horizontal,
                children: <Widget>[
                  image1(),
                  image2(),
@@ -673,8 +667,8 @@ query=widget.name;
               return GestureDetector(
                 child: Container(
                   margin: EdgeInsets.all(5.0),
-                    width: 75,
-                    height: 78,
+                    width: 90,
+                    height: 100,
                     color: Colors.white10,
                     child: GestureDetector(
                       child: Image.file(snapshot.data,
@@ -702,8 +696,8 @@ query=widget.name;
                     child: Card(
                         child: Container(
     
-                          width: 75,
-                          height: 78,
+                          width: 90,
+                          height: 100,
     
                           child: Stack(
                               children: <Widget>[
@@ -736,8 +730,8 @@ query=widget.name;
               return GestureDetector(
                 child: Container(
                     margin: EdgeInsets.all(5.0),
-                    width: 75,
-                    height: 78,
+                    width: 90,
+                    height: 100,
                     color: Colors.white10,
                     child: GestureDetector(
                       child: Image.file(snapshot.data,
@@ -768,8 +762,8 @@ query=widget.name;
                     child: Card(
                         child: Container(
     
-                          width: 75,
-                          height: 78,
+                          width: 90,
+                          height: 100,
     
                           child: Stack(
                               children: <Widget>[
@@ -803,8 +797,8 @@ query=widget.name;
               return GestureDetector(
                 child: Container(
                     margin: EdgeInsets.all(5.0),
-                    width: 75,
-                    height: 78,
+                    width: 90,
+                    height: 100,
                     color: Colors.white10,
                     child: GestureDetector(
                       child: Image.file(snapshot.data,
@@ -835,8 +829,8 @@ query=widget.name;
                     child: Card(
                         child: Container(
     
-                          width: 75,
-                          height: 78,
+                          width: 90,
+                          height: 100,
     
                           child: Stack(
                               children: <Widget>[
@@ -869,8 +863,8 @@ query=widget.name;
               return GestureDetector(
                 child: Container(
                     margin: EdgeInsets.all(5.0),
-                    width: 75,
-                    height: 78,
+                    width: 90,
+                    height: 100,
                     color: Colors.white10,
                     child: GestureDetector(
                       child: Image.file(snapshot.data,
@@ -901,8 +895,8 @@ query=widget.name;
                     child: Card(
                         child: Container(
     
-                          width: 75,
-                          height: 78,
+                          width: 90,
+                          height: 100,
     
                           child: Stack(
                               children: <Widget>[
@@ -931,7 +925,7 @@ query=widget.name;
       final response = await http.post(editProductimage, body: {
         "product_id":widget.id,
          "image": base64Image + ","+base64Image2+","+base64Image3+","+base64Image4,
-         "id":iid1+','+iid2+","+iid3+","+iid4
+         "id":widget.pid[0]+','+widget.pid[1]+","+widget.pid[2]+","+widget.pid[3]
 
          
       });

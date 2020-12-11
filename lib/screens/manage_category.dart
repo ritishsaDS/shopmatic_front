@@ -44,7 +44,7 @@ class StatemanageCategory extends State<manageCategory> {
             foregroundColor: Colors.black,
             onPressed: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => addcategory()));
+                  MaterialPageRoute(builder: (context) => addcategory( text:"Add Category")));
             },
             icon: Icon(Icons.add),
             label: Text(' Add Categories '),

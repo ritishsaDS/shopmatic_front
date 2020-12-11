@@ -89,8 +89,10 @@ class stateproducts extends State<manageproducts> {
     isLoading = true;
     try {
       print("josdfhbvfghbhzsjhu");
-      final response = await http.get(
-        ProductsApi + "23",
+      final response = await http.post(
+        ProductsApi ,body:{
+          "outlet_id":"23"
+        }
       );
       if (response.statusCode == 200) {
         final responseJson = json.decode(response.body);
